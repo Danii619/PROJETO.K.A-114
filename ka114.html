@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Dossiê K.A‑114</title>
+  <style>
+    body {
+      background-color: black;
+      color: #0ff;
+      font-family: 'Courier New', monospace;
+      padding: 40px;
+    }
+    a {
+      color: #ff5;
+      text-decoration: none;
+    }
+    .title {
+      font-size: 26px;
+      margin-bottom: 20px;
+    }
+    .data {
+      background-color: rgba(255,255,255,0.05);
+      border-left: 4px solid #f0f;
+      padding: 15px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <a href="index.html">« VOLTAR AO TERMINAL</a>
+  <div class="title">[ARQUIVO K.A‑114 – CLASSIFICAÇÃO: CRÍTICO]</div>
+<div class="franjabranca">FRANJABRANCA114</div>
+
+<style>
+.franjabranca {
+  position: fixed;
+  top: 50%;
+  left: -300px;
+  font-size: 20px;
+  color: #aa00ff;
+  font-family: monospace;
+  font-weight: bold;
+  white-space: nowrap;
+  z-index: 9999;
+  animation: andarzin 12s linear infinite, glitchzin 0.4s infinite;
+  opacity: 0.7;
+  pointer-events: none;
+  mix-blend-mode: lighten;
+  text-shadow: 
+    1px 0 #ff00cc,
+    -1px 0 #00ffee,
+    0 1px #ff00cc,
+    0 -1px #00ffee;
+}
+
+/* Andando */
+@keyframes andarzin {
+  0%   { left: -300px; transform: rotate(0deg) scale(1); }
+  25%  { transform: rotate(2deg) scale(1.1); }
+  50%  { left: 50%; transform: rotate(-2deg) scale(1); }
+  75%  { transform: rotate(2deg) scale(1.1); }
+  100% { left: 110%; transform: rotate(0deg) scale(1); }
+}
+
+/* Glitch visual */
+@keyframes glitchzin {
+  0% {
+    text-shadow: 2px 0 red, -2px 0 cyan;
+    transform: translateX(0);
+  }
+  20% {
+    text-shadow: -2px 0 magenta, 2px 0 lime;
+    transform: translateX(-1px);
+  }
+  40% {
+    text-shadow: 2px 2px blue, -2px -2px red;
+    transform: translateX(1px);
+  }
+  60% {
+    text-shadow: 0 0 white;
+    transform: translateY(1px);
+  }
+  80% {
+    text-shadow: -1px 1px #00ffff, 1px -1px #ff00ff;
+    transform: translateY(-1px);
+  }
+  100% {
+    text-shadow: 1px 0 #ff00cc, -1px 0 #00ffee;
+    transform: translateX(0);
+  }
+}
+</style>
+</style>
+  <div class="data">
+    <strong>NOME:</strong> Kin Atlas<br>
+    <strong>ALIAS:</strong> K.A‑114<br>
+    <strong>ESPÉCIE:</strong> Skinwalker (confirmado)<br>
+    <strong>ESTADO:</strong> Ativo / Infiltrado<br>
+    <strong>ALTURA:</strong> 1,93m<br>
+    <strong>ORIGEM:</strong> Florestas do Pará<br>
+    <strong>PRIMEIRA DETECÇÃO:</strong> 1948<br>
+    <strong>VÍNCULOS:</strong> Daniiyel Starmorning, João C. Moderno<br>
+    <strong>PERIGO:</strong> Nível Vermelho Escuro<br>
+    <strong>OBSERVAÇÕES:</strong><br>
+    • Unidade rara de Skinwalker com cognição humanizada.<br>
+    • Capaz de assumir formas humanas, incluindo gênero oposto.<br>
+    • Alto poder de adaptação social.<br>
+    • Relatos indicam sentimentos emergentes e apego emocional incomum.<br>
+    • Suspeita-se que tenha eliminado o capitão Moderno (pai) no protocolo Alfa.<br>
+    • Foi avistado na Área 51, posteriormente resgatado.<br>
+    <br>
+    <em>Última frase registrada:</em> <br>
+    <q>“Você não vai encontrá-lo… e se for tentar,  vai ter que me prender até o fim dos tempos.”</q>
+    <div class="protocolo">
+  <h2>🔒 PROTOCOLO-0</h2>
+  <p><strong>⚠️ CLASSIFICADO – ACESSO RESTRITO</strong></p>
+  <p>O conteúdo a seguir só pode ser visualizado por patentes Nível 10.</p>
+  <p>Para continuar, insira a senha:</p>
+
+  <form onsubmit="return verificarSenha()">
+    <input type="password" id="senha" placeholder="..." required>
+    <button type="submit">Acessar</button>
+  </form>
+  <p id="mensagem" style="color: red;"></p>
+</div>
+
+<script>
+  function verificarSenha() {
+    const senha = document.getElementById("senha").value;
+    if (senha === "FRANJABRANCA114") {
+      window.location.href = "protocolo0.html";
+      return false;
+    } else {
+      document.getElementById("mensagem").textContent = "Senha incorreta.";
+      return false;
+    }
+  }
+</script>
+  </div>
+</body>
+</html>

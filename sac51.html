@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Terminal SAC 51</title>
+  <style>
+    body {
+      background-color: black;
+      color: white;
+      font-family: monospace;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+
+    h1 {
+      margin-bottom: 5px;
+      text-align: center;
+    }
+
+    .info {
+      font-size: 14px;
+      color: #aaa;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .display {
+      font-size: 24px;
+      background-color: #111;
+      border: 1px solid #444;
+      padding: 10px 20px;
+      margin-bottom: 20px;
+      min-width: 240px;
+      text-align: center;
+      border-radius: 6px;
+    }
+
+    .teclado {
+      display: grid;
+      grid-template-columns: repeat(3, 80px);
+      gap: 10px;
+      justify-content: center;
+    }
+
+    .teclado button {
+      padding: 20px;
+      font-size: 18px;
+      border: none;
+      border-radius: 6px;
+      background-color: #222;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    .teclado button:hover {
+      background-color: #333;
+    }
+
+    .msg {
+      margin-top: 20px;
+      height: 24px;
+      font-size: 16px;
+      color: #0f0;
+      text-align: center;
+    }
+
+    .terminal-btn {
+      margin-top: 30px;
+      padding: 10px 20px;
+      background-color: #333;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>TERMINAL DE COMUNICAÇÃO – SAC 51</h1>
+  <div class="info">Disque o número <strong>4190619</strong> para tentar conexão</div>
+
+  <div class="display" id="display">_</div>
+
+  <div class="teclado">
+    <button onclick="digitar('1')">1</button>
+    <button onclick="digitar('2')">2</button>
+    <button onclick="digitar('3')">3</button>
+    <button onclick="digitar('4')">4</button>
+    <button onclick="digitar('5')">5</button>
+    <button onclick="digitar('6')">6</button>
+    <button onclick="digitar('7')">7</button>
+    <button onclick="digitar('8')">8</button>
+    <button onclick="digitar('9')">9</button>
+    <button onclick="limpar()">C</button>
+    <button onclick="digitar('0')">0</button>
+    <button onclick="ligar()"><img src="ligar.png" width="30" /></button>
+  </div>
+
+  <div class="msg" id="msg"></div>
+
+  <button class="terminal-btn" onclick="voltar()"> VOLTAR AO TERMINAL</button>
+
+  <!-- Áudios -->
+  <audio id="audioDDD" src="DDD.mp3"></audio>
+  <audio id="audioDC" src="DC.mp3"></audio>
+  <audio id="audioAtendimento" src="atendimento.mp3"></audio>
+  <audio id="audioOpcao3" src="opcao3.mp3"></audio>
+  <audio id="audioKA114" src="ka114menu.mp3"></audio>
+  <audio id="audioSkinwalker" src="skinwalker.mp3"></audio>
+  <audio id="audioEstrela" src="exp_estrela.mp3"></audio>
+  <audio id="audioGerencia" src="gerencia.mp3"></audio>
+  <audio id="audioInfoPriv" src="informacoes.mp3"></audio>
+  <audio id="audioAlfa" src="alfa.mp3"></audio>
+
+  <script>
+    let numero = "";
+    let chamadas = 0;
+    let etapa = 0;
+    const display = document.getElementById("display");
+    const msg = document.getElementById("msg");
+
+    const audios = {
+      DDD: document.getElementById("audioDDD"),
+      DC: document.getElementById("audioDC"),
+      atendimento: document.getElementById("audioAtendimento"),
+      opcao3: document.getElementById("audioOpcao3"),
+      ka114: document.getElementById("audioKA114"),
+      skinwalker: document.getElementById("audioSkinwalker"),
+      estrela: document.getElementById("audioEstrela"),
+      gerencia: document.getElementById("audioGerencia"),
+      info: document.getElementById("audioInfoPriv"),
+      alfa: document.getElementById("audioAlfa")
+    };
+
+    function limpar() {
+      numero = "";
+      display.textContent = "_";
+      msg.textContent = "";
+    }
+
+    function digitar(digito) {
+      if (etapa === 0 && numero.length < 10) {
+        numero += digito;
+        display.textContent = numero;
+      }
+
+      // Menu principal (após atendimento)
+      else if (etapa === 1) {
+        if (digito === "1") {
+          playAudio("gerencia");
+        } else if (digito === "2") {
+          playAudio("info");
+        } else if (digito === "3") {
+          etapa = 2;
+          playAudio("opcao3");
+        }
+      }
+
+      // Menu de Casos
+      else if (etapa === 2) {
+        if (digito === "1") {
+          etapa = 3;
+          playAudio("ka114");
+        } else if (digito === "2") {
+          playAudio("alfa");
+        } else if (digito === "3") {
+          etapa = 1;
+          playAudio("atendimento");
+        }
+      }
+
+      // Menu K.A-114
+      else if (etapa === 3) {
+        if (digito === "1") {
+          playAudio("skinwalker");
+        } else if (digito === "2") {
+          playAudio("estrela");
+        } else if (digito === "3") {
+          etapa = 2;
+          playAudio("opcao3");
+        }
+      }
+    }
+
+    function playAudio(nome) {
+      stopAll();
+      audios[nome].play();
+    }
+
+    function stopAll() {
+      for (let key in audios) {
+        audios[key].pause();
+        audios[key].currentTime = 0;
+      }
+    }
+
+    function ligar() {
+      chamadas++;
+      msg.textContent = "Chamando...";
+
+      if (chamadas < 3) {
+        if (numero === "4190619") {
+          playAudio("DDD");
+        } else {
+          playAudio("DC");
+        }
+      } else {
+        etapa = 1;
+        playAudio("atendimento");
+      }
+
+      numero = "";
+      display.textContent = "_";
+    }
+
+    function voltar() {
+      window.location.href = "index.html";
+    }
+
+    Object.values(audios).forEach(audio => {
+      audio.addEventListener("ended", () => {
+        msg.textContent = "";
+      });
+    });
+  </script>
+</body>
+</html>
