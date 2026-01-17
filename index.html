@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -7,49 +6,108 @@
     <title>PROTOCOLO K.A-114</title>
     <style>
         body {
-            background: black;
-            color: lime;
-            font-family: monospace;
+            background-color: #000;
+            color: #bbb;
+            font-family: 'Courier New', Courier, monospace;
             padding: 40px;
+            line-height: 1.6;
         }
-        h1, h2 {
-            color: red;
-            text-shadow: 0 0 4px white;
+
+        h1, h2, h3 {
+            color: #ff0000;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
-        .glitch {
-            animation: glitch 1s infinite;
+
+       .glitch {
+            animation: glitch 1.5s infinite;
         }
+
         @keyframes glitch {
-            0% { text-shadow: 2px 0 red; }
-            20% { text-shadow: -2px 0 cyan; } 
-            40% { text-shadow: 2px 2px lime; }
-            60% { text-shadow: -2px -2px magenta; }
-            80% { text-shadow: 2px -2px blue; }
-            100% { text-shadow: -2px 2px yellow; }
+            0% { text-shadow: 1px 0 #ff0000; }
+            25% { text-shadow: -1px 0 #00ffff; }
+            50% { text-shadow: 1px 1px #00ff00; }
+            100% { text-shadow: -1px -1px #ff00ff; }
         }
-        .personagem {
+
+       .personagem {
             margin-bottom: 30px;
-            padding: 15px;
-            border: 1px solid lime;
+            padding: 20px;
+            border: 1px solid #222;
+            background: #050505;
+        }
+
+       .highlight {
+            color: #00ff41;
+        }
+
+        /* PADRONIZAÇÃO DOS BOTÕES - DESIGN CLEAN CINZA */
+       .terminal-btn {
+            display: inline-block;
+            margin: 10px;
+            padding: 10px 20px;
+            border: 1px solid #888; /* Linha cinza */
+            color: #888; /* Texto cinza */
+            text-decoration: none;
+            background: transparent;
+            font-size: 13px;
+            font-weight: bold;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+        }
+
+       .terminal-btn:hover {
+            border-color: #fff;
+            color: #fff;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+       .btn-container {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        ul {
+            list-style-type: "- ";
+            padding-left: 20px;
+        }
+
+        hr {
+            border: 0;
+            border-top: 1px solid #222;
+            margin: 40px 0;
+        }
+
+       .footer-note {
+            text-align: center;
+            font-size: 12px;
+            color: #444;
+            margin-top: 50px;
+        }
+
+       .corrupted-link {
+            color: #331111;
+            text-decoration: none;
+            font-size: 10px;
         }
     </style>
 </head>
 <body>
-    <h1 class="glitch">PROTOCOLO K.A-144</h1>
+
+    <h1 class="glitch">PROTOCOLO K.A-114</h1>
     <p>ACESSO NÃO AUTORIZADO – ESTE ARQUIVO ESTÁ SOB VIGILÂNCIA.</p>
 
     <div class="personagem">
         <h2>DANIIYEL STARMORNING — "STELLAR CORE"</h2>
-        <p><strong>O que você guarda:</strong> Familía<br>
+        <p><strong>O que você guarda:</strong> Família<br>
         <strong>O que você é:</strong> Símbolo<br>
         <strong>O que você representa:</strong> Alegria<br>
-        <strong>O que você segue:</strong> Esperança</p>
-        <img scr="boina.png">
+        <strong>O que você segue:</strong> <span class="highlight">Esperança</span></p>
     </div>
 
     <div class="personagem">
         <h2>KIN ATLAS — "WALKER TYPE"</h2>
-        <strong>O que você guarda:</strong> Alguém<br>
+        <p><strong>O que você guarda:</strong> Alguém<br>
         <strong>O que você é:</strong> Nada<br>
         <strong>O que você representa:</strong> Ameaça<br>
         <strong>O que você segue:</strong> Estrela</p>
@@ -71,84 +129,31 @@
         <strong>O que você segue:</strong> Memórias</p>
     </div>
 
-    <p class="glitch">ARQUIVO CORROMPIDO_ . . .</p>
+    <p class="glitch" style="color: #333;">ARQUIVO CORROMPIDO_...</p>
 
-<h3>Informações adicionais:</h3>
-<ul>
-    <li><strong>Kin Atlas</strong> - Identificado como entidade mutável. Periculosidade: alta. Último avistamento: Pará.</li>
-    <li><strong>Daniiyel Starmorning</strong> - Designado como “Portador da Estrela”. Influência emocional extrema em outros membros, como o líder.</li>
-    <li><strong>João C. Moderno</strong> - Ex-soldado. Potencial traidor do protocolo alfa. Extremamente leal ao grupo.</li>
-</ul>
-<hr>
-<h2>ENTRADA RESTRITA</h2>
-<a href="ka114.html" style="color: red; font-weight: bold; text-decoration: none;">
-  → ACESSAR DADOS CLASSIFICADOS: K.A‑114
-</a>
-<a href="individuos.html" style="display: inline-block; padding: 12px 20px; background-color: #222; color: #fff; text-decoration: none; border: 1px solid #555; border-radius: 6px; font-family: monospace;">
-  ACESSAR IMAGENS DOS INDIVÍDUOS
-  <a class="voltar" href="estrella06.html" style="
-  display: inline-block;
-  margin: 30px 0 0 40px;
-  padding: 10px 20px;
-  border-radius: 5px;
-  border: 1px solid #888;
-  color: #fff;
-  background-color: #000;
-  text-decoration: none;
-">
-  ACESSAR DADOS DA ESTRELLA-06
-</a>
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8" />
-  <title>Terminal da Tríade</title>
-  <style>
-    body {
-      background-color: black;
-      color: #0f0;
-      font-family: monospace;
-      padding: 30px;
-    }
+    <h3>Informações adicionais:</h3>
+    <ul>
+        <li><strong>Kin Atlas</strong> - Identificado como entidade mutável. Periculosidade: alta.</li>
+        <li><strong>Daniiyel Starmorning</strong> - Designado como “Portador da Estrela”.</li>
+        <li><strong>João C. Moderno</strong> - Ex-soldado. Potencial traidor do protocolo alfa.</li>
+    </ul>
 
-    h1 {
-      text-align: center;
-      font-size: 24px;
-      margin-bottom: 40px;
-    }
+    <hr>
 
-    .terminal-btn {
-      display: block;
-      margin: 30px auto;
-      background-color: #111;
-      color: #0f0;
-      padding: 12px 20px;
-      text-decoration: none;
-      font-family: monospace;
-      border: 1px solid #0f0;
-      border-radius: 5px;
-      text-align: center;
-      transition: 0.2s;
-      width: fit-content;
-    }
+    <div class="btn-container">
+        <a href="ka114.html" class="terminal-btn">DADOS CLASSIFICADOS: K.A‑114</a>
+        <a href="individuos.html" class="terminal-btn">IMAGENS DOS INDIVÍDUOS</a>
+        <a href="estrella06.html" class="terminal-btn">DADOS DA ESTRELLA-06</a>
+        <a href="jade.html" class="terminal-btn">ARQUIVO: JADE SELENE</a>
+        <a href="tempo.html" class="terminal-btn">ÚLTIMAS APARIÇÕES</a>
+        <a href="sac51.html" class="terminal-btn">BASE SAC 51</a>
+    </div>
 
-    .terminal-btn:hover {
-      background-color: #222;
-      color: #fff;
-      border-color: #fff;
-    }
-  </style>
-</head>
-<body>
+    <div class="footer-note">
+        <p><em>Todos os alvos devem ser monitorados. Contato direto não recomendado.</em></p>
+ <p><em> Protocolo Alfa: https://protocoloalfa.netlify.app/</em></p>
 
-  <a href="tempo.html" class="terminal-btn">[ VER ÚLTIMAS APARIÇÕES DOS INDIVÍDUOS ]</a>
-  <a href="sac51.html" class="terminal-btn">[ LIGAR PARA A BASE SAC 51 ]</a> 
-
-</body>
-</html>
-</a>
-<p><em>Todos os alvos devem ser monitorados. Contato direto não recomendado.</em></p>
-    ¿¿??¿?htjaps://protocoloalfa.netlify.app/hahahahajwjeje?????
+        </div>
 
 </body>
 </html>
