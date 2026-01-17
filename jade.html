@@ -1,0 +1,157 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARQUIVO: JADE SELENE // CONEXÃO DE SENHA: SELENE 10</title>
+    <style>
+        body {
+            background-color: #0a0a0a;
+            color: #d1d1d1;
+            font-family: 'Courier New', Courier, monospace;
+            margin: 20px;
+            line-height: 1.6;
+        }
+        #main-container {
+            max-width: 850px;
+            margin: auto;
+            border: 1px solid #333;
+            padding: 25px;
+            background: linear-gradient(180deg, #121212 0%, #0a0a0a 100%);
+        }
+        .header-warning {
+            background-color: #4a0000;
+            color: #ff4d4d;
+            text-align: center;
+            padding: 10px;
+            font-weight: bold;
+            border: 1px solid #ff4d4d;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+        h1, h2, h3 { color: #fff; border-bottom: 1px solid #444; padding-bottom: 5px; text-transform: uppercase; }
+        .info-table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        .info-table th, .info-table td { border: 1px solid #333; padding: 10px; text-align: left; }
+        .info-table th { background-color: #1a1a1a; color: #888; }
+        .highlight { color: #00ff41; }
+        .red-highlight { color: #ff4d4d; font-weight: bold; }
+
+        /* Estilo da Senha */
+        .auth-section { text-align: center; margin: 30px 0; padding: 25px; border: 1px solid #444; background: #080808; }
+        input[type="password"] { background: #000; border: 1px solid #00ff41; color: #00ff41; padding: 12px; font-family: 'Courier New', monospace; text-align: center; outline: none; margin-bottom: 15px; width: 250px; }
+        .btn-auth { background: #000; color: #00ff41; border: 1px solid #00ff41; padding: 12px 30px; cursor: pointer; font-family: 'Courier New', monospace; font-weight: bold; text-transform: uppercase; }
+        .btn-auth:hover { background: #00ff41; color: #000; }
+
+        /* Conteúdo Oculto Detalhado */
+        #secret-content { display: none; margin-top: 30px; padding: 20px; border-top: 3px double #ff4d4d; animation: fadeIn 1.2s; }
+        .data-block { margin-bottom: 25px; padding: 15px; background: rgba(255, 0, 0, 0.05); border-left: 4px solid #4a0000; }
+
+        /* Alerta de Erro (Piscando) */
+        #panic-screen {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 6px solid #ff0000;
+            padding: 50px;
+            text-align: center;
+            background: #000;
+            color: #ff0000;
+            font-size: 1.8rem;
+            font-weight: bold;
+            z-index: 9999;
+            animation: blinker 0.5s linear infinite;
+        }
+
+        @keyframes blinker { 50% { opacity: 0; border-color: transparent; } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+
+<div id="main-container">
+    <div class="header-warning">
+        ⚠ ACESSO RESTRITO - NÍVEL 4 // CONEXÃO DE SENHA: SELENE10 ⚠
+    </div>
+
+    <h1>INDIVÍDUO: JADE SELENE</h1>
+    <table class="info-table">
+        <tr><th>DATA DE NASCIMENTO</th><td>10/03/2007 (18 anos)</td></tr>
+        <tr><th>ORIGEM</th><td>Guatemala (Nacionalidade Brasileira e Mexicana)</td></tr>
+        <tr><th>CONEXÃO</th><td class="highlight">Namorada de Daniiyel Starmorning</td></tr>
+    </table>
+
+    <p>Jade viveu no Brasil com sua mãe, <strong>Isadora Selene</strong>, até os 16 anos. Atualmente, ela é reconhecida como a quarta e última membra da <strong>Tríade Estrela</strong>.</p>
+
+    <div class="auth-section" id="auth-box">
+        <p>INSIRA A CHAVE PARA DESCRIPTOGRAFAR DADOS DA FUNDAÇÃO E CARTEL:</p>
+        <input type="password" id="passInput" placeholder="CHAVE DE ACESSO">
+        <br>
+        <button class="btn-auth" onclick="revealContent()">EXECUTAR DESCRIPTOGRAFIA</button>
+    </div>
+
+    <div id="secret-content">
+        <div class="header-warning" style="background-color: #1a0000; border-color: #ff4d4d;">
+            RELATÓRIO DE INTELIGÊNCIA: CARTEL SKY SELENE & FOUNDATION
+        </div>
+
+        <div class="data-block">
+            <h3>1. EPIGMÊNIO SELENE ESCÁDRIA</h3>
+            <p>Criminoso internacional de alta periculosidade.</p>
+            <ul>
+                <li>Procurado pela <strong>CIA e FBI</strong> desde 2008.</li>
+                <li>Responsável pelo massacre de <strong>28 agentes americanos</strong> em território mexicano.</li>
+                <li>Líder supremo do <strong>Cartel Sky Selene</strong>, organização com atuação ativa desde 2001.</li>
+            </ul>
+        </div>
+
+        <div class="data-block">
+            <h3>2. ISADORA SELENE FONTES (1976 - 2023)</h3>
+            <p>Nascida em 30/09/1976, no Rio Grande do Sul, Brasil.</p>
+            <ul>
+                <li><strong>Capacidade Intelectual:</strong> QI de 141; especialista em ciências humanitárias.</li>
+                <li><strong>Assassinato:</strong> Executada por Epigmênio após ser descoberta conspirando internamente para desmantelar o braço criminoso da organização.</li>
+                <li><strong>Tentativa de Fuga:</strong> Planejava asilo político em São Paulo para proteger sua filha, Jade.</li>
+            </ul>
+        </div>
+
+        <div class="data-block">
+            <h3>3. ESTRUTURA OPERACIONAL</h3>
+            <p><strong>SELENE FOUNDATION:</strong> Fundada originalmente em 1999 por Isadora como uma ONG humanitária. Após a ascensão do cartel, a fundação foi corrompida, servindo hoje como fachada logística e financeira para operações ilícitas.</p>
+            <p><strong>BRAÇOS INFLUENTES:</strong> Atuação coordenada entre a Fundação e o <strong>Team Zero</strong>, braço de pesquisas responsável por atentados e desenvolvimento bal do cartel na América Latina.</p>
+            <p class="red-highlight">STATUS ATUAL: ANALISTAS SUPÕEM FINANCIAMENTO EXTERNO (IRÃ), SEM COMPROVAÇÃO ATÉ O MOMENTO.</p>
+        </div>
+
+        <p class="highlight" style="text-align: center; margin-top: 40px;">[ FINAL DO ARQUIVO - CONEXÃO ENCERRADA ]</p>
+    </div>
+</div>
+
+<div id="panic-screen">
+    AVISO. SENHA INCORRETA DADOS ENCERRADOS.<br>
+    VOCÊ SERÁ PROCURADO.
+</div>
+
+<script>
+function revealContent() {
+    var pass = document.getElementById("passInput").value;
+    var container = document.getElementById("main-container");
+    var secretDiv = document.getElementById("secret-content");
+    var authBox = document.getElementById("auth-box");
+    var panicScreen = document.getElementById("panic-screen");
+
+    if(pass === "SELENE10") {
+        secretDiv.style.display = "block";
+        authBox.style.display = "none";
+        secretDiv.scrollIntoView({ behavior: 'smooth' });
+    } else {
+        container.style.display = "none";
+        document.body.style.backgroundColor = "#000";
+        panicScreen.style.display = "block";
+    }
+}
+</script>
+
+</body>
+</html>
