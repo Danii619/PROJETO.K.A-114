@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VÍDEOS INFORMATIVOS - K.A-114</title>
+    <style>
+        /* Visual Aesthetic Minimalista */
+        body {
+            background-color: #000;
+            color: #bbb;
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+
+        h1 {
+            color: #ff0000;
+            font-size: 1.2rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 40px;
+            border-bottom: 1px solid #222;
+            padding-bottom: 10px;
+        }
+
+        /* Container de Botões */
+        .menu-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        /* Estilo dos Botões Cinzas */
+        .terminal-btn {
+            display: block;
+            padding: 15px 20px;
+            border: 1px solid #444; /* Cinza escuro */
+            color: #888;           /* Texto cinza */
+            text-decoration: none;
+            background: transparent;
+            font-size: 13px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .terminal-btn:hover {
+            border-color: #fff;
+            color: #fff;
+            background: rgba(255, 255, 255, 0.05);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+        }
+
+        /* Estilo para o botão de voltar (mais discreto) */
+        .btn-voltar {
+            margin-top: 30px;
+            border-color: #222;
+            font-size: 11px;
+            color: #444;
+        }
+
+        /* Player de Vídeo (Oculto inicialmente) */
+        #videoOverlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        video {
+            max-width: 80%;
+            border: 1px solid #333;
+        }
+
+        .fechar-video {
+            margin-top: 20px;
+            color: #ff0000;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-size: 12px;
+            letter-spacing: 2px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>VÍDEOS INFORMATIVOS</h1>
+
+    <div class="menu-container">
+        <a href="javascript:void(0)" class="terminal-btn" onclick="playVideo('daniiestrela.mp4')">
+            Vídeo informativo sobre DANIIYEL STARMORNING
+        </a>
+
+        <a href="javascript:void(0)" class="terminal-btn" onclick="playVideo('joaomarcos.mp4')">
+            Vídeo informativo sobre o PROTOCOLO ALFA
+        </a>
+
+        <a href="BASE.html" class="terminal-btn btn-voltar">
+            ← VOLTAR AO TERMINAL
+        </a>
+    </div>
+
+    <div id="videoOverlay">
+        <video id="videoPlayer" controls></video>
+        <div class="fechar-video" onclick="closeVideo()">[ FECHAR ARQUIVO ]</div>
+    </div>
+
+    <script>
+        const overlay = document.getElementById('videoOverlay');
+        const player = document.getElementById('videoPlayer');
+
+        function playVideo(src) {
+            player.src = src;
+            overlay.style.display = 'flex';
+            player.play();
+        }
+
+        function closeVideo() {
+            player.pause();
+            player.src = "";
+            overlay.style.display = 'none';
+        }
+
+        // Fecha o vídeo se ele terminar sozinho
+        player.onended = function() {
+            closeVideo();
+        };
+    </script>
+
+</body>
+</html>
