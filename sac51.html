@@ -11,7 +11,11 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      justify-content: center; /* Centraliza verticalmente */
+      min-height: 100vh;      /* Garante que o corpo tenha a altura da tela */
+      margin: 0;
       padding: 20px;
+      box-sizing: border-box;
     }
 
     h1 {
@@ -176,61 +180,7 @@
       else if (etapa === 3) {
         if (digito === "1") playAudio("skinwalker");
         else if (digito === "2") playAudio("estrela");
-        else if (digito === "3") { playVideo(); } // Chama o vídeo
-        else if (digito === "4") { etapa = 2; playAudio("opcao3"); } // Retorna etapa 2
+        else if (digito === "3") { playVideo(); } 
+        else if (digito === "4") { etapa = 2; playAudio("opcao3"); } 
       }
     }
-
-    function playVideo() {
-      stopAll();
-      videoCont.style.display = "flex";
-      videoPlayer.play();
-    }
-
-    // Função para fechar o vídeo e limpar a tela
-    function fecharVideo() {
-      videoPlayer.pause();
-      videoPlayer.currentTime = 0;
-      videoCont.style.display = "none";
-    }
-
-    // Detecta automaticamente o fim do vídeo para voltar ao terminal
-    videoPlayer.onended = function() {
-      fecharVideo();
-    };
-
-    function playAudio(nome) {
-      stopAll();
-      audios[nome].play();
-    }
-
-    function stopAll() {
-      for (let key in audios) {
-        audios[key].pause();
-        audios[key].currentTime = 0;
-      }
-      fecharVideo();
-    }
-
-    function ligar() {
-      chamadas++;
-      msg.textContent = "Chamando...";
-      if (chamadas < 3) {
-        if (numero === "4190619") playAudio("DDD");
-        else playAudio("DC");
-      } else {
-        etapa = 1;
-        playAudio("atendimento");
-      }
-      numero = "";
-      display.textContent = "_";
-    }
-
-    function voltar() { window.location.href = "index.html"; }
-
-    Object.values(audios).forEach(audio => {
-      audio.addEventListener("ended", () => { msg.textContent = ""; });
-    });
-  </script>
-</body>
-</html>
