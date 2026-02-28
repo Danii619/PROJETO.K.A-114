@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Protocolo Base - Identificação</title>
+    <style>
+        /* Estilização Geral - Fundo Preto e Centralização */
+        body {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        /* Texto Inicial em Cinza Muito Escuro (Quase Preto) */
+        .instrucao {
+            font-size: 0.85rem;
+            color: #333333; /* Visual discreto conforme solicitado */
+            letter-spacing: 0.05em;
+            max-width: 350px;
+            margin-bottom: 15px;
+            text-transform: lowercase;
+        }
+
+        /* Número do Crachá em Destaque */
+        .numero-cracha {
+            font-size: 8rem;
+            font-weight: 100; /* Extra fino para estética minimalista */
+            letter-spacing: -5px;
+            margin-bottom: 50px;
+            color: #f0f0f0;
+        }
+
+        /* Botão Minimalista Cinza */
+        .btn-protocolo {
+            background-color: transparent;
+            color: #666666;
+            border: 1px solid #333333;
+            padding: 15px 30px;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3em;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            text-decoration: none; /* Remove o sublinhado do link */
+            display: inline-block;
+        }
+
+        /* Efeito de Interação */
+        .btn-protocolo:hover {
+            background-color: #ffffff;
+            color: #000000;
+            border-color: #ffffff;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</head>
+<body>
+
+    <p class="instrucao">
+        Este é seu número de crachá. Decore-o ou o anote: você pode precisar dele mais tarde.
+    </p>
+
+    <div class="numero-cracha">
+        0982
+    </div>
+
+    <a href="BASE.html" class="btn-protocolo">
+        entrar no protocolo base.
+    </a>
+
+</body>
+</html>
