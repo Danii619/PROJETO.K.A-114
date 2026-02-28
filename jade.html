@@ -96,7 +96,7 @@
     
 <div id="main-container">
     <div class="header-warning">
-        ⚠ ACESSO RESTRITO - NÍVEL 4 // CONEXÃO DE SENHA: SELENE10 ⚠
+        ⚠ ACESSO RESTRITO - NÍVEL 4 // CONEXÃO ATIVA ⚠
     </div>
 
     <h1>INDIVÍDUO: JADE SELENE</h1>
@@ -109,7 +109,7 @@
     <p>Jade viveu no Brasil com sua mãe, <strong>Isadora Selene</strong>, até os 16 anos. Atualmente, ela é reconhecida como a quarta e última membra da <strong>Tríade Estrela</strong>.</p>
 
     <div class="auth-section" id="auth-box">
-        <p>INSIRA A CHAVE PARA DESCRIPTOGRAFAR DADOS DA FUNDAÇÃO E CARTEL:</p>
+        <p>INSIRA A CHAVE DO SEU CRACHÁ PARA DESCRIPTOGRAFAR DADOS DA FUNDAÇÃO E CARTEL:</p>
         <input type="password" id="passInput" placeholder="CHAVE DE ACESSO">
         <br>
         <button class="btn-auth" onclick="revealContent()">EXECUTAR DESCRIPTOGRAFIA</button>
@@ -152,7 +152,7 @@
 </div>
 
 <div id="panic-screen">
-    AVISO. SENHA INCORRETA DADOS ENCERRADOS.<br>
+    AVISO. CRACHÁ INVÁLIDO. DADOS ENCERRADOS.<br>
     VOCÊ SERÁ PROCURADO.
 </div>
 
@@ -164,7 +164,7 @@ function revealContent() {
     var authBox = document.getElementById("auth-box");
     var panicScreen = document.getElementById("panic-screen");
 
-    if(pass === "SELENE10") {
+    if(pass === "0982") {
         secretDiv.style.display = "block";
         authBox.style.display = "none";
         secretDiv.scrollIntoView({ behavior: 'smooth' });
