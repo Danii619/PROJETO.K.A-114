@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>Terminal SAC 51</title>
   <style>
+    /* Centralização total e estética aesthetic */
     body {
       background-color: black;
       color: white;
@@ -12,7 +13,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: center; /* Centraliza verticalmente */
-      min-height: 100vh;      /* Garante que o corpo tenha a altura da tela */
+      min-height: 100vh;      /* Garante ocupação de toda a tela */
       margin: 0;
       padding: 20px;
       box-sizing: border-box;
@@ -21,6 +22,7 @@
     h1 {
       margin-bottom: 5px;
       text-align: center;
+      letter-spacing: 2px;
     }
 
     .info {
@@ -39,6 +41,7 @@
       min-width: 240px;
       text-align: center;
       border-radius: 6px;
+      color: #0f0; /* Cor verde terminal para o número digitado */
     }
 
     .teclado {
@@ -74,11 +77,18 @@
     .terminal-btn {
       margin-top: 30px;
       padding: 10px 20px;
-      background-color: #333;
-      color: white;
-      border: none;
+      background-color: #1a1a1a;
+      color: #666;
+      border: 1px solid #333;
       border-radius: 6px;
       cursor: pointer;
+      font-family: monospace;
+      transition: 0.3s;
+    }
+
+    .terminal-btn:hover {
+      background-color: #fff;
+      color: #000;
     }
 
     /* CSS do Container de Vídeo */
@@ -95,6 +105,7 @@
   </style>
 </head>
 <body>
+
   <h1>TERMINAL DE COMUNICAÇÃO – SAC 51</h1>
   <div class="info">Disque o número <strong>4190619</strong> para tentar conexão</div>
 
@@ -112,12 +123,12 @@
     <button onclick="digitar('9')">9</button>
     <button onclick="limpar()">C</button>
     <button onclick="digitar('0')">0</button>
-    <button onclick="ligar()"><img src="ligar.png" width="30" /></button>
+    <button onclick="ligar()"><img src="ligar.png" width="30" style="vertical-align: middle;" /></button>
   </div>
 
   <div class="msg" id="msg"></div>
 
-  <button class="terminal-btn" onclick="voltar()"> VOLTAR AO TERMINAL</button>
+  <button class="terminal-btn" onclick="voltar()">← VOLTAR AO TERMINAL</button>
 
   <div id="videoContainer">
     <video id="vidKA" src="explicativoKA.mp4"></video>
@@ -184,3 +195,58 @@
         else if (digito === "4") { etapa = 2; playAudio("opcao3"); } 
       }
     }
+
+    function playVideo() {
+      stopAll();
+      videoCont.style.display = "flex";
+      videoPlayer.play();
+    }
+
+    function fecharVideo() {
+      videoPlayer.pause();
+      videoPlayer.currentTime = 0;
+      videoCont.style.display = "none";
+    }
+
+    videoPlayer.onended = function() {
+      fecharVideo();
+    };
+
+    function playAudio(nome) {
+      stopAll();
+      if(audios[nome]) audios[nome].play();
+    }
+
+    function stopAll() {
+      for (let key in audios) {
+        audios[key].pause();
+        audios[key].currentTime = 0;
+      }
+      fecharVideo();
+    }
+
+    function ligar() {
+      chamadas++;
+      msg.textContent = "Chamando...";
+      if (chamadas < 3) {
+        if (numero === "4190619") playAudio("DDD");
+        else playAudio("DC");
+      } else {
+        etapa = 1;
+        playAudio("atendimento");
+      }
+      numero = "";
+      display.textContent = "_";
+    }
+
+    // Função que abre o arquivo BASE.html
+    function voltar() { 
+      window.location.href = "BASE.html"; 
+    }
+
+    Object.values(audios).forEach(audio => {
+      audio.addEventListener("ended", () => { msg.textContent = ""; });
+    });
+  </script>
+</body>
+</html>
