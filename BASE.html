@@ -3,140 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>ARQUIVOS RECUPERADOS — K.A-114</title>
-
+    <title>PROTOCOLO K.A-114</title>
     <style>
-        * {
-            box-sizing: border-box;
-        }
-
         body {
-            margin: 0;
-            padding: 40px;
             background-color: #000;
-            color: #aaa;
+            color: #bbb;
             font-family: 'Courier New', Courier, monospace;
+            padding: 40px;
             line-height: 1.6;
         }
 
-        h1 {
+        h1, h2, h3 {
             color: #ff0000;
             text-transform: uppercase;
-            letter-spacing: 3px;
-            margin-bottom: 5px;
-            text-shadow:
-                1px 0 #ff0000,
-                -1px 0 #00ffff;
-        }
-
-        .subtitle {
-            color: #555;
-            font-size: 13px;
-            margin-top: 0;
-            margin-bottom: 35px;
-        }
-
-        .status {
-            color: #00ff41;
-            font-size: 12px;
-            margin-bottom: 30px;
-        }
-
-        hr {
-            border: 0;
-            border-top: 1px solid #222;
-            margin: 30px 0;
-        }
-
-        .arquivo {
-            display: block;
-            padding: 16px 18px;
-            margin: 10px 0;
-
-            border: 1px solid #222;
-            background-color: #050505;
-
-            color: #999;
-            text-decoration: none;
-
-            transition: all 0.25s ease;
-        }
-
-        .arquivo:hover {
-            border-color: #777;
-            color: #fff;
-            background-color: #0a0a0a;
-            transform: translateX(4px);
-        }
-
-        .arquivo::before {
-            content: "[RECUPERADO] ";
-            color: #444;
-        }
-
-        .nome {
-            color: #ccc;
-        }
-
-        .tipo {
-            display: block;
-            margin-top: 5px;
-
-            color: #444;
-            font-size: 11px;
-            text-transform: uppercase;
-        }
-
-        .arquivo:hover .tipo {
-            color: #666;
-        }
-
-        .corrompido {
-            color: #441111;
-        }
-
-        .aviso {
-            margin-top: 35px;
-            padding: 15px;
-
-            border: 1px solid #1a0000;
-            background-color: #050000;
-
-            color: #600;
-            font-size: 12px;
-        }
-
-        .voltar {
-            display: inline-block;
-
-            margin-top: 35px;
-            padding: 10px 18px;
-
-            border: 1px solid #555;
-
-            color: #777;
-            text-decoration: none;
-
-            font-size: 12px;
-            text-transform: uppercase;
-
-            transition: all 0.25s ease;
-        }
-
-        .voltar:hover {
-            border-color: #fff;
-            color: #fff;
-            background-color: rgba(255, 255, 255, 0.05);
-        }
-
-        .footer {
-            margin-top: 50px;
-
-            text-align: center;
-
-            color: #333;
-            font-size: 11px;
+            letter-spacing: 2px;
         }
 
         .glitch {
@@ -144,356 +24,186 @@
         }
 
         @keyframes glitch {
-
-            0% {
-                text-shadow: 1px 0 #ff0000;
-            }
-
-            25% {
-                text-shadow: -1px 0 #00ffff;
-            }
-
-            50% {
-                text-shadow: 1px 1px #00ff00;
-            }
-
-            100% {
-                text-shadow: -1px -1px #ff00ff;
-            }
+            0% { text-shadow: 1px 0 #ff0000; }
+            25% { text-shadow: -1px 0 #00ffff; }
+            50% { text-shadow: 1px 1px #00ff00; }
+            100% { text-shadow: -1px -1px #ff00ff; }
         }
 
-        @media (max-width: 600px) {
+        .personagem {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #222;
+            background: #050505;
+        }
 
-            body {
-                padding: 25px 15px;
-            }
+        .highlight {
+            color: #00ff41;
+        }
 
-            h1 {
-                font-size: 23px;
-            }
+        /* PADRONIZAÇÃO DOS BOTÕES - DESIGN CLEAN CINZA */
+        .terminal-btn {
+            display: inline-block;
+            margin: 10px;
+            padding: 10px 20px;
+            border: 1px solid #888; /* Linha cinza */
+            color: #888; /* Texto cinza */
+            text-decoration: none;
+            background: transparent;
+            font-size: 13px;
+            font-weight: bold;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+        }
 
-            .arquivo {
-                padding: 14px;
-                font-size: 12px;
-                overflow-wrap: anywhere;
-            }
+        .terminal-btn:hover {
+            border-color: #fff;
+            color: #fff;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .btn-container {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        ul {
+            list-style-type: "- ";
+            padding-left: 20px;
+        }
+
+        hr {
+            border: 0;
+            border-top: 1px solid #222;
+            margin: 40px 0;
+        }
+
+        .footer-note {
+            text-align: center;
+            font-size: 12px;
+            color: #444;
+            margin-top: 50px;
+        }
+
+        .corrupted-link {
+            color: #331111;
+            text-decoration: none;
+            font-size: 10px;
         }
     </style>
 </head>
-
 <body>
 
-    <h1 class="glitch">ARQUIVOS RECUPERADOS</h1>
+    <h1 class="glitch">PROTOCOLO K.A-114</h1>
+    <p>ACESSO NÃO AUTORIZADO – ESTE ARQUIVO ESTÁ SOB VIGILÂNCIA.</p>
 
-    <p class="subtitle">
-        PROTOCOLO K.A-114
-        <br>
-        BASE DE DADOS — DOCUMENTOS DIGITALIZADOS
-    </p>
+    <div class="personagem">
+        <h2>DANIIYEL STARMORNING — "STELLAR CORE"</h2>
+        <p><strong>O que você guarda:</strong> Família<br>
+        <strong>O que você é:</strong> Símbolo<br>
+        <strong>O que você representa:</strong> Alegria<br>
+        <strong>O que você segue:</strong> <span class="highlight">Esperança</span></p>
+    </div>
 
-    <p class="status">
-        STATUS: ACESSÍVEL
-        <br>
-        INTEGRIDADE DA BASE: PARCIAL
-    </p>
+    <div class="personagem">
+        <h2>KIN ATLAS — "WALKER TYPE"</h2>
+        <p><strong>O que você guarda:</strong> Alguém<br>
+        <strong>O que você é:</strong> Nada<br>
+        <strong>O que você representa:</strong> Ameaça<br>
+        <strong>O que você segue:</strong> Estrela</p>
+    </div>
+
+    <div class="personagem">
+        <h2>JOÃO C. MODERNO — "SOLDIER ECHO"</h2>
+        <p><strong>Quem você guarda:</strong> Justiça<br>
+        <strong>O que você é:</strong> Trauma<br>
+        <strong>O que você representa:</strong> Consequência<br>
+        <strong>O que você segue:</strong> A verdade</p>
+    </div>
+
+    <div class="personagem">
+        <h2>JADE SELENE — "GHOST-LINK"</h2>
+        <p><strong>Quem você guarda:</strong> Amor<br>
+        <strong>O que você é:</strong> Sobrevivente<br>
+        <strong>O que você representa:</strong> Conexão<br>
+        <strong>O que você segue:</strong> Memórias</p>
+    </div>
+
+    <p class="glitch" style="color: #333;">ARQUIVO CORROMPIDO_...</p>
+
+    <h3>Informações adicionais:</h3>
+    <ul>
+        <li><strong>Kin Atlas</strong> - Identificado como entidade mutável. Periculosidade: alta.</li>
+        <li><strong>Daniiyel Starmorning</strong> - Designado como “Portador da Estrela”.</li>
+        <li><strong>João C. Moderno</strong> - Ex-soldado. Potencial traidor do protocolo alfa.</li>
+    </ul>
 
     <hr>
 
+    <div class="btn-container">
+        <a href="ka114.html" class="terminal-btn">DADOS CLASSIFICADOS: K.A-114</a>
+        <a href="individuos.html" class="terminal-btn">IMAGENS DOS INDIVÍDUOS</a>
+        <a href="seção.html" class="terminal-btn">VÍDEOS INFORMATIVOS</a>
 
-    <!-- BOLETIM ESCOLAR -->
+        <a href="#" class="terminal-btn" onclick="baixarArquivosRecuperados(); return false;">
+            ARQUIVOS RECUPERADOS
+        </a>
 
-    <a
-        class="arquivo"
-        href="boletim_escolar_escaneado_PB.png"
-        target="_blank"
-    >
-        <span class="nome">
-            boletim_escolar_escaneado_PB.png
-        </span>
-
-        <span class="tipo">
-            Documento acadêmico
-        </span>
-    </a>
-
-
-    <!-- CARTA PEDIATRA -->
-
-    <a
-        class="arquivo"
-        href="carta_pediatra_2014_escaneado-1_PB.png"
-        target="_blank"
-    >
-        <span class="nome">
-            carta_pediatra_2014_escaneado-1_PB.png
-        </span>
-
-        <span class="tipo">
-            Documento médico — 2014
-        </span>
-    </a>
-
-
-    <!-- EXAME PSICOTÉCNICO JOÃO -->
-
-    <a
-        class="arquivo"
-        href="exame_psicotecnico_joao_moderno_PB.png"
-        target="_blank"
-    >
-        <span class="nome">
-            exame_psicotecnico_joao_moderno_PB.png
-        </span>
-
-        <span class="tipo">
-            Avaliação psicotécnica
-        </span>
-    </a>
-
-
-    <!-- EXAME PSICOTÉCNICO V2 -->
-
-    <a
-        class="arquivo"
-        href="exame_psicotecnico_joao_moderno_v2_PB.png"
-        target="_blank"
-    >
-        <span class="nome">
-            exame_psicotecnico_joao_moderno_v2_PB.png
-        </span>
-
-        <span class="tipo">
-            Avaliação psicotécnica — versão 02
-        </span>
-    </a>
-
-
-    <!-- LAUDO 2014 PÁGINA 1 -->
-
-    <a
-        class="arquivo"
-        href="laudo_2014_escaneado-1_PB.png"
-        target="_blank"
-    >
-        <span class="nome">
-            laudo_2014_escaneado-1_PB.png
-        </span>
-
-        <span class="tipo">
-            Laudo — 2014 / página 01
-        </span>
-    </a>
-
-
-    <!-- LAUDO 2014 PÁGINA 2 -->
-
-    <a
-        class="arquivo"
-        href="laudo_2014_escaneado-2_PB.png"
-        target="_blank"
-    >
-        <span class="nome">
-            laudo_2014_escaneado-2_PB.png
-        </span>
-
-        <span class="tipo">
-            Laudo — 2014 / página 02
-        </span>
-    </a>
-
-
-    <!-- LAUDO 2026 PÁGINA 1 -->
-
-    <a
-        class="arquivo"
-        href="laudo_2026_conclusivo_escaneado-1_PB.png"
-        target="_blank"
-    >
-        <span class="nome">
-            laudo_2026_conclusivo_escaneado-1_PB.png
-        </span>
-
-        <span class="tipo">
-            Laudo conclusivo — 2026 / página 01
-        </span>
-    </a>
-
-
-    <!-- LAUDO 2026 PÁGINA 2 -->
-
-    <a
-        class="arquivo"
-        href="laudo_2026_conclusivo_escaneado-2_PB.png"
-        target="_blank"
-    >
-        <span class="nome">
-            laudo_2026_conclusivo_escaneado-2_PB.png
-        </span>
-
-        <span class="tipo">
-            Laudo conclusivo — 2026 / página 02
-        </span>
-    </a>
-
-
-    <!-- LAUDO 2026 PÁGINA 3 -->
-
-    <a
-        class="arquivo"
-        href="laudo_2026_conclusivo_escaneado-3_PB.png"
-        target="_blank"
-    >
-        <span class="nome">
-            laudo_2026_conclusivo_escaneado-3_PB.png
-        </span>
-
-        <span class="tipo">
-            Laudo conclusivo — 2026 / página 03
-        </span>
-    </a>
-
-
-    <!-- LAUDO DO EXAME DO DANII -->
-
-    <a
-        class="arquivo"
-        href="laudo_exame_daniiyel_PB.png"
-        target="_blank"
-    >
-        <span class="nome">
-            laudo_exame_daniiyel_PB.png
-        </span>
-
-        <span class="tipo">
-            Laudo — Daniiyel Starmorning
-        </span>
-    </a>
-
-
-    <!-- PORTARIA DE AFASTAMENTO -->
-
-    <a
-        class="arquivo"
-        href="portaria_afastamento_joao_moderno-1_PB.png"
-        target="_blank"
-    >
-        <span class="nome">
-            portaria_afastamento_joao_moderno-1_PB.png
-        </span>
-
-        <span class="tipo">
-            Portaria de afastamento — João C. Moderno
-        </span>
-    </a>
-
-
-    <!-- REGISTRO JOÃO — PÁGINA 1 -->
-
-    <a
-        class="arquivo"
-        href="registro_armamento_joao_moderno-1_PB.png"
-        target="_blank"
-    >
-        <span class="nome">
-            registro_armamento_joao_moderno-1_PB.png
-        </span>
-
-        <span class="tipo">
-            Registro — página 01
-        </span>
-    </a>
-
-
-    <!-- REGISTRO JOÃO — PÁGINA 2 -->
-
-    <a
-        class="arquivo"
-        href="registro_armamento_joao_moderno-2_PB.png"
-        target="_blank"
-    >
-        <span class="nome">
-            registro_armamento_joao_moderno-2_PB.png
-        </span>
-
-        <span class="tipo">
-            Registro — página 02
-        </span>
-    </a>
-
-
-    <!-- REGISTRO JOÃO — PÁGINA 3 -->
-
-    <a
-        class="arquivo"
-        href="registro_armamento_joao_moderno-3_PB.png"
-        target="_blank"
-    >
-        <span class="nome">
-            registro_armamento_joao_moderno-3_PB.png
-        </span>
-
-        <span class="tipo">
-            Registro — página 03
-        </span>
-    </a>
-
-
-    <!-- TERMO DE SIGILO -->
-
-    <a
-        class="arquivo"
-        href="termo_sigilo_pais_2014_escaneado-1_PB.png"
-        target="_blank"
-    >
-        <span class="nome">
-            termo_sigilo_pais_2014_escaneado-1_PB.png
-        </span>
-
-        <span class="tipo">
-            Termo de sigilo — 2014
-        </span>
-    </a>
-
-
-    <div class="aviso">
-        [!] AVISO DO SISTEMA
-        <br><br>
-
-        ALGUNS ARQUIVOS FORAM RECUPERADOS
-        PARCIALMENTE E PODEM APRESENTAR
-        CORRUPÇÃO OU AUSÊNCIA DE PÁGINAS.
+        <a href="jade.html" class="terminal-btn">ARQUIVO: JADE SELENE</a>
+        <a href="tempo.html" class="terminal-btn">ÚLTIMAS APARIÇÕES</a>
+        <a href="sac51.html" class="terminal-btn">BASE SAC 51</a>
+        <a href="daniirecuperado.html" class="terminal-btn">WHATSAPP RECUPERADO</a>
     </div>
 
-
-    <hr>
-
-
-    <a
-        href="index.html"
-        class="voltar"
-    >
-        ← VOLTAR AO PROTOCOLO
-    </a>
-
-
-    <div class="footer">
-
-        <p>
-            K.A-114 // ARQUIVOS RECUPERADOS
-        </p>
-
-        <p>
-            ÚLTIMA SINCRONIZAÇÃO: ████████████
-        </p>
-
-        <p>
-            <em>
-                Alguns documentos podem não pertencer
-                ao arquivo originalmente identificado.
-            </em>
-        </p>
-
+    <div class="footer-note">
+        <p><em>Todos os alvos devem ser monitorados. Contato direto não recomendado.</em></p>
+        <p><em> Protocolo Alfa: https://protocoloalfa.netlify.app/</em></p>
     </div>
+
+    <script>
+
+        function baixarArquivosRecuperados() {
+
+            const arquivos = [
+                "boletim_escolar_escaneado_PB.png",
+                "carta_pediatra_2014_escaneado-1_PB.png",
+                "exame_psicotecnico_joao_moderno_PB.png",
+                "exame_psicotecnico_joao_moderno_v2_PB.png",
+                "laudo_2014_escaneado-1_PB.png",
+                "laudo_2014_escaneado-2_PB.png",
+                "laudo_2026_conclusivo_escaneado-1_PB.png",
+                "laudo_2026_conclusivo_escaneado-2_PB.png",
+                "laudo_2026_conclusivo_escaneado-3_PB.png",
+                "laudo_exame_daniiyel_PB.png",
+                "portaria_afastamento_joao_moderno-1_PB.png",
+                "registro_armamento_joao_moderno-1_PB.png",
+                "registro_armamento_joao_moderno-2_PB.png",
+                "registro_armamento_joao_moderno-3_PB.png",
+                "termo_sigilo_pais_2014_escaneado-1_PB.png"
+            ];
+
+            arquivos.forEach((arquivo, index) => {
+
+                setTimeout(() => {
+
+                    const link = document.createElement("a");
+
+                    link.href = arquivo;
+                    link.download = arquivo;
+
+                    document.body.appendChild(link);
+
+                    link.click();
+
+                    document.body.removeChild(link);
+
+                }, index * 500);
+
+            });
+
+        }
+
+    </script>
 
 </body>
 </html>
