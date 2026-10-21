@@ -4,25 +4,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#0a0b0e">
-    <meta name="robots" content="noindex, nofollow">
-    <title>K.A-114 | Arquivo de Classificação</title>
+    <title>Arquivo K.A-114 | PROJECT114</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap');
-
         :root {
-            --bg: #0a0b0e;
-            --panel: #111318;
-            --panel-alt: #15181e;
+            --bg: #090a0d;
+            --panel: #101217;
+            --panel-light: #15181e;
             --border: #292d35;
-            --text: #e0e2e8;
+            --text: #dfe1e6;
             --muted: #858b98;
-            --red: #cb5159;
-            --red-bg: #28171a;
-            --cyan: #8aa6b5;
-            --mono: 'IBM Plex Mono', monospace;
-            --sans: 'Inter', sans-serif;
+            --red: #b33a43;
+            --red-dark: #40191e;
         }
 
         * {
@@ -33,551 +30,365 @@
 
         body {
             min-height: 100vh;
-            padding: 0 20px 50px;
-            background:
-                radial-gradient(ellipse at 50% 0%, #1a1d25 0%, transparent 55%),
-                var(--bg);
+            background: var(--bg);
             color: var(--text);
-            font-family: var(--sans);
-            font-size: 13px;
-            line-height: 1.75;
+            font-family: 'Inter', sans-serif;
+            line-height: 1.65;
         }
 
-        a {
-            color: inherit;
-            text-decoration: none;
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            opacity: .15;
+            background-image:
+                linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px);
+            background-size: 30px 30px;
         }
 
         .container {
-            width: 100%;
-            max-width: 940px;
-            margin: auto;
+            position: relative;
+            width: min(100% - 32px, 900px);
+            margin: 0 auto;
+            padding: 32px 0 45px;
         }
 
-        /* HEADER */
-
-        .topbar {
+        header {
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: space-between;
             gap: 16px;
-            min-height: 68px;
+            padding-bottom: 20px;
             border-bottom: 1px solid var(--border);
         }
 
         .brand {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-family: var(--mono);
-            font-size: 10px;
-            font-weight: 600;
-            letter-spacing: 1.4px;
-        }
-
-        .brand-icon {
-            display: grid;
-            place-items: center;
-            width: 34px;
-            height: 34px;
-            border: 1px solid #505661;
-            background: #181b22;
-            font-size: 11px;
-        }
-
-        .system-status {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: var(--muted);
-            font-family: var(--mono);
-            font-size: 9px;
-            letter-spacing: 1px;
-        }
-
-        .status-dot {
-            width: 7px;
-            height: 7px;
-            border-radius: 50%;
-            background: var(--red);
-            box-shadow: 0 0 9px #cb515944;
-        }
-
-        /* BREADCRUMB */
-
-        .breadcrumb {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            gap: 9px;
-            margin: 26px 0 30px;
-            color: var(--muted);
-            font-family: var(--mono);
-            font-size: 10px;
-        }
-
-        .breadcrumb a:hover {
-            color: white;
-        }
-
-        .separator {
-            color: #4c515c;
-        }
-
-        .current {
-            color: #d6d8df;
-        }
-
-        /* DOCUMENT HEADING */
-
-        .eyebrow {
-            display: flex;
-            align-items: center;
-            gap: 9px;
-            color: #a4aab5;
-            font-family: var(--mono);
-            font-size: 10px;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 12px;
+            font-weight: 700;
             letter-spacing: 2px;
         }
 
-        .eyebrow-line {
-            width: 22px;
-            height: 1px;
+        .brand span {
+            color: var(--red);
+        }
+
+        .archive-label {
+            color: var(--muted);
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 9px;
+            letter-spacing: 1px;
+            text-align: right;
+        }
+
+        .breadcrumbs {
+            margin: 22px 0;
+            color: var(--muted);
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 10px;
+        }
+
+        .breadcrumbs a {
+            color: var(--muted);
+            text-decoration: none;
+        }
+
+        .breadcrumbs a:hover {
+            color: var(--text);
+        }
+
+        .breadcrumbs span {
+            padding: 0 8px;
+            color: var(--red);
+        }
+
+        .classification {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 22px;
+            padding: 10px 13px;
+            border: 1px solid #51262c;
+            background: #1a1013;
+            color: #d67b81;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 1px;
+        }
+
+        .classification-dot {
+            width: 7px;
+            height: 7px;
+            flex-shrink: 0;
+            border-radius: 50%;
             background: var(--red);
         }
 
         h1 {
-            margin-top: 12px;
-            font-size: clamp(28px, 5vw, 42px);
+            margin-bottom: 7px;
+            font-size: clamp(27px, 5vw, 39px);
             font-weight: 600;
-            letter-spacing: -1.6px;
-            line-height: 1.2;
-        }
-
-        h1 span {
-            color: #999eaa;
-            font-weight: 400;
+            letter-spacing: -1.5px;
         }
 
         .subtitle {
-            max-width: 620px;
-            margin-top: 12px;
+            margin-bottom: 28px;
             color: var(--muted);
-            font-size: 12px;
-            line-height: 1.9;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 11px;
         }
-
-        /* CLASSIFICATION BANNER */
-
-        .alert-banner {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin-top: 25px;
-            padding: 13px 16px;
-            border: 1px solid #613139;
-            background: linear-gradient(100deg, #29171b, #151216);
-        }
-
-        .alert-main {
-            display: flex;
-            align-items: center;
-            gap: 11px;
-            color: #e29a9e;
-            font-family: var(--mono);
-            font-size: 10px;
-            font-weight: 600;
-            letter-spacing: 1px;
-        }
-
-        .alert-icon {
-            display: grid;
-            place-items: center;
-            width: 24px;
-            height: 24px;
-            border: 1px solid #85434a;
-        }
-
-        .alert-code {
-            color: #a87379;
-            font-family: var(--mono);
-            font-size: 9px;
-        }
-
-        /* GENERAL PANELS */
 
         .panel {
-            margin-top: 22px;
+            margin-bottom: 18px;
             border: 1px solid var(--border);
-            background: var(--panel);
+            background: rgba(16, 18, 23, .96);
         }
 
         .panel-header {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
-            gap: 10px;
-            padding: 15px 19px;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 13px 17px;
             border-bottom: 1px solid var(--border);
-            background: #ffffff03;
+            background: var(--panel-light);
         }
 
-        .panel-title {
-            font-size: 10px;
+        .panel-header h2 {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 11px;
             font-weight: 600;
-            letter-spacing: 1.4px;
+            letter-spacing: 1px;
         }
 
-        .panel-reference {
-            color: var(--muted);
-            font-family: var(--mono);
+        .section-code {
+            color: #666d79;
+            font-family: 'IBM Plex Mono', monospace;
             font-size: 9px;
         }
 
         .panel-content {
-            padding: 21px 19px;
-        }
-
-        /* SUBJECT IDENTIFICATION */
-
-        .subject-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 0 25px;
-        }
-
-        .field {
-            padding: 13px 0;
-            border-bottom: 1px solid #ffffff0c;
-        }
-
-        .field-label {
-            margin-bottom: 5px;
-            color: var(--muted);
-            font-family: var(--mono);
-            font-size: 9px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        .field-value {
-            color: #e0e2e8;
-            font-size: 12px;
-            font-weight: 500;
-        }
-
-        .field-value.red {
-            color: #df858b;
-        }
-
-        .field-value.mono {
-            font-family: var(--mono);
-            font-size: 11px;
-        }
-
-        .section-heading {
-            margin: 25px 0 12px;
-            color: #c4c8d0;
-            font-size: 10px;
-            font-weight: 600;
-            letter-spacing: 1.4px;
-            text-transform: uppercase;
-        }
-
-        .description {
-            color: #b8bdc7;
-            font-size: 12px;
-            line-height: 2;
-        }
-
-        /* OBSERVATION LIST */
-
-        .observation-list {
-            border: 1px solid var(--border);
-            background: #0d0f13;
-        }
-
-        .observation {
-            display: grid;
-            grid-template-columns: 28px 1fr;
-            gap: 10px;
-            padding: 13px 14px;
-            border-bottom: 1px solid #ffffff0b;
-            color: #b9bec7;
-            font-size: 11px;
-            line-height: 1.9;
-        }
-
-        .observation:last-child {
-            border-bottom: 0;
-        }
-
-        .observation-number {
-            color: #8a646a;
-            font-family: var(--mono);
-            font-size: 10px;
-        }
-
-        /* FORMS COMPARISON */
-
-        .forms-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 14px;
-        }
-
-        .form-card {
-            overflow: hidden;
-            border: 1px solid var(--border);
-            background: #0d0f13;
-        }
-
-        .form-card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 8px;
-            padding: 13px 14px;
-            border-bottom: 1px solid var(--border);
-            background: #ffffff03;
-        }
-
-        .form-code {
-            font-family: var(--mono);
-            font-size: 11px;
-            font-weight: 600;
-        }
-
-        .form-tag {
-            color: var(--muted);
-            font-family: var(--mono);
-            font-size: 8px;
-        }
-
-        .form-card-body {
-            padding: 15px;
-        }
-
-        .form-name {
-            margin-bottom: 9px;
-            font-size: 15px;
-            font-weight: 600;
-        }
-
-        .form-description {
-            color: #9fa5b0;
-            font-size: 11px;
-            line-height: 1.9;
-        }
-
-        .form-card.alternative {
-            border-color: #59404a;
-        }
-
-        .form-card.alternative .form-code {
-            color: #d29aaf;
-        }
-
-        /* QUOTED RECORDS */
-
-        .quote {
-            margin-top: 10px;
-            padding: 13px 15px;
-            border-left: 2px solid #7d535b;
-            background: #171317;
-            color: #d7d1d8;
-            font-size: 12px;
-            font-style: italic;
-            line-height: 1.9;
-        }
-
-        .quote:first-of-type {
-            margin-top: 0;
-        }
-
-        .quote-label {
-            display: block;
-            margin-bottom: 5px;
-            color: #a57983;
-            font-family: var(--mono);
-            font-size: 9px;
-            font-style: normal;
-            letter-spacing: 1px;
-        }
-
-        /* RISK PANEL */
-
-        .risk-panel {
-            border-color: #613139;
-        }
-
-        .risk-panel .panel-header {
-            background: #26171a;
-            border-bottom-color: #4a282e;
-        }
-
-        .risk-panel .panel-title {
-            color: #e5a1a5;
-        }
-
-        .risk-content {
-            padding: 19px;
-        }
-
-        .risk-level {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 13px;
-        }
-
-        .risk-indicator {
-            width: 9px;
-            height: 31px;
-            background: var(--red);
-            box-shadow: 0 0 12px #cb515933;
-        }
-
-        .risk-name {
-            color: #e08a90;
-            font-size: 13px;
-            font-weight: 600;
-        }
-
-        .risk-content p {
-            color: #b5bac4;
-            font-size: 11px;
-            line-height: 1.9;
-        }
-
-        /* RESTRICTED PROTOCOL */
-
-        .restricted {
-            margin-top: 25px;
-            border: 1px solid #4c3035;
-            background: #111014;
-        }
-
-        .restricted-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 16px 19px;
-            border-bottom: 1px solid #39252a;
-            background: #211619;
-        }
-
-        .lock-icon {
-            display: grid;
-            place-items: center;
-            width: 32px;
-            height: 32px;
-            border: 1px solid #704047;
-            color: #df9298;
-        }
-
-        .restricted-title {
-            color: #e9c1c4;
-            font-size: 11px;
-            font-weight: 600;
-            letter-spacing: 1px;
-        }
-
-        .restricted-subtitle {
-            margin-top: 3px;
-            color: #a7777d;
-            font-family: var(--mono);
-            font-size: 9px;
-        }
-
-        .restricted-content {
             padding: 20px;
         }
 
-        .restricted-content p {
-            color: #a5a9b3;
-            font-size: 11px;
-            line-height: 1.9;
+        .data-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 19px 25px;
         }
 
-        .restricted-content strong {
-            color: #e3b0b4;
-            font-weight: 500;
-        }
-
-        .password-form {
-            display: flex;
-            gap: 9px;
-            margin-top: 16px;
-        }
-
-        .password-input {
+        .data-item {
             min-width: 0;
-            flex: 1;
-            padding: 12px;
-            border: 1px solid #39343c;
-            border-radius: 3px;
-            outline: none;
-            color: white;
-            background: #0b0c10;
-            font-family: var(--mono);
+        }
+
+        .data-label {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--muted);
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 9px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .data-value {
+            font-size: 13px;
+            font-weight: 500;
+            overflow-wrap: anywhere;
+        }
+
+        .status {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            color: #c5c9d1;
+        }
+
+        .status::before {
+            content: "";
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #a6aeb9;
+        }
+
+        p {
+            margin-bottom: 13px;
+            color: #c0c4cc;
+            font-size: 13px;
+        }
+
+        p:last-child {
+            margin-bottom: 0;
+        }
+
+        .subheading {
+            margin: 20px 0 9px;
+            color: #e0e2e7;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 10px;
+            letter-spacing: .8px;
+            text-transform: uppercase;
+        }
+
+        .subheading:first-child {
+            margin-top: 0;
+        }
+
+        .list {
+            padding-left: 19px;
+            color: #c0c4cc;
+            font-size: 13px;
+        }
+
+        .list li {
+            margin-bottom: 7px;
+            padding-left: 3px;
+        }
+
+        .form-comparison {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+            margin: 15px 0;
+        }
+
+        .form-card {
+            padding: 15px;
+            border: 1px solid var(--border);
+            background: #0c0e12;
+        }
+
+        .form-card h3 {
+            margin-bottom: 9px;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 11px;
+        }
+
+        .form-card p {
+            color: var(--muted);
             font-size: 12px;
-            letter-spacing: 2px;
         }
 
-        .password-input:focus {
-            border-color: #a3545c;
+        .form-tag {
+            display: inline-block;
+            margin-bottom: 10px;
+            padding: 3px 6px;
+            border: 1px solid var(--border);
+            color: #aeb4bf;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 8px;
+            letter-spacing: .5px;
         }
 
-        .access-button {
+        .quote {
+            margin: 12px 0;
             padding: 12px 15px;
-            border: 1px solid #a44951;
-            border-radius: 3px;
-            color: white;
-            background: #692c33;
-            cursor: pointer;
-            font-family: var(--mono);
+            border-left: 2px solid #555c68;
+            background: #0c0e12;
+            color: #d0d3da;
+            font-size: 13px;
+            font-style: italic;
+        }
+
+        .warning-box {
+            padding: 14px 16px;
+            border: 1px solid #38282c;
+            background: #151012;
+        }
+
+        .warning-box .data-label {
+            color: #c4777d;
+        }
+
+        .warning-box p {
+            margin-bottom: 0;
+        }
+
+        .back-button {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 25px;
+            padding: 17px 19px;
+            border: 1px solid var(--border);
+            background: linear-gradient(100deg, #15181e, #0d0f13);
+            color: var(--text);
+            text-decoration: none;
+            transition: border-color .2s, background .2s;
+        }
+
+        .back-button:hover {
+            border-color: #626976;
+            background: #1a1d24;
+        }
+
+        .back-arrow {
+            display: grid;
+            place-items: center;
+            width: 34px;
+            height: 34px;
+            flex-shrink: 0;
+            border: 1px solid #414650;
+            color: var(--text);
+            font-size: 19px;
+            transition: transform .2s;
+        }
+
+        .back-button:hover .back-arrow {
+            transform: translateX(-3px);
+        }
+
+        .back-text {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .back-text strong {
+            font-family: 'IBM Plex Mono', monospace;
             font-size: 10px;
-            transition: background .2s;
+            letter-spacing: 1px;
         }
 
-        .access-button:hover {
-            background: #853740;
+        .back-text small {
+            color: var(--muted);
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 8px;
+            letter-spacing: .5px;
         }
 
-        .message {
-            min-height: 20px;
-            margin-top: 10px;
-            color: #e17b82;
-            font-family: var(--mono);
-            font-size: 10px;
+        .back-code {
+            margin-left: auto;
+            color: #626874;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 9px;
+            white-space: nowrap;
         }
 
-        /* FOOTER */
-
-        .page-footer {
+        footer {
             display: flex;
             justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 27px;
+            gap: 15px;
+            margin-top: 30px;
             padding-top: 15px;
             border-top: 1px solid var(--border);
-            color: #626874;
-            font-family: var(--mono);
+            color: #606672;
+            font-family: 'IBM Plex Mono', monospace;
             font-size: 9px;
+            letter-spacing: .5px;
         }
 
-        @media (max-width: 600px) {
-            body {
-                padding: 0 14px 35px;
+        @media (max-width: 560px) {
+            .container {
+                width: min(100% - 22px, 900px);
+                padding-top: 20px;
             }
 
-            .subject-grid,
-            .forms-grid {
+            .data-grid,
+            .form-comparison {
                 grid-template-columns: 1fr;
             }
 
@@ -585,31 +396,17 @@
                 padding: 16px;
             }
 
-            .classification-code {
+            .archive-label {
                 font-size: 8px;
             }
 
-            .password-form {
+            .back-code {
+                display: none;
+            }
+
+            footer {
                 flex-direction: column;
-            }
-
-            .access-button {
-                min-height: 43px;
-            }
-
-            .system-brand {
-                font-size: 9px;
-            }
-
-            .system-status {
-                font-size: 8px;
-            }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            *, *::before, *::after {
-                animation: none !important;
-                transition: none !important;
+                gap: 5px;
             }
         }
     </style>
@@ -618,335 +415,265 @@
 <body>
     <main class="container">
 
-        <header class="topbar">
-            <div class="brand">
-                <div class="brand-icon">114</div>
-                <span>PROJECT114 / ARCHIVE</span>
-            </div>
-
-            <div class="system-status">
-                <span class="status-dot"></span>
-                SISTEMA RESTRITO
+        <header>
+            <div class="brand">PROJECT<span>114</span></div>
+            <div class="archive-label">
+                SISTEMA DE ARQUIVAMENTO<br>
+                REGISTRO INTERNO
             </div>
         </header>
 
-        <nav class="breadcrumb" aria-label="Navegação">
-            <a href="index.html">TERMINAL</a>
-            <span class="separator">/</span>
-            <span>ARQUIVOS</span>
-            <span class="separator">/</span>
-            <span class="current">K.A-114</span>
+        <nav class="breadcrumbs">
+            <a href="BASE.html">TERMINAL</a>
+            <span>/</span>
+            ARQUIVOS
+            <span>/</span>
+            K.A-114
         </nav>
 
-        <section>
-            <div class="eyebrow">
-                <span class="eyebrow-line"></span>
-                REGISTRO DE ANOMALIA
-            </div>
-
-            <h1>Arquivo <span>K.A-114</span></h1>
-
-            <p class="subtitle">
-                Dossiê de identificação e análise de entidade metamórfica.
-                Os dados apresentados estão sujeitos à revisão institucional.
-            </p>
-        </section>
-
-        <div class="alert-banner">
-            <div class="alert-main">
-                <span class="alert-icon">!</span>
-                CLASSIFICAÇÃO: CRÍTICO
-            </div>
-            <span class="alert-code">REF. KA114-1948</span>
+        <div class="classification">
+            <span class="classification-dot"></span>
+            DOCUMENTO RESTRITO — ACESSO CONTROLADO
         </div>
 
-        <!-- 01: SUJEITO ORIGINAL -->
+        <h1>Arquivo K.A-114</h1>
+        <div class="subtitle">
+            REGISTRO DE ENTIDADE // IDENTIFICAÇÃO K.A-114
+        </div>
 
         <section class="panel">
-            <header class="panel-header">
-                <span class="panel-title">01 — IDENTIFICAÇÃO DO SUJEITO</span>
-                <span class="panel-reference">REGISTRO KA114-A</span>
-            </header>
+            <div class="panel-header">
+                <h2>01 — IDENTIFICAÇÃO</h2>
+                <span class="section-code">REG. 001</span>
+            </div>
 
             <div class="panel-content">
-                <div class="subject-grid">
-                    <div class="field">
-                        <div class="field-label">Nome registrado</div>
-                        <div class="field-value">Kin Atlas</div>
+                <div class="data-grid">
+                    <div class="data-item">
+                        <span class="data-label">Nome registrado</span>
+                        <div class="data-value">Kin Atlas</div>
                     </div>
 
-                    <div class="field">
-                        <div class="field-label">Designação</div>
-                        <div class="field-value mono">K.A-114</div>
+                    <div class="data-item">
+                        <span class="data-label">Identificação</span>
+                        <div class="data-value">K.A-114</div>
                     </div>
 
-                    <div class="field">
-                        <div class="field-label">Classificação</div>
-                        <div class="field-value">Skinwalker ancestral</div>
+                    <div class="data-item">
+                        <span class="data-label">Classificação</span>
+                        <div class="data-value">Skinwalker ancestral</div>
                     </div>
 
-                    <div class="field">
-                        <div class="field-label">Idade estimada</div>
-                        <div class="field-value">114 anos / aparência de 18</div>
+                    <div class="data-item">
+                        <span class="data-label">Idade estimada</span>
+                        <div class="data-value">114 anos</div>
                     </div>
 
-                    <div class="field">
-                        <div class="field-label">Altura</div>
-                        <div class="field-value">1,93 m</div>
+                    <div class="data-item">
+                        <span class="data-label">Aparência física</span>
+                        <div class="data-value">Aproximadamente 18 anos</div>
                     </div>
 
-                    <div class="field">
-                        <div class="field-label">Origem</div>
-                        <div class="field-value">Norte do Pará</div>
+                    <div class="data-item">
+                        <span class="data-label">Altura registrada</span>
+                        <div class="data-value">1,93 m</div>
                     </div>
 
-                    <div class="field">
-                        <div class="field-label">Estado</div>
-                        <div class="field-value red">Ativo</div>
+                    <div class="data-item">
+                        <span class="data-label">Origem conhecida</span>
+                        <div class="data-value">Norte do Pará, Brasil</div>
                     </div>
 
-                    <div class="field">
-                        <div class="field-label">Primeira detecção documentada</div>
-                        <div class="field-value mono">1948</div>
+                    <div class="data-item">
+                        <span class="data-label">Estado operacional</span>
+                        <div class="data-value status">Ativo</div>
+                    </div>
+
+                    <div class="data-item">
+                        <span class="data-label">Primeira detecção documentada</span>
+                        <div class="data-value">1948</div>
                     </div>
                 </div>
+            </div>
+        </section>
 
-                <h2 class="section-heading">02 — Caracterização física</h2>
+        <section class="panel">
+            <div class="panel-header">
+                <h2>02 — CARACTERIZAÇÃO FÍSICA</h2>
+                <span class="section-code">REG. 002</span>
+            </div>
 
-                <p class="description">
-                    Pele morena, cabelo castanho com franja branca e tatuagem
-                    preta em formato de ondas no braço esquerdo. Vestimenta
-                    habitual registrada: regata cinza, calça verde-escura
-                    rasgada e tênis cinza.
+            <div class="panel-content">
+                <p>
+                    A entidade apresenta aparência humana consistente, embora
+                    existam registros de alterações físicas incompatíveis com
+                    a anatomia humana convencional.
                 </p>
 
-                <h2 class="section-heading">03 — Comportamento e cognição</h2>
+                <ul class="list">
+                    <li>Pele de tonalidade morena.</li>
+                    <li>Cabelos castanhos com uma mecha branca frontal.</li>
+                    <li>Tatuagem escura em formato de onda cobrindo o braço esquerdo.</li>
+                    <li>Registros visuais mostram uma regata cinza.</li>
+                    <li>Calça verde-escura com sinais de desgaste.</li>
+                    <li>Tênis cinza.</li>
+                </ul>
 
-                <div class="observation-list">
-                    <div class="observation">
-                        <span class="observation-number">01</span>
-                        <span>Entidade metamórfica originária das florestas do norte do Pará.</span>
-                    </div>
-
-                    <div class="observation">
-                        <span class="observation-number">02</span>
-                        <span>Relatos indicam comportamento predominantemente instintivo durante grande parte de sua existência. A estimativa atual atribui aproximadamente 90% de sua vida a esse período.</span>
-                    </div>
-
-                    <div class="observation">
-                        <span class="observation-number">03</span>
-                        <span>Desenvolvimento de cognição social e respostas emocionais observado após contato prolongado com Daniiyel Starmorning.</span>
-                    </div>
-
-                    <div class="observation">
-                        <span class="observation-number">04</span>
-                        <span>Apresenta impulsividade, arrogância, lealdade seletiva e capacidade de estabelecer vínculos afetivos.</span>
-                    </div>
-
-                    <div class="observation">
-                        <span class="observation-number">05</span>
-                        <span>Alterações na aparência ocular podem acompanhar mudanças comportamentais e emocionais. A natureza exata do fenômeno permanece indeterminada.</span>
-                    </div>
-                </div>
-
-                <h2 class="section-heading">04 — Capacidade metamórfica</h2>
-
-                <p class="description">
-                    O sujeito apresenta controle avançado sobre a própria
-                    configuração física. A forma designada K.A-114-B não
-                    constitui clone ou duplicata, sendo considerada uma
-                    manifestação alternativa do mesmo indivíduo.
+                <p style="margin-top: 14px;">
+                    A aparência descrita não deve ser considerada um indicador
+                    confiável da idade, da natureza ou das capacidades da entidade.
                 </p>
             </div>
         </section>
 
-        <!-- 02: FORMA ALTERNATIVA -->
-
         <section class="panel">
-            <header class="panel-header">
-                <span class="panel-title">05 — MANIFESTAÇÃO ALTERNATIVA</span>
-                <span class="panel-reference">REGISTRO KA114-B</span>
-            </header>
+            <div class="panel-header">
+                <h2>03 — COMPORTAMENTO E COGNIÇÃO</h2>
+                <span class="section-code">REG. 003</span>
+            </div>
 
             <div class="panel-content">
-                <div class="forms-grid">
-                    <article class="form-card">
-                        <header class="form-card-header">
-                            <span class="form-code">K.A-114</span>
-                            <span class="form-tag">ORIGINAL</span>
-                        </header>
+                <p>
+                    K.A-114 demonstra capacidade de comunicação, planejamento
+                    e adaptação social. Seu comportamento varia conforme o
+                    ambiente e as pessoas presentes.
+                </p>
 
-                        <div class="form-card-body">
-                            <h3 class="form-name">Forma primária</h3>
-                            <p class="form-description">
-                                Apresentação habitual. Cabelo castanho com
-                                franja branca, tatuagem no braço esquerdo
-                                e vestimentas associadas ao registro original.
-                            </p>
-                        </div>
-                    </article>
+                <p>
+                    A entidade pode apresentar sarcasmo, arrogância e respostas
+                    provocativas. Em situações específicas, demonstra lealdade
+                    a indivíduos com os quais mantém vínculos duradouros.
+                </p>
 
-                    <article class="form-card alternative">
-                        <header class="form-card-header">
-                            <span class="form-code">K.A-114-B</span>
-                            <span class="form-tag">ALTERNATIVA</span>
-                        </header>
+                <p>
+                    A capacidade de reconhecer padrões sociais e explorar
+                    expectativas alheias torna imprevisível sua reação a
+                    tentativas de contenção ou interrogatório.
+                </p>
 
-                        <div class="form-card-body">
-                            <h3 class="form-name">A Mulher do Vazio</h3>
-                            <p class="form-description">
-                                Também identificada como A Flor do Medo.
-                                Cabelo ondulado até os ombros, franja branca,
-                                voz suave e postura calculada.
-                            </p>
-                        </div>
-                    </article>
+                <h3 class="subheading">Padrões de fala observados</h3>
+
+                <ul class="list">
+                    <li>Utiliza o termo “moço” ao se dirigir a João C. Moderno.</li>
+                    <li>Também utiliza o apelido “cowboy” em determinadas interações.</li>
+                    <li>Costuma responder a questionamentos diretos com ironia ou evasivas.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="panel">
+            <div class="panel-header">
+                <h2>04 — CAPACIDADE METAMÓRFICA</h2>
+                <span class="section-code">REG. 004</span>
+            </div>
+
+            <div class="panel-content">
+                <p>
+                    K.A-114 possui capacidade de alterar a própria forma física.
+                    A extensão total dessa habilidade permanece desconhecida.
+                    Os registros disponíveis indicam que as transformações
+                    podem modificar significativamente sua aparência.
+                </p>
+
+                <div class="form-comparison">
+                    <div class="form-card">
+                        <span class="form-tag">FORMA PRINCIPAL</span>
+                        <h3>K.A-114</h3>
+                        <p>
+                            Aparência predominantemente humana. É a forma mais
+                            frequentemente registrada durante interações com
+                            outros indivíduos.
+                        </p>
+                    </div>
+
+                    <div class="form-card">
+                        <span class="form-tag">FORMA ALTERNATIVA</span>
+                        <h3>K.A-114-B</h3>
+                        <p>
+                            Forma de aparência feminina, observada com menor
+                            frequência e associada a situações de caça e
+                            intimidação.
+                        </p>
+                    </div>
                 </div>
 
-                <h2 class="section-heading">06 — Perfil comportamental B</h2>
+                <h3 class="subheading">Designações informais</h3>
 
-                <div class="observation-list">
-                    <div class="observation">
-                        <span class="observation-number">01</span>
-                        <span>Manifestação historicamente associada a atividades de caça; utilização atualmente descrita como rara.</span>
+                <div class="data-grid">
+                    <div class="data-item">
+                        <span class="data-label">K.A-114-B</span>
+                        <div class="data-value">“A Mulher do Vazio”</div>
                     </div>
 
-                    <div class="observation">
-                        <span class="observation-number">02</span>
-                        <span>Apresenta comportamento mais calculista, postura ereta, movimentação felina e tendência à provocação verbal.</span>
-                    </div>
-
-                    <div class="observation">
-                        <span class="observation-number">03</span>
-                        <span>O sujeito associa essa manifestação a estados de ódio e à perseguição de objetivos específicos. A relação entre forma física e estado emocional não foi completamente esclarecida.</span>
-                    </div>
-
-                    <div class="observation">
-                        <span class="observation-number">04</span>
-                        <span>Não há evidências de que a manifestação possua consciência independente da forma original.</span>
+                    <div class="data-item">
+                        <span class="data-label">K.A-114-B</span>
+                        <div class="data-value">“A Flor do Medo”</div>
                     </div>
                 </div>
 
-                <h2 class="section-heading">07 — Amostras de fala</h2>
+                <p style="margin-top: 18px;">
+                    As designações acima são informais e não constituem
+                    classificações técnicas independentes.
+                </p>
 
-                <div class="quote">
-                    <span class="quote-label">TRANSCRIÇÃO A</span>
+                <h3 class="subheading">Declarações registradas</h3>
+
+                <blockquote class="quote">
                     “Eles esquecem que eu mudo de forma.”
-                </div>
+                </blockquote>
 
-                <div class="quote">
-                    <span class="quote-label">TRANSCRIÇÃO B</span>
+                <blockquote class="quote">
                     “Se eu não sinto, então enganar a mim mesmo.”
-                </div>
-
-                <p class="description" style="margin-top: 12px;">
-                    Padrão linguístico registrado: ironia, provocações
-                    controladas e utilização recorrente dos termos
-                    “moço” e “cowboy” ao se dirigir a João C. Moderno.
-                </p>
+                </blockquote>
             </div>
         </section>
 
-        <!-- 03: AVALIAÇÃO DE RISCO -->
+        <section class="panel">
+            <div class="panel-header">
+                <h2>05 — AVALIAÇÃO DE RISCO</h2>
+                <span class="section-code">REG. 005</span>
+            </div>
 
-        <section class="panel risk-panel">
-            <header class="panel-header">
-                <span class="panel-title">08 — AVALIAÇÃO DE RISCO</span>
-                <span class="panel-reference">ANÁLISE COMPORTAMENTAL</span>
-            </header>
-
-            <div class="risk-content">
-                <div class="risk-level">
-                    <div class="risk-indicator"></div>
-                    <div>
-                        <div class="field-label">Categoria de risco</div>
-                        <div class="risk-name">Vínculo psicológico / elevado</div>
-                    </div>
+            <div class="panel-content">
+                <div class="warning-box">
+                    <span class="data-label">Fator de atenção</span>
+                    <p>
+                        A habilidade de alteração física, somada à capacidade
+                        de adaptação social, dificulta a identificação visual
+                        e aumenta o risco de interpretações equivocadas durante
+                        operações envolvendo a entidade.
+                    </p>
                 </div>
 
-                <p>
-                    A manifestação K.A-114-B pode estabelecer interações
-                    emocionalmente convincentes, tornando difícil distinguir
-                    respostas afetivas genuínas de comportamentos
-                    deliberadamente manipulativos.
-                </p>
+                <h3 class="subheading">Diretrizes de observação</h3>
 
-                <p style="margin-top: 12px;">
-                    <strong>Nota analítica:</strong> a capacidade de manipulação
-                    foi considerada uma possibilidade concreta. A existência
-                    de vínculos emocionais não elimina esse risco.
-                </p>
+                <ul class="list">
+                    <li>Não presumir identidade com base apenas na aparência.</li>
+                    <li>Verificar inconsistências entre relatos e registros disponíveis.</li>
+                    <li>Documentar alterações comportamentais e físicas observadas.</li>
+                    <li>Evitar conclusões definitivas a partir de uma única ocorrência.</li>
+                </ul>
             </div>
         </section>
 
-        <!-- 04: PROTOCOLO RESTRITO -->
+        <!-- RETORNO AO TERMINAL -->
 
-        <section class="restricted">
-            <header class="restricted-header">
-                <div class="lock-icon">⌑</div>
+        <a href="BASE.html" class="back-button">
+            <span class="back-arrow">←</span>
 
-                <div>
-                    <div class="restricted-title">PROTOCOLO-0</div>
-                    <div class="restricted-subtitle">
-                        ACESSO RESTRITO — NÍVEL 10
-                    </div>
-                </div>
-            </header>
+            <span class="back-text">
+                <strong>VOLTAR AO TERMINAL</strong>
+                <small>RETORNAR AO DIRETÓRIO DE ARQUIVOS</small>
+            </span>
 
-            <div class="restricted-content">
-                <p>
-                    O conteúdo subsequente exige autenticação.
-                    A autorização de acesso é restrita às patentes
-                    <strong>Nível 10</strong>.
-                </p>
+            <span class="back-code">114 / EXIT</span>
+        </a>
 
-                <form class="password-form" id="accessForm">
-                    <input
-                        class="password-input"
-                        type="password"
-                        id="senha"
-                        placeholder="CÓDIGO DE ACESSO"
-                        aria-label="Código de acesso"
-                        autocomplete="off"
-                        required
-                    >
-
-                    <button class="access-button" type="submit">
-                        AUTENTICAR →
-                    </button>
-                </form>
-
-                <p class="message" id="mensagem" role="status" aria-live="polite"></p>
-            </div>
-        </section>
-
-        <footer class="page-footer">
-            <span>PROJECT114</span>
-            <span>ARQUIVO KA114</span>
+        <footer>
+            <span>PROJECT114 // ARQUIVO K.A-114</span>
             <span>FIM DO REGISTRO</span>
         </footer>
 
     </main>
-
-    <script>
-        const form = document.getElementById("accessForm");
-        const input = document.getElementById("senha");
-        const mensagem = document.getElementById("mensagem");
-
-        form.addEventListener("submit", function(event) {
-            event.preventDefault();
-
-            if (input.value === "0982") {
-                mensagem.style.color = "#a5d7b1";
-                mensagem.textContent = "CREDENCIAL ACEITA. REDIRECIONANDO...";
-                window.location.href = "protocolo0.html";
-            } else {
-                mensagem.style.color = "#e17b82";
-                mensagem.textContent = "ACESSO NEGADO. CÓDIGO NÃO RECONHECIDO.";
-                input.value = "";
-                input.focus();
-            }
-        });
-    </script>
 </body>
 </html>
