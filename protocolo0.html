@@ -1,106 +1,952 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>ARQUIVO K.A-114 / K.A-114-B</title>
-  <style>
-    body {
-      background-color: #0a0a0a;
-      color: #00ffcc;
-      font-family: "Courier New", monospace;
-      padding: 40px;
-    }
-    h1, h2, h3 {
-      color: #ff00aa;
-    }
-    .alerta {
-      color: red;
-      font-weight: bold;
-      font-size: 1.2em;
-    }
-    .bloco {
-      border: 1px solid #00ffcc;
-      padding: 20px;
-      margin: 20px 0;
-      background-color: #111;
-    }
-    .codigo {
-      background-color: #222;
-      padding: 10px;
-      margin: 10px 0;
-      font-family: monospace;
-    }
-    a {
-      color: #00ffff;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0a0b0e">
+    <meta name="robots" content="noindex, nofollow">
+    <title>K.A-114 | Arquivo de Classificação</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap');
+
+        :root {
+            --bg: #0a0b0e;
+            --panel: #111318;
+            --panel-alt: #15181e;
+            --border: #292d35;
+            --text: #e0e2e8;
+            --muted: #858b98;
+            --red: #cb5159;
+            --red-bg: #28171a;
+            --cyan: #8aa6b5;
+            --mono: 'IBM Plex Mono', monospace;
+            --sans: 'Inter', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            padding: 0 20px 50px;
+            background:
+                radial-gradient(ellipse at 50% 0%, #1a1d25 0%, transparent 55%),
+                var(--bg);
+            color: var(--text);
+            font-family: var(--sans);
+            font-size: 13px;
+            line-height: 1.75;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 940px;
+            margin: auto;
+        }
+
+        /* HEADER */
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            min-height: 68px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-family: var(--mono);
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 1.4px;
+        }
+
+        .brand-icon {
+            display: grid;
+            place-items: center;
+            width: 34px;
+            height: 34px;
+            border: 1px solid #505661;
+            background: #181b22;
+            font-size: 11px;
+        }
+
+        .system-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--muted);
+            font-family: var(--mono);
+            font-size: 9px;
+            letter-spacing: 1px;
+        }
+
+        .status-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--red);
+            box-shadow: 0 0 9px #cb515944;
+        }
+
+        /* BREADCRUMB */
+
+        .breadcrumb {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 9px;
+            margin: 26px 0 30px;
+            color: var(--muted);
+            font-family: var(--mono);
+            font-size: 10px;
+        }
+
+        .breadcrumb a:hover {
+            color: white;
+        }
+
+        .separator {
+            color: #4c515c;
+        }
+
+        .current {
+            color: #d6d8df;
+        }
+
+        /* DOCUMENT HEADING */
+
+        .eyebrow {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            color: #a4aab5;
+            font-family: var(--mono);
+            font-size: 10px;
+            letter-spacing: 2px;
+        }
+
+        .eyebrow-line {
+            width: 22px;
+            height: 1px;
+            background: var(--red);
+        }
+
+        h1 {
+            margin-top: 12px;
+            font-size: clamp(28px, 5vw, 42px);
+            font-weight: 600;
+            letter-spacing: -1.6px;
+            line-height: 1.2;
+        }
+
+        h1 span {
+            color: #999eaa;
+            font-weight: 400;
+        }
+
+        .subtitle {
+            max-width: 620px;
+            margin-top: 12px;
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.9;
+        }
+
+        /* CLASSIFICATION BANNER */
+
+        .alert-banner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 25px;
+            padding: 13px 16px;
+            border: 1px solid #613139;
+            background: linear-gradient(100deg, #29171b, #151216);
+        }
+
+        .alert-main {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            color: #e29a9e;
+            font-family: var(--mono);
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .alert-icon {
+            display: grid;
+            place-items: center;
+            width: 24px;
+            height: 24px;
+            border: 1px solid #85434a;
+        }
+
+        .alert-code {
+            color: #a87379;
+            font-family: var(--mono);
+            font-size: 9px;
+        }
+
+        /* GENERAL PANELS */
+
+        .panel {
+            margin-top: 22px;
+            border: 1px solid var(--border);
+            background: var(--panel);
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 15px 19px;
+            border-bottom: 1px solid var(--border);
+            background: #ffffff03;
+        }
+
+        .panel-title {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 1.4px;
+        }
+
+        .panel-reference {
+            color: var(--muted);
+            font-family: var(--mono);
+            font-size: 9px;
+        }
+
+        .panel-content {
+            padding: 21px 19px;
+        }
+
+        /* SUBJECT IDENTIFICATION */
+
+        .subject-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0 25px;
+        }
+
+        .field {
+            padding: 13px 0;
+            border-bottom: 1px solid #ffffff0c;
+        }
+
+        .field-label {
+            margin-bottom: 5px;
+            color: var(--muted);
+            font-family: var(--mono);
+            font-size: 9px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .field-value {
+            color: #e0e2e8;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .field-value.red {
+            color: #df858b;
+        }
+
+        .field-value.mono {
+            font-family: var(--mono);
+            font-size: 11px;
+        }
+
+        .section-heading {
+            margin: 25px 0 12px;
+            color: #c4c8d0;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 1.4px;
+            text-transform: uppercase;
+        }
+
+        .description {
+            color: #b8bdc7;
+            font-size: 12px;
+            line-height: 2;
+        }
+
+        /* OBSERVATION LIST */
+
+        .observation-list {
+            border: 1px solid var(--border);
+            background: #0d0f13;
+        }
+
+        .observation {
+            display: grid;
+            grid-template-columns: 28px 1fr;
+            gap: 10px;
+            padding: 13px 14px;
+            border-bottom: 1px solid #ffffff0b;
+            color: #b9bec7;
+            font-size: 11px;
+            line-height: 1.9;
+        }
+
+        .observation:last-child {
+            border-bottom: 0;
+        }
+
+        .observation-number {
+            color: #8a646a;
+            font-family: var(--mono);
+            font-size: 10px;
+        }
+
+        /* FORMS COMPARISON */
+
+        .forms-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+
+        .form-card {
+            overflow: hidden;
+            border: 1px solid var(--border);
+            background: #0d0f13;
+        }
+
+        .form-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+            padding: 13px 14px;
+            border-bottom: 1px solid var(--border);
+            background: #ffffff03;
+        }
+
+        .form-code {
+            font-family: var(--mono);
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .form-tag {
+            color: var(--muted);
+            font-family: var(--mono);
+            font-size: 8px;
+        }
+
+        .form-card-body {
+            padding: 15px;
+        }
+
+        .form-name {
+            margin-bottom: 9px;
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .form-description {
+            color: #9fa5b0;
+            font-size: 11px;
+            line-height: 1.9;
+        }
+
+        .form-card.alternative {
+            border-color: #59404a;
+        }
+
+        .form-card.alternative .form-code {
+            color: #d29aaf;
+        }
+
+        /* QUOTED RECORDS */
+
+        .quote {
+            margin-top: 10px;
+            padding: 13px 15px;
+            border-left: 2px solid #7d535b;
+            background: #171317;
+            color: #d7d1d8;
+            font-size: 12px;
+            font-style: italic;
+            line-height: 1.9;
+        }
+
+        .quote:first-of-type {
+            margin-top: 0;
+        }
+
+        .quote-label {
+            display: block;
+            margin-bottom: 5px;
+            color: #a57983;
+            font-family: var(--mono);
+            font-size: 9px;
+            font-style: normal;
+            letter-spacing: 1px;
+        }
+
+        /* RISK PANEL */
+
+        .risk-panel {
+            border-color: #613139;
+        }
+
+        .risk-panel .panel-header {
+            background: #26171a;
+            border-bottom-color: #4a282e;
+        }
+
+        .risk-panel .panel-title {
+            color: #e5a1a5;
+        }
+
+        .risk-content {
+            padding: 19px;
+        }
+
+        .risk-level {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 13px;
+        }
+
+        .risk-indicator {
+            width: 9px;
+            height: 31px;
+            background: var(--red);
+            box-shadow: 0 0 12px #cb515933;
+        }
+
+        .risk-name {
+            color: #e08a90;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .risk-content p {
+            color: #b5bac4;
+            font-size: 11px;
+            line-height: 1.9;
+        }
+
+        /* RESTRICTED PROTOCOL */
+
+        .restricted {
+            margin-top: 25px;
+            border: 1px solid #4c3035;
+            background: #111014;
+        }
+
+        .restricted-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 19px;
+            border-bottom: 1px solid #39252a;
+            background: #211619;
+        }
+
+        .lock-icon {
+            display: grid;
+            place-items: center;
+            width: 32px;
+            height: 32px;
+            border: 1px solid #704047;
+            color: #df9298;
+        }
+
+        .restricted-title {
+            color: #e9c1c4;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .restricted-subtitle {
+            margin-top: 3px;
+            color: #a7777d;
+            font-family: var(--mono);
+            font-size: 9px;
+        }
+
+        .restricted-content {
+            padding: 20px;
+        }
+
+        .restricted-content p {
+            color: #a5a9b3;
+            font-size: 11px;
+            line-height: 1.9;
+        }
+
+        .restricted-content strong {
+            color: #e3b0b4;
+            font-weight: 500;
+        }
+
+        .password-form {
+            display: flex;
+            gap: 9px;
+            margin-top: 16px;
+        }
+
+        .password-input {
+            min-width: 0;
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #39343c;
+            border-radius: 3px;
+            outline: none;
+            color: white;
+            background: #0b0c10;
+            font-family: var(--mono);
+            font-size: 12px;
+            letter-spacing: 2px;
+        }
+
+        .password-input:focus {
+            border-color: #a3545c;
+        }
+
+        .access-button {
+            padding: 12px 15px;
+            border: 1px solid #a44951;
+            border-radius: 3px;
+            color: white;
+            background: #692c33;
+            cursor: pointer;
+            font-family: var(--mono);
+            font-size: 10px;
+            transition: background .2s;
+        }
+
+        .access-button:hover {
+            background: #853740;
+        }
+
+        .message {
+            min-height: 20px;
+            margin-top: 10px;
+            color: #e17b82;
+            font-family: var(--mono);
+            font-size: 10px;
+        }
+
+        /* FOOTER */
+
+        .page-footer {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 27px;
+            padding-top: 15px;
+            border-top: 1px solid var(--border);
+            color: #626874;
+            font-family: var(--mono);
+            font-size: 9px;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 0 14px 35px;
+            }
+
+            .subject-grid,
+            .forms-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .panel-content {
+                padding: 16px;
+            }
+
+            .classification-code {
+                font-size: 8px;
+            }
+
+            .password-form {
+                flex-direction: column;
+            }
+
+            .access-button {
+                min-height: 43px;
+            }
+
+            .system-brand {
+                font-size: 9px;
+            }
+
+            .system-status {
+                font-size: 8px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+    </style>
 </head>
+
 <body>
+    <main class="container">
 
-  <h1>📁 ARQUIVO DE CLASSIFICAÇÃO: K.A-114</h1>
-  <p class="alerta">ACESSO RESTRITO – NÍVEL 10</p>
-  <p>Protocolo-0 não deve ser aberto. Patentes nível 10 são permitidas.</p>
-  <hr>
+        <header class="topbar">
+            <div class="brand">
+                <div class="brand-icon">114</div>
+                <span>PROJECT114 / ARCHIVE</span>
+            </div>
 
-  <div class="bloco">
-    <h2>🔹 K.A-114 – Sujeito original</h2>
-    <p><strong>Nome não oficial:</strong> Kin Atlas</p>
-    <p><strong>Classificação:</strong> Skinwalker Ancestral</p>
-    <p><strong>Idade:</strong> 114 anos (aparência: 18)</p>
-    <p><strong>Altura:</strong> 1,93m</p>
-    <p><strong>Aparência:</strong> Pele morena, cabelo castanho com franja branca, tatuagem preta em formato de ondas no braço esquerdo.</p>
-    <p><strong>Roupas padrão:</strong> Regata cinza, calça verde escura rasgada, tênis cinza.</p>
+            <div class="system-status">
+                <span class="status-dot"></span>
+                SISTEMA RESTRITO
+            </div>
+        </header>
 
-    <h3>🌑 Natureza</h3>
-    <p>Kin é um Skinwalker do norte do Pará, criatura metamórfica que aprendeu a se comunicar e viver como humano.</p>
-    <p>Durante 90% de sua vida, foi irracional e bestial. Desenvolveu sentimentos e compreensão ao observar o humano Danii.</p>
+        <nav class="breadcrumb" aria-label="Navegação">
+            <a href="index.html">TERMINAL</a>
+            <span class="separator">/</span>
+            <span>ARQUIVOS</span>
+            <span class="separator">/</span>
+            <span class="current">K.A-114</span>
+        </nav>
 
-    <h3> Personalidade</h3>
-    <ul>
-      <li>Arrogante, impulsivo, leal ao Danii.</li>
-      <li>Desenvolveu afeição verdadeira por membros da Tríade.</li>
-      <li>Tem forte conexão espiritual com o sol, a lua e o vazio. Seus olhos brilham conforme suas falsas emoções.</li>
-    </ul>
+        <section>
+            <div class="eyebrow">
+                <span class="eyebrow-line"></span>
+                REGISTRO DE ANOMALIA
+            </div>
 
-    <h3> Transformação</h3>
-    <p>Possui controle total sobre sua forma física. Sua forma feminina não é disfarce, ela é uma extensão natural de si mesmo.</p>
-  </div>
+            <h1>Arquivo <span>K.A-114</span></h1>
 
-  <div class="bloco">
-    <h2>🔸 K.A-114-B – Forma alternativa</h2>
-    <p><strong>Codinome:</strong> A Flor do Medo, A Mulher do Vazio</p>
-    <p><strong>Vínculo direto com K.A-114, forma alternativa.</strong> Não é clone, não é duplicata.</p>
+            <p class="subtitle">
+                Dossiê de identificação e análise de entidade metamórfica.
+                Os dados apresentados estão sujeitos à revisão institucional.
+            </p>
+        </section>
 
-    <h3> Aparência</h3>
-    <ul>
-      <li>Rosto mais fino, cabelo cresce até os ombros, ondulado e com franja branca.</li>
-      <li>Voz suave, mas arrogante.</li>
-      <li>Postura mais ereta, andar felino.</li>
-    </ul>
+        <div class="alert-banner">
+            <div class="alert-main">
+                <span class="alert-icon">!</span>
+                CLASSIFICAÇÃO: CRÍTICO
+            </div>
+            <span class="alert-code">REF. KA114-1948</span>
+        </div>
 
-    <h3> Emoção e Psicologia</h3>
-    <p>A forma B foi adotada para caça, e hoje é raramente vista. Kin assume a forma feminina como forma de ódio e objetivo.</p>
-    <p>Costuma dizer:</p>
-    <div class="codigo">"Eles esquecem que eu mudo de forma."</div>
-    <div class="codigo">"Se eu não sinto, então enganar a mim mesmo."</div>
+        <!-- 01: SUJEITO ORIGINAL -->
 
-    <h3>  Vocabulário e Padrões de Fala</h3>
-    <ul>
-      <li>Chama João de “moço” ou “cowboy”.</li>
-      <li>Provoca os outros com calma e ironia.</li>
-      <li>Menos agressiva, mais calculista.</li>
-    </ul>
-  </div>
+        <section class="panel">
+            <header class="panel-header">
+                <span class="panel-title">01 — IDENTIFICAÇÃO DO SUJEITO</span>
+                <span class="panel-reference">REGISTRO KA114-A</span>
+            </header>
 
-  <div class="bloco">
-    <h2>⚠️ RISCO DE VÍNCULO</h2>
-    <p>A forma K.A-114-B é altamente perigosa emocionalmente. Desenvolve vínculos que lembram a verdade ou quase perfeitos, sendo difícil distinguir manipulação de afeto.</p>
-    <p>⚠️ Ela pode <strong>manipular de verdade</strong>, e isso é um problema.</p>
-  </div>
+            <div class="panel-content">
+                <div class="subject-grid">
+                    <div class="field">
+                        <div class="field-label">Nome registrado</div>
+                        <div class="field-value">Kin Atlas</div>
+                    </div>
 
-  <p><em>Clique abaixo para retornar ao diretório de entidades:</em></p>
-  <a href="BASE.html">🔙 Voltar para o terminal</a>
+                    <div class="field">
+                        <div class="field-label">Designação</div>
+                        <div class="field-value mono">K.A-114</div>
+                    </div>
 
+                    <div class="field">
+                        <div class="field-label">Classificação</div>
+                        <div class="field-value">Skinwalker ancestral</div>
+                    </div>
+
+                    <div class="field">
+                        <div class="field-label">Idade estimada</div>
+                        <div class="field-value">114 anos / aparência de 18</div>
+                    </div>
+
+                    <div class="field">
+                        <div class="field-label">Altura</div>
+                        <div class="field-value">1,93 m</div>
+                    </div>
+
+                    <div class="field">
+                        <div class="field-label">Origem</div>
+                        <div class="field-value">Norte do Pará</div>
+                    </div>
+
+                    <div class="field">
+                        <div class="field-label">Estado</div>
+                        <div class="field-value red">Ativo</div>
+                    </div>
+
+                    <div class="field">
+                        <div class="field-label">Primeira detecção documentada</div>
+                        <div class="field-value mono">1948</div>
+                    </div>
+                </div>
+
+                <h2 class="section-heading">02 — Caracterização física</h2>
+
+                <p class="description">
+                    Pele morena, cabelo castanho com franja branca e tatuagem
+                    preta em formato de ondas no braço esquerdo. Vestimenta
+                    habitual registrada: regata cinza, calça verde-escura
+                    rasgada e tênis cinza.
+                </p>
+
+                <h2 class="section-heading">03 — Comportamento e cognição</h2>
+
+                <div class="observation-list">
+                    <div class="observation">
+                        <span class="observation-number">01</span>
+                        <span>Entidade metamórfica originária das florestas do norte do Pará.</span>
+                    </div>
+
+                    <div class="observation">
+                        <span class="observation-number">02</span>
+                        <span>Relatos indicam comportamento predominantemente instintivo durante grande parte de sua existência. A estimativa atual atribui aproximadamente 90% de sua vida a esse período.</span>
+                    </div>
+
+                    <div class="observation">
+                        <span class="observation-number">03</span>
+                        <span>Desenvolvimento de cognição social e respostas emocionais observado após contato prolongado com Daniiyel Starmorning.</span>
+                    </div>
+
+                    <div class="observation">
+                        <span class="observation-number">04</span>
+                        <span>Apresenta impulsividade, arrogância, lealdade seletiva e capacidade de estabelecer vínculos afetivos.</span>
+                    </div>
+
+                    <div class="observation">
+                        <span class="observation-number">05</span>
+                        <span>Alterações na aparência ocular podem acompanhar mudanças comportamentais e emocionais. A natureza exata do fenômeno permanece indeterminada.</span>
+                    </div>
+                </div>
+
+                <h2 class="section-heading">04 — Capacidade metamórfica</h2>
+
+                <p class="description">
+                    O sujeito apresenta controle avançado sobre a própria
+                    configuração física. A forma designada K.A-114-B não
+                    constitui clone ou duplicata, sendo considerada uma
+                    manifestação alternativa do mesmo indivíduo.
+                </p>
+            </div>
+        </section>
+
+        <!-- 02: FORMA ALTERNATIVA -->
+
+        <section class="panel">
+            <header class="panel-header">
+                <span class="panel-title">05 — MANIFESTAÇÃO ALTERNATIVA</span>
+                <span class="panel-reference">REGISTRO KA114-B</span>
+            </header>
+
+            <div class="panel-content">
+                <div class="forms-grid">
+                    <article class="form-card">
+                        <header class="form-card-header">
+                            <span class="form-code">K.A-114</span>
+                            <span class="form-tag">ORIGINAL</span>
+                        </header>
+
+                        <div class="form-card-body">
+                            <h3 class="form-name">Forma primária</h3>
+                            <p class="form-description">
+                                Apresentação habitual. Cabelo castanho com
+                                franja branca, tatuagem no braço esquerdo
+                                e vestimentas associadas ao registro original.
+                            </p>
+                        </div>
+                    </article>
+
+                    <article class="form-card alternative">
+                        <header class="form-card-header">
+                            <span class="form-code">K.A-114-B</span>
+                            <span class="form-tag">ALTERNATIVA</span>
+                        </header>
+
+                        <div class="form-card-body">
+                            <h3 class="form-name">A Mulher do Vazio</h3>
+                            <p class="form-description">
+                                Também identificada como A Flor do Medo.
+                                Cabelo ondulado até os ombros, franja branca,
+                                voz suave e postura calculada.
+                            </p>
+                        </div>
+                    </article>
+                </div>
+
+                <h2 class="section-heading">06 — Perfil comportamental B</h2>
+
+                <div class="observation-list">
+                    <div class="observation">
+                        <span class="observation-number">01</span>
+                        <span>Manifestação historicamente associada a atividades de caça; utilização atualmente descrita como rara.</span>
+                    </div>
+
+                    <div class="observation">
+                        <span class="observation-number">02</span>
+                        <span>Apresenta comportamento mais calculista, postura ereta, movimentação felina e tendência à provocação verbal.</span>
+                    </div>
+
+                    <div class="observation">
+                        <span class="observation-number">03</span>
+                        <span>O sujeito associa essa manifestação a estados de ódio e à perseguição de objetivos específicos. A relação entre forma física e estado emocional não foi completamente esclarecida.</span>
+                    </div>
+
+                    <div class="observation">
+                        <span class="observation-number">04</span>
+                        <span>Não há evidências de que a manifestação possua consciência independente da forma original.</span>
+                    </div>
+                </div>
+
+                <h2 class="section-heading">07 — Amostras de fala</h2>
+
+                <div class="quote">
+                    <span class="quote-label">TRANSCRIÇÃO A</span>
+                    “Eles esquecem que eu mudo de forma.”
+                </div>
+
+                <div class="quote">
+                    <span class="quote-label">TRANSCRIÇÃO B</span>
+                    “Se eu não sinto, então enganar a mim mesmo.”
+                </div>
+
+                <p class="description" style="margin-top: 12px;">
+                    Padrão linguístico registrado: ironia, provocações
+                    controladas e utilização recorrente dos termos
+                    “moço” e “cowboy” ao se dirigir a João C. Moderno.
+                </p>
+            </div>
+        </section>
+
+        <!-- 03: AVALIAÇÃO DE RISCO -->
+
+        <section class="panel risk-panel">
+            <header class="panel-header">
+                <span class="panel-title">08 — AVALIAÇÃO DE RISCO</span>
+                <span class="panel-reference">ANÁLISE COMPORTAMENTAL</span>
+            </header>
+
+            <div class="risk-content">
+                <div class="risk-level">
+                    <div class="risk-indicator"></div>
+                    <div>
+                        <div class="field-label">Categoria de risco</div>
+                        <div class="risk-name">Vínculo psicológico / elevado</div>
+                    </div>
+                </div>
+
+                <p>
+                    A manifestação K.A-114-B pode estabelecer interações
+                    emocionalmente convincentes, tornando difícil distinguir
+                    respostas afetivas genuínas de comportamentos
+                    deliberadamente manipulativos.
+                </p>
+
+                <p style="margin-top: 12px;">
+                    <strong>Nota analítica:</strong> a capacidade de manipulação
+                    foi considerada uma possibilidade concreta. A existência
+                    de vínculos emocionais não elimina esse risco.
+                </p>
+            </div>
+        </section>
+
+        <!-- 04: PROTOCOLO RESTRITO -->
+
+        <section class="restricted">
+            <header class="restricted-header">
+                <div class="lock-icon">⌑</div>
+
+                <div>
+                    <div class="restricted-title">PROTOCOLO-0</div>
+                    <div class="restricted-subtitle">
+                        ACESSO RESTRITO — NÍVEL 10
+                    </div>
+                </div>
+            </header>
+
+            <div class="restricted-content">
+                <p>
+                    O conteúdo subsequente exige autenticação.
+                    A autorização de acesso é restrita às patentes
+                    <strong>Nível 10</strong>.
+                </p>
+
+                <form class="password-form" id="accessForm">
+                    <input
+                        class="password-input"
+                        type="password"
+                        id="senha"
+                        placeholder="CÓDIGO DE ACESSO"
+                        aria-label="Código de acesso"
+                        autocomplete="off"
+                        required
+                    >
+
+                    <button class="access-button" type="submit">
+                        AUTENTICAR →
+                    </button>
+                </form>
+
+                <p class="message" id="mensagem" role="status" aria-live="polite"></p>
+            </div>
+        </section>
+
+        <footer class="page-footer">
+            <span>PROJECT114</span>
+            <span>ARQUIVO KA114</span>
+            <span>FIM DO REGISTRO</span>
+        </footer>
+
+    </main>
+
+    <script>
+        const form = document.getElementById("accessForm");
+        const input = document.getElementById("senha");
+        const mensagem = document.getElementById("mensagem");
+
+        form.addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            if (input.value === "0982") {
+                mensagem.style.color = "#a5d7b1";
+                mensagem.textContent = "CREDENCIAL ACEITA. REDIRECIONANDO...";
+                window.location.href = "protocolo0.html";
+            } else {
+                mensagem.style.color = "#e17b82";
+                mensagem.textContent = "ACESSO NEGADO. CÓDIGO NÃO RECONHECIDO.";
+                input.value = "";
+                input.focus();
+            }
+        });
+    </script>
 </body>
-
 </html>
