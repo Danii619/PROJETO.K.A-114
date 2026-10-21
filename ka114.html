@@ -1,141 +1,762 @@
+
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Dossiê K.A‑114</title>
-  <style>
-    body {
-      background-color: black;
-      color: #0ff;
-      font-family: 'Courier New', monospace;
-      padding: 40px;
-    }
-    a {
-      color: #ff5;
-      text-decoration: none;
-    }
-    .title {
-      font-size: 26px;
-      margin-bottom: 20px;
-    }
-    .data {
-      background-color: rgba(255,255,255,0.05);
-      border-left: 4px solid #f0f;
-      padding: 15px;
-      margin-top: 20px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0b0c0f">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Arquivo K.A-114 | Registro de Anomalias</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap');
+
+        :root {
+            --bg: #0b0c0f;
+            --surface: #111318;
+            --surface2: #171a20;
+            --border: #292d35;
+            --text: #dfe1e6;
+            --muted: #858b96;
+            --red: #c84b52;
+            --red-bg: #28171a;
+            --mono: 'IBM Plex Mono', monospace;
+            --sans: 'Inter', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            padding: 0 20px 55px;
+            color: var(--text);
+            background:
+                radial-gradient(ellipse at 50% 0%, #1b1e25 0%, transparent 60%),
+                var(--bg);
+            font-family: var(--sans);
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button, input {
+            font: inherit;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* CABEÇALHO DO SISTEMA */
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            min-height: 68px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .system-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-family: var(--mono);
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+        }
+
+        .brand-icon {
+            display: grid;
+            place-items: center;
+            width: 32px;
+            height: 32px;
+            border: 1px solid #505560;
+            color: #f0f1f3;
+            font-size: 11px;
+        }
+
+        .system-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--muted);
+            font-family: var(--mono);
+            font-size: 9px;
+            letter-spacing: 1px;
+        }
+
+        .status-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--red);
+            box-shadow: 0 0 8px #c84b5244;
+        }
+
+        /* NAVEGAÇÃO */
+
+        .breadcrumb {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 9px;
+            align-items: center;
+            margin: 27px 0 30px;
+            color: var(--muted);
+            font-family: var(--mono);
+            font-size: 10px;
+        }
+
+        .breadcrumb a:hover {
+            color: white;
+        }
+
+        .separator {
+            color: #4e535e;
+        }
+
+        .breadcrumb .current {
+            color: #d3d5db;
+        }
+
+        /* TÍTULO */
+
+        .document-heading {
+            margin-bottom: 25px;
+        }
+
+        .eyebrow {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            color: #a4a9b3;
+            font-family: var(--mono);
+            font-size: 10px;
+            letter-spacing: 1.8px;
+        }
+
+        .eyebrow-line {
+            width: 22px;
+            height: 1px;
+            background: var(--red);
+        }
+
+        h1 {
+            margin-top: 13px;
+            font-size: clamp(27px, 5vw, 39px);
+            font-weight: 600;
+            letter-spacing: -1.4px;
+            line-height: 1.15;
+        }
+
+        h1 span {
+            color: #a7abb4;
+            font-weight: 400;
+        }
+
+        .heading-description {
+            max-width: 570px;
+            margin-top: 12px;
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.9;
+        }
+
+        /* CLASSIFICAÇÃO */
+
+        .classification {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            padding: 13px 16px;
+            border: 1px solid #633137;
+            background: linear-gradient(90deg, #28171a, #171317);
+        }
+
+        .classification-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #e18c91;
+            font-family: var(--mono);
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 1.1px;
+        }
+
+        .warning-icon {
+            display: grid;
+            place-items: center;
+            width: 23px;
+            height: 23px;
+            border: 1px solid #85434a;
+            font-size: 12px;
+        }
+
+        .classification-code {
+            color: #a76b70;
+            font-family: var(--mono);
+            font-size: 9px;
+        }
+
+        /* PAINEL PRINCIPAL */
+
+        .panel {
+            margin-top: 22px;
+            border: 1px solid var(--border);
+            background: var(--surface);
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 19px;
+            border-bottom: 1px solid var(--border);
+            background: #ffffff03;
+        }
+
+        .panel-title {
+            color: #e1e3e8;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .panel-code {
+            color: var(--muted);
+            font-family: var(--mono);
+            font-size: 9px;
+        }
+
+        .panel-content {
+            padding: 21px 19px;
+        }
+
+        /* IDENTIFICAÇÃO */
+
+        .identity-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0 24px;
+        }
+
+        .field {
+            padding: 13px 0;
+            border-bottom: 1px solid #ffffff0c;
+        }
+
+        .field-label {
+            margin-bottom: 5px;
+            color: var(--muted);
+            font-family: var(--mono);
+            font-size: 9px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .field-value {
+            color: #e0e2e7;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .field-value.red {
+            color: #e17b81;
+        }
+
+        .field-value.mono {
+            font-family: var(--mono);
+            font-size: 11px;
+        }
+
+        /* OBSERVAÇÕES */
+
+        .section-heading {
+            margin: 26px 0 13px;
+            color: #c5c8d0;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        .observations {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            border: 1px solid var(--border);
+            background: #0d0f13;
+        }
+
+        .observation {
+            display: grid;
+            grid-template-columns: 23px 1fr;
+            gap: 10px;
+            padding: 13px 14px;
+            border-bottom: 1px solid #ffffff0b;
+            color: #b8bcc5;
+            font-size: 11px;
+            line-height: 1.8;
+        }
+
+        .observation:last-child {
+            border-bottom: none;
+        }
+
+        .observation-index {
+            color: #8d5157;
+            font-family: var(--mono);
+            font-size: 10px;
+        }
+
+        /* REGISTRO DE DECLARAÇÃO */
+
+        .statement {
+            margin-top: 22px;
+            padding: 19px;
+            border-left: 2px solid #8f454c;
+            background: #151216;
+        }
+
+        .statement-label {
+            color: #b96b71;
+            font-family: var(--mono);
+            font-size: 9px;
+            letter-spacing: 1.3px;
+        }
+
+        blockquote {
+            margin-top: 12px;
+            color: #e0dce0;
+            font-size: 13px;
+            font-style: italic;
+            line-height: 1.9;
+        }
+
+        .statement-source {
+            margin-top: 12px;
+            color: #77727c;
+            font-family: var(--mono);
+            font-size: 9px;
+        }
+
+        /* PROTOCOLO RESTRITO */
+
+        .restricted {
+            margin-top: 25px;
+            border: 1px solid #633137;
+            background: #111014;
+        }
+
+        .restricted-header {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            padding: 17px 19px;
+            border-bottom: 1px solid #49262b;
+            background: #251619;
+        }
+
+        .lock-icon {
+            display: grid;
+            place-items: center;
+            width: 31px;
+            height: 31px;
+            border: 1px solid #754047;
+            color: #e58b91;
+            font-size: 14px;
+        }
+
+        .restricted-title {
+            color: #edc2c4;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .restricted-subtitle {
+            margin-top: 3px;
+            color: #a7777c;
+            font-family: var(--mono);
+            font-size: 9px;
+        }
+
+        .restricted-content {
+            padding: 20px;
+        }
+
+        .restricted-content > p {
+            color: #9da2ad;
+            font-size: 11px;
+            line-height: 1.9;
+        }
+
+        .restricted-content > p strong {
+            color: #d8a0a4;
+            font-weight: 500;
+        }
+
+        .password-form {
+            display: flex;
+            gap: 9px;
+            margin-top: 17px;
+        }
+
+        .password-input {
+            min-width: 0;
+            flex: 1;
+            padding: 12px 13px;
+            border: 1px solid #39343c;
+            border-radius: 3px;
+            outline: none;
+            color: #f1edf1;
+            background: #0b0c10;
+            font-family: var(--mono);
+            font-size: 12px;
+            letter-spacing: 2px;
+            transition: border-color .2s;
+        }
+
+        .password-input:focus {
+            border-color: #a3545c;
+        }
+
+        .password-input::placeholder {
+            color: #56545c;
+            letter-spacing: 1px;
+        }
+
+        .access-button {
+            padding: 12px 15px;
+            border: 1px solid #a44951;
+            border-radius: 3px;
+            color: #fff0f0;
+            background: #692c33;
+            cursor: pointer;
+            font-family: var(--mono);
+            font-size: 10px;
+            letter-spacing: .5px;
+            transition: background .2s, border-color .2s;
+        }
+
+        .access-button:hover {
+            border-color: #e17b82;
+            background: #853740;
+        }
+
+        .message {
+            min-height: 20px;
+            margin-top: 10px;
+            color: #e17b82;
+            font-family: var(--mono);
+            font-size: 10px;
+        }
+
+        .page-footer {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 28px;
+            padding-top: 15px;
+            border-top: 1px solid var(--border);
+            color: #626874;
+            font-family: var(--mono);
+            font-size: 9px;
+            letter-spacing: .5px;
+        }
+
+        @media (max-width: 560px) {
+            body {
+                padding: 0 14px 35px;
+            }
+
+            .topbar {
+                min-height: 60px;
+            }
+
+            .system-brand {
+                font-size: 9px;
+            }
+
+            .system-status {
+                font-size: 8px;
+            }
+
+            .identity-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .classification-code {
+                font-size: 8px;
+            }
+
+            .panel-content {
+                padding: 17px 15px;
+            }
+
+            .password-form {
+                flex-direction: column;
+            }
+
+            .access-button {
+                min-height: 43px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+    </style>
 </head>
+
 <body>
-  <a href="index.html">« VOLTAR AO TERMINAL</a>
-  <div class="title">[ARQUIVO K.A‑114 – CLASSIFICAÇÃO: CRÍTICO]</div>
-<div class="franjabranca">FRANJABRANCA114</div>
+    <main class="container">
 
-<style>
-.franjabranca {
-  position: fixed;
-  top: 50%;
-  left: -300px;
-  font-size: 20px;
-  color: #aa00ff;
-  font-family: monospace;
-  font-weight: bold;
-  white-space: nowrap;
-  z-index: 9999;
-  animation: andarzin 12s linear infinite, glitchzin 0.4s infinite;
-  opacity: 0.7;
-  pointer-events: none;
-  mix-blend-mode: lighten;
-  text-shadow: 
-    1px 0 #ff00cc,
-    -1px 0 #00ffee,
-    0 1px #ff00cc,
-    0 -1px #00ffee;
-}
+        <header class="topbar">
+            <div class="system-brand">
+                <div class="brand-icon">114</div>
+                <span>PROJECT114 / ARCHIVE</span>
+            </div>
 
-/* Andando */
-@keyframes andarzin {
-  0%   { left: -300px; transform: rotate(0deg) scale(1); }
-  25%  { transform: rotate(2deg) scale(1.1); }
-  50%  { left: 50%; transform: rotate(-2deg) scale(1); }
-  75%  { transform: rotate(2deg) scale(1.1); }
-  100% { left: 110%; transform: rotate(0deg) scale(1); }
-}
+            <div class="system-status">
+                <span class="status-dot"></span>
+                SISTEMA RESTRITO
+            </div>
+        </header>
 
-/* Glitch visual */
-@keyframes glitchzin {
-  0% {
-    text-shadow: 2px 0 red, -2px 0 cyan;
-    transform: translateX(0);
-  }
-  20% {
-    text-shadow: -2px 0 magenta, 2px 0 lime;
-    transform: translateX(-1px);
-  }
-  40% {
-    text-shadow: 2px 2px blue, -2px -2px red;
-    transform: translateX(1px);
-  }
-  60% {
-    text-shadow: 0 0 white;
-    transform: translateY(1px);
-  }
-  80% {
-    text-shadow: -1px 1px #00ffff, 1px -1px #ff00ff;
-    transform: translateY(-1px);
-  }
-  100% {
-    text-shadow: 1px 0 #ff00cc, -1px 0 #00ffee;
-    transform: translateX(0);
-  }
-}
-</style>
-</style>
-  <div class="data">
-    <strong>NOME:</strong> Kin Atlas<br>
-    <strong>ALIAS:</strong> K.A‑114<br>
-    <strong>ESPÉCIE:</strong> Skinwalker (confirmado)<br>
-    <strong>ESTADO:</strong> Ativo / Infiltrado<br>
-    <strong>ALTURA:</strong> 1,93m<br>
-    <strong>ORIGEM:</strong> Florestas do Pará<br>
-    <strong>PRIMEIRA DETECÇÃO:</strong> 1948<br>
-    <strong>VÍNCULOS:</strong> Daniiyel Starmorning, João C. Moderno<br>
-    <strong>PERIGO:</strong> Nível Vermelho Escuro<br>
-    <strong>OBSERVAÇÕES:</strong><br>
-    • Unidade rara de Skinwalker com cognição humanizada.<br>
-    • Capaz de assumir formas humanas, incluindo gênero oposto.<br>
-    • Alto poder de adaptação social.<br>
-    • Relatos indicam sentimentos emergentes e apego emocional incomum.<br>
-    • Suspeita-se que tenha eliminado o capitão Moderno (pai) no protocolo Alfa.<br>
-    • Foi avistado na Área 51, posteriormente resgatado.<br>
-    <br>
-    <em>Última frase registrada:</em> <br>
-    <q>“Você não vai encontrá-lo… e se for tentar,  vai ter que me prender até o fim dos tempos.”</q>
-    <div class="protocolo">
-  <h2>🔒 PROTOCOLO-0</h2>
-  <p><strong>⚠️ CLASSIFICADO – ACESSO RESTRITO</strong></p>
-  <p>O conteúdo a seguir só pode ser visualizado por patentes Nível 10.</p>
-  <p>Para continuar, insira a senha:</p>
+        <nav class="breadcrumb" aria-label="Navegação">
+            <a href="index.html">TERMINAL</a>
+            <span class="separator">/</span>
+            <span>ARQUIVOS</span>
+            <span class="separator">/</span>
+            <span class="current">K.A-114</span>
+        </nav>
 
-  <form onsubmit="return verificarSenha()">
-    <input type="password" id="senha" placeholder="..." required>
-    <button type="submit">Acessar</button>
-  </form>
-  <p id="mensagem" style="color: red;"></p>
-</div>
+        <section class="document-heading">
+            <div class="eyebrow">
+                <span class="eyebrow-line"></span>
+                REGISTRO DE ANOMALIA
+            </div>
 
-<script>
-  function verificarSenha() {
-    const senha = document.getElementById("senha").value;
-    if (senha === "FRANJABRANCA114") {
-      window.location.href = "protocolo0.html";
-      return false;
-    } else {
-      document.getElementById("mensagem").textContent = "Senha incorreta.";
-      return false;
-    }
-  }
-</script>
-  </div>
+            <h1>Arquivo <span>K.A-114</span></h1>
+
+            <p class="heading-description">
+                Dossiê de identificação, observação e acompanhamento
+                de entidade classificada pelo sistema de análise.
+            </p>
+        </section>
+
+        <div class="classification">
+            <div class="classification-label">
+                <span class="warning-icon">!</span>
+                CLASSIFICAÇÃO: CRÍTICO
+            </div>
+
+            <span class="classification-code">REF. KA114-1948</span>
+        </div>
+
+        <section class="panel">
+            <header class="panel-header">
+                <span class="panel-title">01 — IDENTIFICAÇÃO</span>
+                <span class="panel-code">ARQ. 114-A</span>
+            </header>
+
+            <div class="panel-content">
+                <div class="identity-grid">
+
+                    <div class="field">
+                        <div class="field-label">Nome registrado</div>
+                        <div class="field-value">Kin Atlas</div>
+                    </div>
+
+                    <div class="field">
+                        <div class="field-label">Identificador</div>
+                        <div class="field-value mono">K.A-114</div>
+                    </div>
+
+                    <div class="field">
+                        <div class="field-label">Classificação biológica</div>
+                        <div class="field-value">Skinwalker — confirmado</div>
+                    </div>
+
+                    <div class="field">
+                        <div class="field-label">Estado operacional</div>
+                        <div class="field-value red">Ativo / Infiltrado</div>
+                    </div>
+
+                    <div class="field">
+                        <div class="field-label">Altura registrada</div>
+                        <div class="field-value">1,93 m</div>
+                    </div>
+
+                    <div class="field">
+                        <div class="field-label">Origem conhecida</div>
+                        <div class="field-value">Florestas do Pará</div>
+                    </div>
+
+                    <div class="field">
+                        <div class="field-label">Primeira detecção</div>
+                        <div class="field-value mono">1948</div>
+                    </div>
+
+                    <div class="field">
+                        <div class="field-label">Nível de ameaça</div>
+                        <div class="field-value red">Vermelho escuro</div>
+                    </div>
+
+                    <div class="field">
+                        <div class="field-label">Vínculos identificados</div>
+                        <div class="field-value">Daniiyel Starmorning; João C. Moderno</div>
+                    </div>
+
+                    <div class="field">
+                        <div class="field-label">Última condição conhecida</div>
+                        <div class="field-value">Em atividade</div>
+                    </div>
+
+                </div>
+
+                <h2 class="section-heading">02 — Observações de campo</h2>
+
+                <div class="observations">
+                    <div class="observation">
+                        <span class="observation-index">01</span>
+                        <span>Unidade de Skinwalker com capacidade cognitiva e comportamento social comparáveis aos humanos.</span>
+                    </div>
+
+                    <div class="observation">
+                        <span class="observation-index">02</span>
+                        <span>Capaz de assumir diferentes formas humanas, incluindo representações de gênero oposto.</span>
+                    </div>
+
+                    <div class="observation">
+                        <span class="observation-index">03</span>
+                        <span>Apresenta elevada capacidade de adaptação social, dificultando sua identificação em ambientes civis.</span>
+                    </div>
+
+                    <div class="observation">
+                        <span class="observation-index">04</span>
+                        <span>Relatos apontam comportamentos afetivos e vínculos interpessoais considerados incomuns para a classificação.</span>
+                    </div>
+
+                    <div class="observation">
+                        <span class="observation-index">05</span>
+                        <span>Há suspeitas de envolvimento no incidente relacionado ao capitão Moderno durante o Protocolo Alfa. Evidências inconclusivas.</span>
+                    </div>
+
+                    <div class="observation">
+                        <span class="observation-index">06</span>
+                        <span>Registro de avistamento na Área 51, seguido de operação de resgate. Circunstâncias completas não documentadas neste arquivo.</span>
+                    </div>
+                </div>
+
+                <h2 class="section-heading">03 — Registro de declaração</h2>
+
+                <div class="statement">
+                    <div class="statement-label">
+                        TRANSCRIÇÃO / ORIGEM NÃO CONFIRMADA
+                    </div>
+
+                    <blockquote>
+                        “Você não vai encontrá-lo… e se for tentar, vai ter que me prender até o fim dos tempos.”
+                    </blockquote>
+
+                    <div class="statement-source">
+                        REF. TRANSCRIÇÃO KA114-06 // AUTENTICIDADE PENDENTE
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="restricted">
+            <header class="restricted-header">
+                <div class="lock-icon">⌑</div>
+
+                <div>
+                    <div class="restricted-title">PROTOCOLO-0</div>
+                    <div class="restricted-subtitle">
+                        ÁREA DE ACESSO CONTROLADO
+                    </div>
+                </div>
+            </header>
+
+            <div class="restricted-content">
+                <p>
+                    Este segmento contém material de
+                    <strong>classificação restrita</strong>.
+                    A continuidade da consulta exige uma credencial
+                    de acesso autorizada.
+                </p>
+
+                <form class="password-form" id="accessForm">
+                    <input
+                        class="password-input"
+                        type="password"
+                        id="senha"
+                        placeholder="CÓDIGO DE ACESSO"
+                        aria-label="Código de acesso"
+                        autocomplete="off"
+                        required
+                    >
+
+                    <button class="access-button" type="submit">
+                        AUTENTICAR →
+                    </button>
+                </form>
+
+                <p class="message" id="mensagem" role="status" aria-live="polite"></p>
+            </div>
+        </section>
+
+        <footer class="page-footer">
+            <span>PROJECT114</span>
+            <span>ARQUIVO K.A-114</span>
+            <span>FIM DO REGISTRO</span>
+        </footer>
+
+    </main>
+
+    <script>
+        const form = document.getElementById("accessForm");
+        const input = document.getElementById("senha");
+        const mensagem = document.getElementById("mensagem");
+
+        form.addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            if (input.value === "0982") {
+                mensagem.style.color = "#a5d7b1";
+                mensagem.textContent = "CREDENCIAL ACEITA. REDIRECIONANDO...";
+
+                window.location.href = "protocolo0.html";
+            } else {
+                mensagem.style.color = "#e17b82";
+                mensagem.textContent = "ACESSO NEGADO. CÓDIGO NÃO RECONHECIDO.";
+
+                input.value = "";
+                input.focus();
+            }
+        });
+    </script>
 </body>
 </html>
