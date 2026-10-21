@@ -2,136 +2,374 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#0a0b0e">
   <title>Terminal SAC 51</title>
   <style>
-    /* Centralização total e estética aesthetic */
+    :root {
+      --bg: #0a0b0e;
+      --panel: #12141a;
+      --key: #1b1e26;
+      --key-hover: #262a35;
+      --border: #30343e;
+      --text: #e5e7eb;
+      --muted: #9298a5;
+      --subtle: #626977;
+      --red: #a52a32;
+      --red-light: #d75a63;
+      --green: #4cff7a;
+      --mono: "Courier New", monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html {
+      background: var(--bg);
+    }
+
     body {
-      background-color: black;
-      color: white;
-      font-family: monospace;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center; /* Centraliza verticalmente */
-      min-height: 100vh;      /* Garante ocupação de toda a tela */
+      justify-content: center;
+      min-height: 100vh;
+      min-height: 100dvh;
       margin: 0;
-      padding: 20px;
-      box-sizing: border-box;
+      padding:
+        max(20px, env(safe-area-inset-top))
+        max(16px, env(safe-area-inset-right))
+        max(20px, env(safe-area-inset-bottom))
+        max(16px, env(safe-area-inset-left));
+      background:
+        radial-gradient(circle at 50% 0%, #1a1217 0%, transparent 60%),
+        var(--bg);
+      color: var(--text);
+      font-family: var(--mono);
+    }
+
+    /* Scanlines */
+    body::before {
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      background: repeating-linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0.02) 0,
+        rgba(255, 255, 255, 0.02) 1px,
+        transparent 1px,
+        transparent 3px
+      );
+      content: "";
+      pointer-events: none;
+    }
+
+    .terminal {
+      width: 100%;
+      max-width: 380px;
+      padding: 26px 22px 24px;
+      border: 1px solid var(--border);
+      background: var(--panel);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+      animation: entrada .5s ease backwards;
+    }
+
+    .topline {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 14px;
+      color: var(--red-light);
+      font-size: 10px;
+      letter-spacing: 1.5px;
+    }
+
+    .topline i {
+      width: 6px;
+      height: 6px;
+      background: var(--red-light);
+      animation: piscar 1.8s steps(2, start) infinite;
     }
 
     h1 {
-      margin-bottom: 5px;
-      text-align: center;
+      margin: 0 0 8px;
+      font-size: clamp(15px, 4.4vw, 18px);
+      font-weight: bold;
       letter-spacing: 2px;
+      line-height: 1.4;
+      text-align: center;
     }
 
     .info {
-      font-size: 14px;
-      color: #aaa;
-      margin-bottom: 20px;
+      margin-bottom: 22px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
       text-align: center;
     }
 
+    .info strong {
+      display: inline-block;
+      margin-top: 2px;
+      padding: 1px 8px;
+      border: 1px solid #593238;
+      background: rgba(165, 42, 50, 0.12);
+      color: #e2a2a6;
+      letter-spacing: 2px;
+    }
+
     .display {
-      font-size: 24px;
-      background-color: #111;
-      border: 1px solid #444;
-      padding: 10px 20px;
-      margin-bottom: 20px;
-      min-width: 240px;
+      min-height: 62px;
+      margin-bottom: 18px;
+      padding: 14px 16px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: #07080b;
+      box-shadow: inset 0 0 20px rgba(76, 255, 122, 0.04);
+      color: var(--green);
+      font-size: clamp(22px, 7vw, 28px);
+      letter-spacing: 4px;
       text-align: center;
-      border-radius: 6px;
-      color: #0f0; /* Cor verde terminal para o número digitado */
+      text-shadow: 0 0 8px rgba(76, 255, 122, 0.35);
+      white-space: nowrap;
     }
 
     .teclado {
       display: grid;
-      grid-template-columns: repeat(3, 80px);
+      grid-template-columns: repeat(3, 1fr);
       gap: 10px;
-      justify-content: center;
     }
 
     .teclado button {
-      padding: 20px;
-      font-size: 18px;
-      border: none;
+      display: grid;
+      place-items: center;
+      aspect-ratio: 1.25 / 1;
+      min-height: 56px;
+      padding: 0;
+      border: 1px solid var(--border);
       border-radius: 6px;
-      background-color: #222;
-      color: white;
+      background: var(--key);
+      color: var(--text);
       cursor: pointer;
-      transition: background-color 0.2s;
+      font-family: var(--mono);
+      font-size: 22px;
+      touch-action: manipulation;
+      user-select: none;
+      -webkit-user-select: none;
+      transition: background-color .15s ease, border-color .15s ease, transform .08s ease;
     }
 
     .teclado button:hover {
-      background-color: #333;
+      border-color: #634047;
+      background: var(--key-hover);
+    }
+
+    .teclado button:active,
+    .teclado button.press {
+      border-color: var(--red-light);
+      background: #2c1a1f;
+      transform: scale(.95);
+    }
+
+    .teclado button.limpar {
+      color: var(--red-light);
+    }
+
+    .teclado button.ligar-btn {
+      border-color: #2d6b3f;
+      background: #14301c;
+    }
+
+    .teclado button.ligar-btn:hover {
+      background: #1a4026;
+    }
+
+    .teclado button.ligar-btn:active,
+    .teclado button.ligar-btn.press {
+      border-color: var(--green);
+      background: #1f5230;
+    }
+
+    .teclado button:focus-visible,
+    .terminal-btn:focus-visible,
+    .fechar-video:focus-visible {
+      outline: 2px solid var(--red-light);
+      outline-offset: 3px;
+    }
+
+    .teclado img {
+      display: block;
+      width: 28px;
+      height: auto;
     }
 
     .msg {
-      margin-top: 20px;
-      height: 24px;
-      font-size: 16px;
-      color: #0f0;
+      min-height: 24px;
+      margin-top: 18px;
+      color: var(--green);
+      font-size: 14px;
+      letter-spacing: 1px;
       text-align: center;
+      text-shadow: 0 0 8px rgba(76, 255, 122, 0.3);
     }
 
     .terminal-btn {
-      margin-top: 30px;
-      padding: 10px 20px;
-      background-color: #1a1a1a;
-      color: #666;
-      border: 1px solid #333;
+      margin-top: 22px;
+      padding: 12px 20px;
+      border: 1px solid var(--border);
       border-radius: 6px;
+      background: #14161c;
+      color: var(--muted);
       cursor: pointer;
-      font-family: monospace;
-      transition: 0.3s;
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 1px;
+      touch-action: manipulation;
+      transition: background-color .25s ease, color .25s ease, border-color .25s ease;
     }
 
     .terminal-btn:hover {
-      background-color: #fff;
+      border-color: #fff;
+      background: #fff;
       color: #000;
     }
 
-    /* CSS do Container de Vídeo */
+    /* Container de vídeo */
     #videoContainer {
       display: none;
       position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: black;
+      inset: 0;
       z-index: 100;
       justify-content: center;
       align-items: center;
+      padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+      background: black;
     }
-    video { max-width: 90%; max-height: 90%; border: 1px solid #444; }
+
+    video {
+      max-width: 100%;
+      max-height: 100%;
+      border: 1px solid #444;
+    }
+
+    .fechar-video {
+      position: absolute;
+      top: max(14px, env(safe-area-inset-top));
+      right: max(14px, env(safe-area-inset-right));
+      z-index: 101;
+      padding: 8px 13px;
+      border: 1px solid #75404a;
+      background: rgba(89, 38, 46, 0.85);
+      color: #fff;
+      cursor: pointer;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 1px;
+    }
+
+    @keyframes entrada {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes piscar {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    @media (min-width: 900px) {
+      .terminal {
+        max-width: 420px;
+        padding: 32px 28px 28px;
+      }
+
+      .teclado button {
+        font-size: 24px;
+      }
+    }
+
+    @media (max-height: 640px) {
+      .terminal {
+        padding: 18px 18px 18px;
+      }
+
+      .info {
+        margin-bottom: 14px;
+        padding-bottom: 12px;
+      }
+
+      .display {
+        min-height: 52px;
+        margin-bottom: 12px;
+        padding: 10px 14px;
+      }
+
+      .teclado {
+        gap: 8px;
+      }
+
+      .teclado button {
+        aspect-ratio: auto;
+        min-height: 46px;
+      }
+
+      .msg {
+        margin-top: 10px;
+      }
+
+      .terminal-btn {
+        margin-top: 12px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+      }
+    }
   </style>
 </head>
 <body>
 
-  <h1>TERMINAL DE COMUNICAÇÃO – SAC 51</h1>
-  <div class="info">Disque o número <strong>4190619</strong> para tentar conexão</div>
+  <div class="terminal">
+    <div class="topline"><i></i> CANAL SEGURO // SAC 51</div>
 
-  <div class="display" id="display">_</div>
+    <h1>TERMINAL DE COMUNICAÇÃO – SAC 51</h1>
+    <div class="info">Disque o número <strong>4190619</strong> para tentar conexão</div>
 
-  <div class="teclado">
-    <button onclick="digitar('1')">1</button>
-    <button onclick="digitar('2')">2</button>
-    <button onclick="digitar('3')">3</button>
-    <button onclick="digitar('4')">4</button>
-    <button onclick="digitar('5')">5</button>
-    <button onclick="digitar('6')">6</button>
-    <button onclick="digitar('7')">7</button>
-    <button onclick="digitar('8')">8</button>
-    <button onclick="digitar('9')">9</button>
-    <button onclick="limpar()">C</button>
-    <button onclick="digitar('0')">0</button>
-    <button onclick="ligar()"><img src="ligar.png" width="30" style="vertical-align: middle;" /></button>
+    <div class="display" id="display">_</div>
+
+    <div class="teclado">
+      <button onclick="digitar('1')">1</button>
+      <button onclick="digitar('2')">2</button>
+      <button onclick="digitar('3')">3</button>
+      <button onclick="digitar('4')">4</button>
+      <button onclick="digitar('5')">5</button>
+      <button onclick="digitar('6')">6</button>
+      <button onclick="digitar('7')">7</button>
+      <button onclick="digitar('8')">8</button>
+      <button onclick="digitar('9')">9</button>
+      <button class="limpar" onclick="limpar()" aria-label="Limpar">C</button>
+      <button onclick="digitar('0')">0</button>
+      <button class="ligar-btn" onclick="ligar()" aria-label="Ligar"><img src="ligar.png" alt="Ligar" /></button>
+    </div>
+
+    <div class="msg" id="msg" role="status" aria-live="polite"></div>
   </div>
-
-  <div class="msg" id="msg"></div>
 
   <button class="terminal-btn" onclick="voltar()">← VOLTAR AO TERMINAL</button>
 
   <div id="videoContainer">
-    <video id="vidKA" src="explicativoKA.mp4"></video>
+    <button class="fechar-video" type="button" onclick="fecharVideo()">✕ FECHAR</button>
+    <video id="vidKA" src="explicativoKA.mp4" playsinline></video>
   </div>
 
   <audio id="audioDDD" src="DDD.mp3"></audio>
@@ -246,6 +484,40 @@
 
     Object.values(audios).forEach(audio => {
       audio.addEventListener("ended", () => { msg.textContent = ""; });
+    });
+
+    /* ---- EXTRAS DE USO (não alteram a lógica acima) ---- */
+
+    // Vibração leve ao tocar nas teclas (celular)
+    document.querySelectorAll(".teclado button").forEach(btn => {
+      btn.addEventListener("pointerdown", () => {
+        if (navigator.vibrate) navigator.vibrate(10);
+      });
+    });
+
+    // Teclado físico: números, Enter = ligar, Backspace/Esc = limpar
+    document.addEventListener("keydown", (e) => {
+      if (e.ctrlKey || e.metaKey || e.altKey) return;
+
+      let alvo = null;
+
+      if (/^[0-9]$/.test(e.key)) {
+        digitar(e.key);
+        alvo = [...document.querySelectorAll(".teclado button")]
+          .find(b => b.textContent.trim() === e.key);
+      } else if (e.key === "Enter") {
+        e.preventDefault();
+        ligar();
+        alvo = document.querySelector(".ligar-btn");
+      } else if (e.key === "Backspace" || e.key === "Escape") {
+        limpar();
+        alvo = document.querySelector(".limpar");
+      }
+
+      if (alvo) {
+        alvo.classList.add("press");
+        setTimeout(() => alvo.classList.remove("press"), 120);
+      }
     });
   </script>
 </body>
