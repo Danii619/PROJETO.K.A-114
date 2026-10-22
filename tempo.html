@@ -2,844 +2,872 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#0b0b0d">
-  <title>Últimas Aparições // PROJECT114</title>
-
-  <style>
-    :root {
-      --bg: #0b0b0d;
-      --panel: #111114;
-      --panel-hover: #17171b;
-      --border: #303035;
-      --text: #e5e5e8;
-      --muted: #85858e;
-      --red: #c94a52;
-      --red-dim: #713238;
-      --white: #f5f5f5;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      min-height: 100vh;
-      background:
-        radial-gradient(ellipse at 50% -15%, #292024 0%, transparent 55%),
-        var(--bg);
-      color: var(--text);
-      font-family: "Courier New", monospace;
-    }
-
-    button, a {
-      font: inherit;
-    }
-
-    .container {
-      max-width: 1000px;
-      margin: auto;
-      padding: 24px 20px 40px;
-    }
-
-    .topbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 15px;
-      flex-wrap: wrap;
-      padding-bottom: 15px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .brand {
-      color: #e7e7e9;
-      font-size: 12px;
-      letter-spacing: 2px;
-      font-weight: bold;
-    }
-
-    .classification {
-      color: var(--red);
-      border: 1px solid var(--red-dim);
-      padding: 6px 9px;
-      font-size: 9px;
-      letter-spacing: 1px;
-    }
-
-    header {
-      padding: 43px 0 30px;
-      text-align: center;
-    }
-
-    .eyebrow {
-      color: var(--red);
-      font-size: 10px;
-      letter-spacing: 4px;
-      margin-bottom: 14px;
-    }
-
-    h1 {
-      margin: 0;
-      font-size: clamp(25px, 5vw, 38px);
-      font-weight: 600;
-      letter-spacing: 1px;
-    }
-
-    .subtitle {
-      max-width: 570px;
-      margin: 15px auto 0;
-      color: var(--muted);
-      font-family: Arial, sans-serif;
-      font-size: 13px;
-      line-height: 1.8;
-    }
-
-    .overview {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      border: 1px solid var(--border);
-      background: var(--border);
-      gap: 1px;
-      margin-bottom: 36px;
-    }
-
-    .overview-item {
-      background: #101013;
-      text-align: center;
-      padding: 16px 8px;
-    }
-
-    .overview-label {
-      color: var(--muted);
-      font-size: 9px;
-      letter-spacing: 1px;
-      margin-bottom: 10px;
-    }
-
-    .overview-value {
-      color: var(--white);
-      font-size: clamp(14px, 3vw, 19px);
-    }
-
-    .overview-value.red {
-      color: var(--red);
-    }
-
-    .section-title {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-bottom: 16px;
-    }
-
-    .section-title h2 {
-      margin: 0;
-      font-size: 12px;
-      font-weight: normal;
-      letter-spacing: 1px;
-    }
-
-    .section-title span {
-      color: var(--muted);
-      font-size: 9px;
-    }
-
-    .painel {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 13px;
-    }
-
-    .relato {
-      width: 100%;
-      min-width: 0;
-      position: relative;
-      overflow: hidden;
-      padding: 0;
-      text-align: left;
-      color: var(--text);
-      cursor: pointer;
-      background: var(--panel);
-      border: 1px solid var(--border);
-      transition: background .2s, border-color .2s, transform .2s;
-    }
-
-    .relato:hover,
-    .relato:focus-visible {
-      background: var(--panel-hover);
-      border-color: #8b4147;
-      transform: translateY(-2px);
-      outline: none;
-    }
-
-    .relato::before {
-      content: "";
-      position: absolute;
-      inset: 0 auto 0 0;
-      width: 2px;
-      background: var(--red-dim);
-    }
-
-    .card-head {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      padding: 13px 15px;
-      border-bottom: 1px solid #29292e;
-    }
-
-    .record-id {
-      color: var(--muted);
-      font-size: 10px;
-      letter-spacing: 1px;
-    }
-
-    .status {
-      color: var(--red);
-      font-size: 9px;
-      letter-spacing: .5px;
-      text-align: right;
-    }
-
-    .card-body {
-      padding: 20px 17px;
-    }
-
-    .personagem {
-      color: var(--white);
-      font-size: clamp(15px, 2.5vw, 19px);
-      font-weight: bold;
-      overflow-wrap: anywhere;
-    }
-
-    .codinome {
-      margin-top: 7px;
-      color: var(--muted);
-      font-size: 10px;
-    }
-
-    .separator {
-      height: 1px;
-      background: #29292e;
-      margin: 19px 0;
-    }
-
-    .label {
-      margin-bottom: 8px;
-      color: var(--muted);
-      font-size: 9px;
-      letter-spacing: 1px;
-    }
-
-    .location {
-      font-size: 12px;
-      line-height: 1.7;
-      color: #d5d5d8;
-    }
-
-    .last-seen {
-      margin-top: 16px;
-      font-size: 10px;
-      color: var(--muted);
-      line-height: 1.8;
-    }
-
-    .timer-box {
-      background: #0b0b0d;
-      border: 1px solid #2b2b31;
-      margin-top: 17px;
-      padding: 12px;
-    }
-
-    .timer-label {
-      color: var(--muted);
-      font-size: 9px;
-      margin-bottom: 9px;
-    }
-
-    .tempo {
-      color: #ededf0;
-      font-size: clamp(13px, 2.5vw, 17px);
-      font-weight: bold;
-      font-variant-numeric: tabular-nums;
-    }
-
-    .card-foot {
-      padding: 12px 15px;
-      border-top: 1px solid #29292e;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-      color: var(--muted);
-      font-size: 9px;
-      letter-spacing: .5px;
-    }
-
-    .open-label {
-      color: var(--red);
-    }
-
-    .system-note {
-      margin-top: 25px;
-      padding: 16px;
-      border: 1px solid var(--border);
-      background: #101013;
-      font-size: 10px;
-      line-height: 1.9;
-      color: var(--muted);
-    }
-
-    .system-note strong {
-      color: #d4d4d8;
-      font-weight: normal;
-    }
-
-    footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 15px;
-      border-top: 1px solid var(--border);
-      padding-top: 20px;
-      margin-top: 35px;
-    }
-
-    .back {
-      color: #dedee2;
-      text-decoration: none;
-      border: 1px solid #45454c;
-      padding: 12px 16px;
-      font-size: 10px;
-      transition: .2s;
-    }
-
-    .back:hover {
-      background: #202025;
-      border-color: var(--red-dim);
-    }
-
-    .footer-info {
-      color: #66666e;
-      font-size: 9px;
-      line-height: 1.8;
-      text-align: right;
-    }
-
-    /* JANELA DE LOCALIZAÇÃO */
-
-    .modal {
-      display: none;
-      position: fixed;
-      inset: 0;
-      z-index: 20;
-      background: #000c;
-      padding: 16px;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .modal.open {
-      display: flex;
-    }
-
-    .modal-box {
-      width: min(760px, 100%);
-      max-height: 92vh;
-      overflow-y: auto;
-      background: #101013;
-      border: 1px solid #49494f;
-      box-shadow: 0 20px 80px #000;
-      animation: enter .18s ease-out;
-    }
-
-    @keyframes enter {
-      from {
-        opacity: 0;
-        transform: translateY(8px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .modal-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 15px;
-      padding: 18px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .modal-kicker {
-      color: var(--red);
-      font-size: 9px;
-      letter-spacing: 2px;
-      margin-bottom: 9px;
-    }
-
-    .modal-title {
-      font-size: clamp(17px, 4vw, 23px);
-      font-weight: bold;
-      overflow-wrap: anywhere;
-    }
-
-    .close {
-      width: 34px;
-      height: 34px;
-      flex-shrink: 0;
-      color: #ddd;
-      background: #19191d;
-      border: 1px solid #414148;
-      cursor: pointer;
-      font-size: 20px;
-    }
-
-    .close:hover {
-      color: var(--red);
-      border-color: var(--red-dim);
-    }
-
-    .metadata {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 1px;
-      background: var(--border);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .meta {
-      padding: 14px 16px;
-      background: #121215;
-      min-width: 0;
-    }
-
-    .meta-label {
-      color: var(--muted);
-      font-size: 9px;
-      margin-bottom: 8px;
-      letter-spacing: .5px;
-    }
-
-    .meta-value {
-      color: #e1e1e4;
-      font-size: 11px;
-      line-height: 1.7;
-      overflow-wrap: anywhere;
-    }
-
-    .map-wrap {
-      padding: 15px;
-    }
-
-    .map-frame {
-      width: 100%;
-      height: 330px;
-      display: block;
-      background: #19191d;
-      border: 1px solid #36363c;
-    }
-
-    .map-placeholder {
-      height: 330px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      gap: 12px;
-      padding: 20px;
-      border: 1px solid #36363c;
-      background:
-        linear-gradient(#ffffff05 1px, transparent 1px),
-        linear-gradient(90deg, #ffffff05 1px, transparent 1px),
-        #111114;
-      background-size: 25px 25px;
-    }
-
-    .map-placeholder .crosshair {
-      font-size: 38px;
-      color: var(--red);
-    }
-
-    .map-placeholder p {
-      color: var(--muted);
-      font-size: 11px;
-      line-height: 1.8;
-      max-width: 300px;
-    }
-
-    .map-caption {
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 10px;
-      color: var(--muted);
-      font-size: 9px;
-      line-height: 1.7;
-    }
-
-    .map-caption strong {
-      color: var(--red);
-      font-weight: normal;
-    }
-
-    .map-actions {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-top: 14px;
-    }
-
-    .map-link {
-      display: inline-block;
-      padding: 11px 13px;
-      background: #19191d;
-      border: 1px solid #494950;
-      color: #ededf0;
-      text-decoration: none;
-      font-size: 10px;
-      transition: .2s;
-    }
-
-    .map-link.primary {
-      background: #281417;
-      border-color: #74383e;
-      color: #f0d9db;
-    }
-
-    .map-link:hover {
-      border-color: var(--red);
-    }
-
-    .coordinates {
-      padding: 0 16px 18px;
-      font-size: 10px;
-      line-height: 1.8;
-      color: var(--muted);
-      overflow-wrap: anywhere;
-    }
-
-    .coordinates span {
-      color: #dedee2;
-    }
-
-    @media (max-width: 620px) {
-      .container {
-        padding: 18px 12px 30px;
-      }
-
-      .painel {
-        grid-template-columns: 1fr;
-      }
-
-      .overview {
-        grid-template-columns: 1fr;
-      }
-
-      .overview-item {
-        padding: 12px;
-      }
-
-      .map-frame,
-      .map-placeholder {
-        height: 280px;
-      }
-
-      .footer-info {
-        text-align: left;
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        animation-duration: .01ms !important;
-        transition-duration: .01ms !important;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#111318">
+<title>Últimas Aparições | PROJECT114</title>
+
+<style>
+:root {
+  --bg: #111318;
+  --panel: #191c23;
+  --panel-dark: #14161c;
+  --border: #30343e;
+  --text: #e3e4e8;
+  --muted: #9296a1;
+  --red: #a52a32;
+  --red-light: #d44a52;
+  --black: #090a0d;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Courier New", monospace;
+  min-height: 100vh;
+}
+
+button, a { font: inherit; }
+
+a { color: inherit; }
+
+.page {
+  width: min(1040px, 100%);
+  margin: auto;
+  padding: 24px 20px 40px;
+}
+
+.topline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border);
+}
+
+.brand {
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+.classification {
+  color: #d7a4a7;
+  border: 1px solid #633238;
+  padding: 6px 9px;
+  font-size: 9px;
+  letter-spacing: 1px;
+}
+
+.breadcrumb {
+  margin-top: 19px;
+  color: var(--muted);
+  font-size: 10px;
+  letter-spacing: 1px;
+}
+
+.breadcrumb span { color: var(--red-light); }
+
+header {
+  margin: 34px 0 26px;
+  padding: 25px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--red);
+}
+
+.eyebrow {
+  color: var(--red-light);
+  font-size: 10px;
+  letter-spacing: 2px;
+  margin-bottom: 13px;
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(24px, 5vw, 35px);
+  letter-spacing: 1px;
+  font-weight: normal;
+}
+
+.subtitle {
+  color: var(--muted);
+  font-family: Arial, sans-serif;
+  font-size: 13px;
+  line-height: 1.8;
+  max-width: 660px;
+  margin: 14px 0 0;
+}
+
+.overview {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 32px;
+}
+
+.overview-item {
+  background: var(--panel-dark);
+  border: 1px solid var(--border);
+  padding: 15px;
+}
+
+.overview-label {
+  color: var(--muted);
+  font-size: 9px;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+}
+
+.overview-value {
+  font-size: 17px;
+  color: var(--text);
+}
+
+.overview-value.red { color: var(--red-light); }
+
+.section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+
+.section-head h2 {
+  font-size: 12px;
+  font-weight: normal;
+  letter-spacing: 1px;
+  margin: 0;
+}
+
+.section-head span {
+  color: var(--muted);
+  font-size: 9px;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.record {
+  display: block;
+  width: 100%;
+  text-align: left;
+  color: var(--text);
+  background: var(--panel);
+  border: 1px solid var(--border);
+  padding: 0;
+  cursor: pointer;
+  transition: background .18s, border-color .18s;
+}
+
+.record:hover, .record:focus-visible {
+  background: #20232b;
+  border-color: #8d4147;
+  outline: none;
+}
+
+.record-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 15px;
+  border-bottom: 1px solid var(--border);
+  background: #15171d;
+}
+
+.record-code {
+  color: var(--muted);
+  font-size: 10px;
+  letter-spacing: 1px;
+}
+
+.status {
+  font-size: 9px;
+  color: #d47b80;
+  text-align: right;
+}
+
+.record-content { padding: 18px 16px; }
+
+.person-name {
+  font-size: 18px;
+  font-weight: bold;
+  overflow-wrap: anywhere;
+}
+
+.person-sub {
+  color: var(--muted);
+  font-size: 10px;
+  margin-top: 7px;
+}
+
+.rule {
+  height: 1px;
+  background: var(--border);
+  margin: 17px 0;
+}
+
+.label {
+  color: var(--muted);
+  font-size: 9px;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+
+.location {
+  font-family: Arial, sans-serif;
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.last-date {
+  margin-top: 14px;
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.7;
+}
+
+.timer-box {
+  padding: 12px;
+  margin-top: 15px;
+  background: var(--black);
+  border: 1px solid #303039;
+}
+
+.timer-title {
+  color: var(--muted);
+  font-size: 9px;
+  margin-bottom: 8px;
+}
+
+.timer {
+  font-size: 16px;
+  color: #e5e5e8;
+  font-variant-numeric: tabular-nums;
+}
+
+.record-bottom {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 12px 15px;
+  border-top: 1px solid var(--border);
+  font-size: 9px;
+  color: var(--muted);
+}
+
+.record-bottom .open-label { color: #d47b80; }
+
+.note {
+  margin-top: 24px;
+  padding: 15px;
+  background: var(--panel-dark);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.9;
+}
+
+.note strong {
+  color: #d5d6da;
+  font-weight: normal;
+}
+
+footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 30px;
+  padding-top: 18px;
+  border-top: 1px solid var(--border);
+}
+
+.back {
+  display: inline-block;
+  text-decoration: none;
+  border: 1px solid #454852;
+  padding: 11px 16px;
+  background: transparent;
+  font-size: 10px;
+  transition: .2s;
+}
+
+.back:hover {
+  border-color: var(--red);
+  background: #191a20;
+}
+
+.footer-info {
+  color: var(--muted);
+  font-size: 9px;
+  line-height: 1.8;
+  text-align: right;
+}
+
+/* JANELA DO REGISTRO */
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 50;
+  inset: 0;
+  background: #000c;
+  padding: 16px;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal.open { display: flex; }
+
+.modal-box {
+  width: min(850px, 100%);
+  max-height: 94vh;
+  overflow-y: auto;
+  background: var(--bg);
+  border: 1px solid #454852;
+  box-shadow: 0 20px 70px #000;
+}
+
+.modal-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 18px;
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+
+.modal-eyebrow {
+  font-size: 9px;
+  color: #d47b80;
+  letter-spacing: 1.5px;
+  margin-bottom: 9px;
+}
+
+.modal-title {
+  font-size: clamp(17px, 4vw, 24px);
+  overflow-wrap: anywhere;
+}
+
+.close {
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  border: 1px solid #454852;
+  background: #121318;
+  color: #ddd;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.close:hover {
+  border-color: var(--red);
+  color: #e89a9e;
+}
+
+.metadata {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.meta {
+  min-width: 0;
+  padding: 13px 16px;
+  background: #15171d;
+}
+
+.meta-label {
+  font-size: 9px;
+  color: var(--muted);
+  margin-bottom: 8px;
+  letter-spacing: .5px;
+}
+
+.meta-value {
+  font-size: 11px;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+
+/* MAPA LOCAL, DESENHADO DIRETAMENTE NA PÁGINA */
+
+.map-section { padding: 15px; }
+
+.map-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.map-heading h3 {
+  margin: 0;
+  font-size: 10px;
+  font-weight: normal;
+  letter-spacing: 1px;
+}
+
+.map-heading span {
+  color: var(--muted);
+  font-size: 9px;
+}
+
+.map-canvas {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border: 1px solid #343741;
+  background: #12151a;
+}
+
+.map-canvas svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  min-height: 230px;
+}
+
+.map-caption {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: 9px;
+  line-height: 1.7;
+}
+
+.map-caption .pin-key { color: #e05a62; }
+
+.map-info {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.map-info-item {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  padding: 12px;
+  min-width: 0;
+}
+
+.map-info-label {
+  color: var(--muted);
+  font-size: 9px;
+  margin-bottom: 8px;
+}
+
+.map-info-value {
+  font-size: 11px;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+
+.map-actions {
+  margin-top: 13px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+}
+
+.map-link {
+  text-decoration: none;
+  border: 1px solid #454852;
+  padding: 10px 12px;
+  background: #17191f;
+  font-size: 10px;
+}
+
+.map-link:hover { border-color: var(--red); }
+
+.coordinates {
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.8;
+  padding: 0 15px 17px;
+}
+
+.coordinates span { color: #dedee2; }
+
+@media (max-width: 640px) {
+  .page { padding: 16px 12px 28px; }
+  header { padding: 20px 16px; }
+  .cards { grid-template-columns: 1fr; }
+  .overview { grid-template-columns: 1fr; gap: 8px; }
+  .overview-item { padding: 12px; }
+  .overview-value { font-size: 15px; }
+  .footer-info { text-align: left; }
+  .map-info { grid-template-columns: 1fr; }
+  .map-canvas svg { min-height: 190px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition-duration: .01ms !important;
+  }
+}
+</style>
 </head>
 
 <body>
-  <main class="container">
+<main class="page">
 
-    <div class="topbar">
-      <div class="brand">PROJECT114 / ARQUIVOS INTERNOS</div>
-      <div class="classification">ACESSO RESTRITO</div>
-    </div>
-
-    <header>
-      <div class="eyebrow">DIVISÃO DE MONITORAMENTO</div>
-      <h1>Últimas Aparições</h1>
-      <p class="subtitle">
-        Histórico das últimas localizações registradas.
-        Selecione um indivíduo para acessar os dados completos
-        de sua última aparição conhecida.
-      </p>
-    </header>
-
-    <section class="overview">
-      <div class="overview-item">
-        <div class="overview-label">REGISTROS ATIVOS NO ARQUIVO</div>
-        <div class="overview-value">04</div>
-      </div>
-      <div class="overview-item">
-        <div class="overview-label">CONEXÃO DOS INDIVÍDUOS</div>
-        <div class="overview-value red">INTERROMPIDA</div>
-      </div>
-      <div class="overview-item">
-        <div class="overview-label">HORÁRIO DO SISTEMA</div>
-        <div class="overview-value" id="clock">--:--:--</div>
-      </div>
-    </section>
-
-    <div class="section-title">
-      <h2>REGISTROS DE LOCALIZAÇÃO</h2>
-      <span>04 ENTRADAS ENCONTRADAS</span>
-    </div>
-
-    <section class="painel">
-
-      <button class="relato" type="button" data-id="danii">
-        <div class="card-head">
-          <span class="record-id">ARQUIVO D-619</span>
-          <span class="status">SINAL PERDIDO</span>
-        </div>
-        <div class="card-body">
-          <div class="personagem">Daniiyel Starmorning</div>
-          <div class="codinome">IDENTIFICAÇÃO D-619</div>
-
-          <div class="separator"></div>
-
-          <div class="label">ÚLTIMA LOCALIZAÇÃO CONHECIDA</div>
-          <div class="location">Setor de observação<br>Belém, Pará, Brasil</div>
-
-          <div class="last-seen">
-            ÚLTIMO REGISTRO: <span data-date="danii"></span>
-          </div>
-
-          <div class="timer-box">
-            <div class="timer-label">TEMPO DESDE A ÚLTIMA APARIÇÃO</div>
-            <div class="tempo" data-timer="danii">--</div>
-          </div>
-        </div>
-        <div class="card-foot">
-          <span>CONSULTA DISPONÍVEL</span>
-          <span class="open-label">ABRIR ARQUIVO ↗</span>
-        </div>
-      </button>
-
-      <button class="relato" type="button" data-id="kin">
-        <div class="card-head">
-          <span class="record-id">ARQUIVO K.A-114</span>
-          <span class="status">RASTRO PERDIDO</span>
-        </div>
-        <div class="card-body">
-          <div class="personagem">Kin Atlas</div>
-          <div class="codinome">IDENTIFICAÇÃO K.A-114</div>
-
-          <div class="separator"></div>
-
-          <div class="label">ÚLTIMA LOCALIZAÇÃO CONHECIDA</div>
-          <div class="location">Perímetro florestal<br>Santarém, Pará, Brasil</div>
-
-          <div class="last-seen">
-            ÚLTIMO REGISTRO: <span data-date="kin"></span>
-          </div>
-
-          <div class="timer-box">
-            <div class="timer-label">TEMPO DESDE A ÚLTIMA APARIÇÃO</div>
-            <div class="tempo" data-timer="kin">--</div>
-          </div>
-        </div>
-        <div class="card-foot">
-          <span>CONSULTA DISPONÍVEL</span>
-          <span class="open-label">ABRIR ARQUIVO ↗</span>
-        </div>
-      </button>
-
-      <button class="relato" type="button" data-id="joao">
-        <div class="card-head">
-          <span class="record-id">ARQUIVO J-CM</span>
-          <span class="status">TELEMETRIA PERDIDA</span>
-        </div>
-        <div class="card-body">
-          <div class="personagem">João C. Moderno</div>
-          <div class="codinome">IDENTIFICAÇÃO J-CM</div>
-
-          <div class="separator"></div>
-
-          <div class="label">ÚLTIMA LOCALIZAÇÃO CONHECIDA</div>
-          <div class="location">Zona industrial<br>Marabá, Pará, Brasil</div>
-
-          <div class="last-seen">
-            ÚLTIMO REGISTRO: <span data-date="joao"></span>
-          </div>
-
-          <div class="timer-box">
-            <div class="timer-label">TEMPO DESDE A ÚLTIMA APARIÇÃO</div>
-            <div class="tempo" data-timer="joao">--</div>
-          </div>
-        </div>
-        <div class="card-foot">
-          <span>CONSULTA DISPONÍVEL</span>
-          <span class="open-label">ABRIR ARQUIVO ↗</span>
-        </div>
-      </button>
-
-      <button class="relato" type="button" data-id="jade">
-        <div class="card-head">
-          <span class="record-id">ARQUIVO J-SL</span>
-          <span class="status">RASTREIO INCONCLUSIVO</span>
-        </div>
-        <div class="card-body">
-          <div class="personagem">Jade Selene</div>
-          <div class="codinome">IDENTIFICAÇÃO J-SL</div>
-
-          <div class="separator"></div>
-
-          <div class="label">ÚLTIMA LOCALIZAÇÃO CONHECIDA</div>
-          <div class="location">Setor portuário<br>Veracruz, México</div>
-
-          <div class="last-seen">
-            ÚLTIMO REGISTRO: <span data-date="jade"></span>
-          </div>
-
-          <div class="timer-box">
-            <div class="timer-label">TEMPO DESDE A ÚLTIMA APARIÇÃO</div>
-            <div class="tempo" data-timer="jade">--</div>
-          </div>
-        </div>
-        <div class="card-foot">
-          <span>CONSULTA DISPONÍVEL</span>
-          <span class="open-label">ABRIR ARQUIVO ↗</span>
-        </div>
-      </button>
-
-    </section>
-
-    <div class="system-note">
-      <strong>NOTA DO ARQUIVO</strong><br>
-      Os horários indicam o último registro armazenado, não uma confirmação
-      da localização atual. A ausência de sinal não constitui evidência
-      conclusiva sobre o estado do indivíduo.
-    </div>
-
-    <footer>
-      <a href="BASE.html" class="back">← VOLTAR AO TERMINAL</a>
-      <div class="footer-info">
-        PROJECT114 // DIVISÃO DE MONITORAMENTO<br>
-        DOCUMENTO INTERNO // DISTRIBUIÇÃO RESTRITA
-      </div>
-    </footer>
-  </main>
-
-  <!-- JANELA DE DETALHES -->
-  <div class="modal" id="modal" role="dialog"
-       aria-modal="true" aria-labelledby="modalTitle">
-
-    <div class="modal-box">
-      <div class="modal-head">
-        <div>
-          <div class="modal-kicker">CONSULTA DE REGISTRO / GEOLOCALIZAÇÃO</div>
-          <div class="modal-title" id="modalTitle">REGISTRO</div>
-        </div>
-        <button class="close" id="closeModal"
-                type="button" aria-label="Fechar">×</button>
-      </div>
-
-      <div class="metadata">
-        <div class="meta">
-          <div class="meta-label">DATA E HORA DO REGISTRO</div>
-          <div class="meta-value" id="detailDate">--</div>
-        </div>
-        <div class="meta">
-          <div class="meta-label">TEMPO TRANSCORRIDO</div>
-          <div class="meta-value" id="detailTimer">--</div>
-        </div>
-        <div class="meta">
-          <div class="meta-label">LOCAL REGISTRADO</div>
-          <div class="meta-value" id="detailLocation">--</div>
-        </div>
-        <div class="meta">
-          <div class="meta-label">ESTADO DO SINAL</div>
-          <div class="meta-value" id="detailStatus">--</div>
-        </div>
-      </div>
-
-      <div class="map-wrap">
-        <div id="mapArea"></div>
-
-        <div class="map-caption">
-          <span><strong>●</strong> PONTO DA ÚLTIMA LOCALIZAÇÃO</span>
-          <span>MAPA: OPENSTREETMAP</span>
-        </div>
-
-        <div class="map-actions">
-          <a class="map-link primary" id="externalMap"
-             href="#" target="_blank" rel="noopener">
-            ABRIR MAPA COMPLETO ↗
-          </a>
-          <a class="map-link" id="externalSatellite"
-             href="#" target="_blank" rel="noopener">
-            VER NO MAPA ALTERNATIVO ↗
-          </a>
-        </div>
-      </div>
-
-      <div class="coordinates">
-        COORDENADAS DO REGISTRO: <span id="detailCoords">--</span><br>
-        <span id="detailNote"></span>
-      </div>
-    </div>
+  <div class="topline">
+    <div class="brand">PROJECT114</div>
+    <div class="classification">DOCUMENTO INTERNO // RESTRITO</div>
   </div>
 
-  <script>
-    /*
-      DATAS E LOCALIZAÇÕES CENOGRÁFICAS PARA A HISTÓRIA.
+  <div class="breadcrumb">
+    TERMINAL / ARQUIVOS / <span>ÚLTIMAS APARIÇÕES</span>
+  </div>
 
-      Para alterar o horário, edite ultimaLocalizacao.
-      O fuso -03:00 representa o horário de Brasília.
-      Coordenadas: [latitude, longitude].
-    */
+  <header>
+    <div class="eyebrow">DIVISÃO DE MONITORAMENTO</div>
+    <h1>Últimas Aparições Conhecidas</h1>
+    <p class="subtitle">
+      Consulta de registros de localização associados aos indivíduos
+      monitorados. Os dados abaixo correspondem às últimas posições
+      armazenadas no sistema.
+    </p>
+  </header>
 
-    const records = {
-      danii: {
-        name: "Daniiyel Starmorning",
-        code: "D-619",
-        location: "Setor de observação, Belém, Pará, Brasil",
-        status: "SINAL PERDIDO",
-        ultimaLocalizacao: "2026-10-21T18:44:12-03:00",
-        coords: [-1.4558, -48.4902],
-        note: "Último registro armazenado pelo setor de observação."
-      },
+  <section class="overview">
+    <div class="overview-item">
+      <div class="overview-label">REGISTROS INDEXADOS</div>
+      <div class="overview-value">04 INDIVÍDUOS</div>
+    </div>
+    <div class="overview-item">
+      <div class="overview-label">ESTADO DO MONITORAMENTO</div>
+      <div class="overview-value red">SINAIS INDISPONÍVEIS</div>
+    </div>
+    <div class="overview-item">
+      <div class="overview-label">HORÁRIO DO SISTEMA</div>
+      <div class="overview-value" id="clock">--:--:--</div>
+    </div>
+  </section>
 
-      kin: {
-        name: "Kin Atlas",
-        code: "K.A-114",
-        location: "Perímetro florestal, Santarém, Pará, Brasil",
-        status: "RASTRO PERDIDO",
-        ultimaLocalizacao: "2026-10-21T19:02:21-03:00",
-        coords: [-2.4431, -54.7083],
-        note: "Último registro armazenado antes da interrupção do sinal."
-      },
+  <div class="section-head">
+    <h2>REGISTROS DE LOCALIZAÇÃO</h2>
+    <span>SELECIONE UM INDIVÍDUO PARA CONSULTAR</span>
+  </div>
 
-      joao: {
-        name: "João C. Moderno",
-        code: "J-CM",
-        location: "Zona industrial, Marabá, Pará, Brasil",
-        status: "TELEMETRIA PERDIDA",
-        ultimaLocalizacao: "2026-10-21T20:11:33-03:00",
-        coords: [-5.3686, -49.1178],
-        note: "Última posição estimada disponível no arquivo."
+  <section class="cards">
+
+    <button class="record" type="button" data-id="danii">
+      <div class="record-top">
+        <span class="record-code">ARQUIVO D-619</span>
+        <span class="status">SINAL PERDIDO</span>
+      </div>
+      <div class="record-content">
+        <div class="person-name">Daniiyel Starmorning</div>
+        <div class="person-sub">IDENTIFICAÇÃO: D-619</div>
+        <div class="rule"></div>
+        <div class="label">ÚLTIMA LOCALIZAÇÃO CONHECIDA</div>
+        <div class="location">Setor de observação — Belém, Pará</div>
+        <div class="last-date">REGISTRO: <span data-date="danii"></span></div>
+        <div class="timer-box">
+          <div class="timer-title">TEMPO DESDE O ÚLTIMO REGISTRO</div>
+          <div class="timer" data-timer="danii">Calculando...</div>
+        </div>
+      </div>
+      <div class="record-bottom">
+        <span>CONSULTA DISPONÍVEL</span>
+        <span class="open-label">ABRIR REGISTRO ↗</span>
+      </div>
+    </button>
+
+    <button class="record" type="button" data-id="kin">
+      <div class="record-top">
+        <span class="record-code">ARQUIVO K.A-114</span>
+        <span class="status">RASTRO INTERROMPIDO</span>
+      </div>
+      <div class="record-content">
+        <div class="person-name">Kin Atlas</div>
+        <div class="person-sub">IDENTIFICAÇÃO: K.A-114</div>
+        <div class="rule"></div>
+        <div class="label">ÚLTIMA LOCALIZAÇÃO CONHECIDA</div>
+        <div class="location">Perímetro florestal — Santarém, Pará</div>
+        <div class="last-date">REGISTRO: <span data-date="kin"></span></div>
+        <div class="timer-box">
+          <div class="timer-title">TEMPO DESDE O ÚLTIMO REGISTRO</div>
+          <div class="timer" data-timer="kin">Calculando...</div>
+        </div>
+      </div>
+      <div class="record-bottom">
+        <span>CONSULTA DISPONÍVEL</span>
+        <span class="open-label">ABRIR REGISTRO ↗</span>
+      </div>
+    </button>
+
+    <button class="record" type="button" data-id="joao">
+      <div class="record-top">
+        <span class="record-code">ARQUIVO J-CM</span>
+        <span class="status">TELEMETRIA PERDIDA</span>
+      </div>
+      <div class="record-content">
+        <div class="person-name">João C. Moderno</div>
+        <div class="person-sub">IDENTIFICAÇÃO: J-CM</div>
+        <div class="rule"></div>
+        <div class="label">ÚLTIMA LOCALIZAÇÃO CONHECIDA</div>
+        <div class="location">Zona industrial — Marabá, Pará</div>
+        <div class="last-date">REGISTRO: <span data-date="joao"></span></div>
+        <div class="timer-box">
+          <div class="timer-title">TEMPO DESDE O ÚLTIMO REGISTRO</div>
+          <div class="timer" data-timer="joao">Calculando...</div>
+        </div>
+      </div>
+      <div class="record-bottom">
+        <span>CONSULTA DISPONÍVEL</span>
+        <span class="open-label">ABRIR REGISTRO ↗</span>
+      </div>
+    </button>
+
+    <button class="record" type="button" data-id="jade">
+      <div class="record-top">
+        <span class="record-code">ARQUIVO J-SL</span>
+        <span class="status">RASTREIO INCONCLUSIVO</span>
+      </div>
+      <div class="record-content">
+        <div class="person-name">Jade Selene</div>
+        <div class="person-sub">IDENTIFICAÇÃO: J-SL</div>
+        <div class="rule"></div>
+        <div class="label">ÚLTIMA LOCALIZAÇÃO CONHECIDA</div>
+        <div class="location">Setor portuário — Veracruz, México</div>
+        <div class="last-date">REGISTRO: <span data-date="jade"></span></div>
+        <div class="timer-box">
+          <div class="timer-title">TEMPO DESDE O ÚLTIMO REGISTRO</div>
+          <div class="timer" data-timer="jade">Calculando...</div>
+        </div>
+      </div>
+      <div class="record-bottom">
+        <span>CONSULTA DISPONÍVEL</span>
+        <span class="open-label">ABRIR REGISTRO ↗</span>
+      </div>
+    </button>
+
+  </section>
+
+  <div class="note">
+    <strong>NOTA DO SISTEMA:</strong><br>
+    O contador indica o tempo transcorrido desde o registro armazenado.
+    A posição exibida não representa necessariamente a localização atual
+    do indivíduo.
+  </div>
+
+  <footer>
+    <a href="BASE.html" class="back">← VOLTAR AO TERMINAL</a>
+    <div class="footer-info">
+      PROJECT114 / DIVISÃO DE MONITORAMENTO<br>
+      ARQUIVO INTERNO — DISTRIBUIÇÃO RESTRITA
+    </div>
+  </footer>
+</main>
+
+<!-- MODAL -->
+<div class="modal" id="modal" role="dialog" aria-modal="true"
+     aria-labelledby="modalTitle">
+  <div class="modal-box">
+    <div class="modal-head">
+      <div>
+        <div class="modal-eyebrow">TERMINAL / ARQUIVOS / GEOLOCALIZAÇÃO</div>
+        <div class="modal-title" id="modalTitle">REGISTRO</div>
+      </div>
+      <button class="close" id="closeModal" type="button"
+              aria-label="Fechar janela">×</button>
+    </div>
+
+    <div class="metadata">
+      <div class="meta">
+        <div class="meta-label">DATA DO REGISTRO</div>
+        <div class="meta-value" id="detailDate">--</div>
+      </div>
+      <div class="meta">
+        <div class="meta-label">TEMPO TRANSCORRIDO</div>
+        <div class="meta-value" id="detailTimer">--</div>
+      </div>
+      <div class="meta">
+        <div class="meta-label">LOCAL REGISTRADO</div>
+        <div class="meta-value" id="detailLocation">--</div>
+      </div>
+      <div class="meta">
+        <div class="meta-label">ESTADO DO SINAL</div>
+        <div class="meta-value" id="detailStatus">--</div>
+      </div>
+    </div>
+
+    <section class="map-section">
+      <div class="map-heading">
+        <h3>MAPA DA ÚLTIMA LOCALIZAÇÃO</h3>
+        <span id="mapCode">REGISTRO --</span>
+      </div>
+
+      <div class="map-canvas" id="mapCanvas"></div>
+
+      <div class="map-caption">
+        <span><span class="pin-key">●</span> ÚLTIMO PONTO REGISTRADO</span>
+        <span>REPRESENTAÇÃO CARTOGRÁFICA ESQUEMÁTICA</span>
+      </div>
+
+      <div class="map-info">
+        <div class="map-info-item">
+          <div class="map-info-label">ÁREA DE REGISTRO</div>
+          <div class="map-info-value" id="mapArea">--</div>
+        </div>
+        <div class="map-info-item">
+          <div class="map-info-label">COORDENADAS</div>
+          <div class="map-info-value" id="mapCoords">--</div>
+        </div>
+      </div>
+
+      <div class="map-actions">
+        <a href="#" class="map-link" id="externalMap"
+           target="_blank" rel="noopener">CONSULTAR MAPA GEOGRÁFICO ↗</a>
+      </div>
+    </section>
+
+    <div class="coordinates">
+      <span id="mapNote"></span>
+    </div>
+  </div>
+</div>
+
+<script>
+/*
+  MAPA INTEGRADO:
+  O desenho é gerado em SVG dentro desta página.
+  Não depende de bibliotecas, imagens ou serviços externos.
+
+  As coordenadas e os pontos de referência são cenográficos.
+  As datas usam o fuso -03:00.
+*/
+
+const records = {
+  danii: {
+    name: "Daniiyel Starmorning",
+    code: "D-619",
+    location: "Setor de observação — Belém, Pará, Brasil",
+    area: "Setor de observação / Distrito Norte",
+    status: "SINAL PERDIDO",
+    lastSeen: "2026-10-21T18:44:12-03:00",
+    coords: [-1.4558, -48.4902],
+    mapLabel: "SETOR DE OBSERVAÇÃO",
+    landmarks: ["DISTRITO NORTE", "VIA CENTRAL", "SETOR 04"],
+    note: "Último registro armazenado pelo setor de observação."
+  },
+
+  kin: {
+    name: "Kin Atlas",
+    code: "K.A-114",
+    location: "Perímetro florestal — Santarém, Pará, Brasil",
+    area: "Perímetro florestal / Zona Leste",
+    status: "RASTRO INTERROMPIDO",
+    lastSeen: "2026-10-21T19:02:21-03:00",
+    coords: [-2.4431, -54.7083],
+    mapLabel: "PERÍMETRO FLORESTAL",
+    landmarks: ["SETOR ARBÓREO", "VIA DE ACESSO", "LIMITE 02"],
+    note: "Última leitura antes da interrupção do sinal."
+  },
+
+  joao: {
+    name: "João C. Moderno",
+    code: "J-CM",
+    location: "Zona industrial — Marabá, Pará, Brasil",
+    area: "Zona industrial / Setor de carga",
+    status: "TELEMETRIA PERDIDA",
+    lastSeen: "2026-10-21T20:11:33-03:00",
+    coords: [-5.3686, -49.1178],
+    mapLabel: "ZONA INDUSTRIAL",
+    landmarks: ["SETOR DE CARGA", "AVENIDA 03", "COMPLEXO LESTE"],
+    note: "Última posição estimada antes da perda de telemetria."
+  },
+
+  jade: {
+    name: "Jade Selene",
+    code: "J-SL",
+    location: "Setor portuário — Veracruz, México",
+    area: "Setor portuário / Terminal costeiro",
+    status: "RASTREIO INCONCLUSIVO",
+    lastSeen: "2026-10-21T21:23:47-03:00",
+    coords: [19.1738, -96.1342],
+    mapLabel: "SETOR PORTUÁRIO",
+    landmarks: ["TERMINAL COSTEIRO", "VIA PORTUÁRIA", "SETOR 07"],
+    note: "Registro mantido no arquivo para consulta posterior."
+  }
+};
+
+const modal = document.getElementById("modal");
+const mapCanvas = document.getElementById("mapCanvas");
+let activeRecord = null;
+let previousFocus = null;
+
+function elapsed(ms) {
+  const total = Math.max(0, Math.floor(ms / 1000));
+  const days = Math.floor(total / 86400);
+  const hours = Math.floor((total % 86400) / 3600);
+  const minutes = Math.floor((total % 3600) / 60);
+  const seconds = total % 60;
+
+  const h = String(hours).padStart(2, "0");
+  const m = String(minutes).padStart(2, "0");
+  const s = String(seconds).padStart(2, "0");
+
+  return days > 0
+    ? `${days}d ${h}h ${m}min ${s}s`
+    : `${h}h ${m}min ${s}s`;
+}
+
+function formatDate(value) {
+  return new Date(value).toLocaleString("pt-BR", {
+    timeZone: "America/Sao_Paulo",
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: false
+  });
+}
+
+function updateClock() {
+  const now = Date.now();
+
+  document.getElementById("clock").textContent =
+    new Date().toLocaleTimeString("pt-BR", {
+      timeZone: "America/Sao_Paulo",
+      hour12: false
+    });
+
+  document.querySelectorAll("[data-timer]").forEach(el => {
+    const record = records[el.dataset.timer];
+    el.textContent = elapsed(now - new Date(record.lastSeen).getTime());
+  });
+
+  document.querySelectorAll("[data-date]").forEach(el => {
+    const record = records[el.dataset.date];
+    el.textContent = formatDate(record.lastSeen);
+  });
+
   
