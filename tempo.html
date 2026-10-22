@@ -3,27 +3,21 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#080a09">
-
-  <title>PROJECT114 // Últimas Aparições</title>
-
-  <link
-    rel="stylesheet"
-    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-  >
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b0b0d">
+  <title>Últimas Aparições // PROJECT114</title>
 
   <style>
     :root {
-      --bg: #080a09;
-      --panel: #101412;
-      --panel2: #151b17;
-      --green: #8cff9b;
-      --green-dim: #4b9b5b;
-      --red: #ff4747;
-      --text: #dce5dd;
-      --muted: #748078;
-      --border: #29342c;
+      --bg: #0b0b0d;
+      --panel: #111114;
+      --panel-hover: #17171b;
+      --border: #303035;
+      --text: #e5e5e8;
+      --muted: #85858e;
+      --red: #c94a52;
+      --red-dim: #713238;
+      --white: #f5f5f5;
     }
 
     * {
@@ -34,377 +28,350 @@
       margin: 0;
       min-height: 100vh;
       background:
-        radial-gradient(ellipse at 50% 0%, #15251a 0%, transparent 48%),
+        radial-gradient(ellipse at 50% -15%, #292024 0%, transparent 55%),
         var(--bg);
       color: var(--text);
       font-family: "Courier New", monospace;
     }
 
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      z-index: 10;
-      pointer-events: none;
-      opacity: 0.12;
-      background: repeating-linear-gradient(
-        to bottom,
-        transparent 0px,
-        transparent 3px,
-        #000 4px
-      );
-    }
-
-    button,
-    a {
+    button, a {
       font: inherit;
     }
 
-    button {
-      color: inherit;
-    }
-
     .container {
-      width: min(1120px, 100%);
+      max-width: 1000px;
       margin: auto;
-      padding: 25px 18px 45px;
+      padding: 24px 20px 40px;
     }
 
     .topbar {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 15px;
       flex-wrap: wrap;
-      gap: 12px;
-      padding-bottom: 16px;
+      padding-bottom: 15px;
       border-bottom: 1px solid var(--border);
     }
 
-    .system-name {
-      color: var(--green);
-      font-weight: bold;
+    .brand {
+      color: #e7e7e9;
+      font-size: 12px;
       letter-spacing: 2px;
-      font-size: 13px;
+      font-weight: bold;
     }
 
     .classification {
       color: var(--red);
-      border: 1px solid #692d2d;
-      padding: 6px 10px;
-      font-size: 10px;
+      border: 1px solid var(--red-dim);
+      padding: 6px 9px;
+      font-size: 9px;
       letter-spacing: 1px;
-      background: #210d0d;
     }
 
     header {
+      padding: 43px 0 30px;
       text-align: center;
-      padding: 37px 0 27px;
     }
 
     .eyebrow {
-      color: var(--green-dim);
-      font-size: 11px;
+      color: var(--red);
+      font-size: 10px;
       letter-spacing: 4px;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
     }
 
     h1 {
       margin: 0;
-      font-size: clamp(23px, 5vw, 39px);
-      letter-spacing: 2px;
-      color: #f0f5f0;
-      text-shadow: 0 0 18px #8cff9b20;
+      font-size: clamp(25px, 5vw, 38px);
+      font-weight: 600;
+      letter-spacing: 1px;
     }
 
     .subtitle {
-      margin: 13px auto 0;
-      max-width: 620px;
+      max-width: 570px;
+      margin: 15px auto 0;
       color: var(--muted);
-      font-size: 12px;
+      font-family: Arial, sans-serif;
+      font-size: 13px;
       line-height: 1.8;
     }
 
-    .system-strip {
+    .overview {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 1px;
-      margin: 10px 0 25px;
-      background: var(--border);
       border: 1px solid var(--border);
+      background: var(--border);
+      gap: 1px;
+      margin-bottom: 36px;
     }
 
-    .strip-item {
-      min-width: 0;
-      background: #0c100d;
+    .overview-item {
+      background: #101013;
       text-align: center;
-      padding: 15px 8px;
+      padding: 16px 8px;
     }
 
-    .strip-label {
+    .overview-label {
       color: var(--muted);
       font-size: 9px;
       letter-spacing: 1px;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
     }
 
-    .strip-value {
-      color: var(--green);
-      font-size: clamp(14px, 3vw, 20px);
-      font-weight: bold;
+    .overview-value {
+      color: var(--white);
+      font-size: clamp(14px, 3vw, 19px);
     }
 
-    .section-heading {
+    .overview-value.red {
+      color: var(--red);
+    }
+
+    .section-title {
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
       flex-wrap: wrap;
       gap: 10px;
-      margin: 30px 0 14px;
+      margin-bottom: 16px;
+    }
+
+    .section-title h2 {
+      margin: 0;
       font-size: 12px;
+      font-weight: normal;
       letter-spacing: 1px;
     }
 
-    .section-heading span:first-child {
-      color: var(--green);
-    }
-
-    .section-heading span:last-child {
+    .section-title span {
       color: var(--muted);
-      font-size: 10px;
+      font-size: 9px;
     }
 
     .painel {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 14px;
+      gap: 13px;
     }
 
     .relato {
+      width: 100%;
+      min-width: 0;
       position: relative;
       overflow: hidden;
-      background: linear-gradient(145deg, #121814, #0b0e0c);
-      border: 1px solid var(--border);
-      text-align: left;
       padding: 0;
+      text-align: left;
+      color: var(--text);
       cursor: pointer;
-      transition: border-color 0.2s, transform 0.2s, background 0.2s;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      transition: background .2s, border-color .2s, transform .2s;
     }
 
     .relato:hover,
     .relato:focus-visible {
-      border-color: var(--green-dim);
-      background: #141d16;
-      transform: translateY(-3px);
+      background: var(--panel-hover);
+      border-color: #8b4147;
+      transform: translateY(-2px);
       outline: none;
     }
 
     .relato::before {
       content: "";
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 3px;
-      height: 100%;
-      background: var(--green-dim);
+      inset: 0 auto 0 0;
+      width: 2px;
+      background: var(--red-dim);
     }
 
-    .relato.alerta::before {
-      background: var(--red);
-    }
-
-    .card-top {
+    .card-head {
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
       gap: 10px;
-      padding: 14px 16px;
-      border-bottom: 1px solid #202a22;
+      padding: 13px 15px;
+      border-bottom: 1px solid #29292e;
     }
 
-    .registro {
+    .record-id {
+      color: var(--muted);
       font-size: 10px;
       letter-spacing: 1px;
-      color: var(--muted);
     }
 
     .status {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 9px;
-      color: var(--green);
-      letter-spacing: 1px;
-      white-space: nowrap;
-    }
-
-    .status::before {
-      content: "";
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: currentColor;
-      box-shadow: 0 0 8px currentColor;
-    }
-
-    .alerta .status {
       color: var(--red);
+      font-size: 9px;
+      letter-spacing: .5px;
+      text-align: right;
     }
 
-    .card-content {
-      padding: 19px 17px 17px;
+    .card-body {
+      padding: 20px 17px;
     }
 
     .personagem {
+      color: var(--white);
       font-size: clamp(15px, 2.5vw, 19px);
       font-weight: bold;
-      color: #f0f5f0;
-      margin-bottom: 5px;
       overflow-wrap: anywhere;
     }
 
     .codinome {
-      color: var(--green-dim);
-      font-size: 10px;
-      margin-bottom: 19px;
-    }
-
-    .info-label {
-      font-size: 9px;
+      margin-top: 7px;
       color: var(--muted);
+      font-size: 10px;
+    }
+
+    .separator {
+      height: 1px;
+      background: #29292e;
+      margin: 19px 0;
+    }
+
+    .label {
+      margin-bottom: 8px;
+      color: var(--muted);
+      font-size: 9px;
       letter-spacing: 1px;
-      margin-bottom: 7px;
     }
 
-    .local {
+    .location {
       font-size: 12px;
-      line-height: 1.6;
-      margin-bottom: 16px;
+      line-height: 1.7;
+      color: #d5d5d8;
     }
 
-    .contador {
-      border: 1px solid #28392c;
-      background: #080d09;
+    .last-seen {
+      margin-top: 16px;
+      font-size: 10px;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .timer-box {
+      background: #0b0b0d;
+      border: 1px solid #2b2b31;
+      margin-top: 17px;
       padding: 12px;
     }
 
-    .contador-label {
+    .timer-label {
       color: var(--muted);
       font-size: 9px;
-      margin-bottom: 7px;
+      margin-bottom: 9px;
     }
 
     .tempo {
-      color: var(--green);
-      font-size: clamp(13px, 2.6vw, 18px);
+      color: #ededf0;
+      font-size: clamp(13px, 2.5vw, 17px);
       font-weight: bold;
       font-variant-numeric: tabular-nums;
-      letter-spacing: 1px;
     }
 
-    .card-bottom {
+    .card-foot {
+      padding: 12px 15px;
+      border-top: 1px solid #29292e;
       display: flex;
       justify-content: space-between;
       align-items: center;
       gap: 10px;
-      border-top: 1px solid #202a22;
-      padding: 12px 16px;
       color: var(--muted);
       font-size: 9px;
-      letter-spacing: 1px;
+      letter-spacing: .5px;
     }
 
-    .abrir {
-      color: var(--green);
+    .open-label {
+      color: var(--red);
     }
 
-    .aviso {
+    .system-note {
       margin-top: 25px;
+      padding: 16px;
       border: 1px solid var(--border);
-      background: #0c100d;
-      padding: 15px;
+      background: #101013;
       font-size: 10px;
-      line-height: 1.8;
+      line-height: 1.9;
       color: var(--muted);
     }
 
-    .aviso strong {
-      color: var(--green);
+    .system-note strong {
+      color: #d4d4d8;
       font-weight: normal;
     }
 
-    .footer {
-      margin-top: 35px;
-      padding-top: 18px;
-      border-top: 1px solid var(--border);
+    footer {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 15px;
       flex-wrap: wrap;
+      gap: 15px;
+      border-top: 1px solid var(--border);
+      padding-top: 20px;
+      margin-top: 35px;
     }
 
-    .btn-voltar {
-      display: inline-block;
+    .back {
+      color: #dedee2;
       text-decoration: none;
-      border: 1px solid #405345;
-      background: #121a14;
-      color: var(--green);
-      padding: 12px 17px;
-      font-size: 11px;
-      transition: 0.2s;
+      border: 1px solid #45454c;
+      padding: 12px 16px;
+      font-size: 10px;
+      transition: .2s;
     }
 
-    .btn-voltar:hover {
-      background: #1b2a1e;
-      border-color: var(--green);
+    .back:hover {
+      background: #202025;
+      border-color: var(--red-dim);
     }
 
-    .footer-note {
-      color: #536057;
+    .footer-info {
+      color: #66666e;
       font-size: 9px;
-      line-height: 1.7;
+      line-height: 1.8;
+      text-align: right;
     }
 
-    /* JANELA DO MAPA */
+    /* JANELA DE LOCALIZAÇÃO */
 
     .modal {
+      display: none;
       position: fixed;
       inset: 0;
-      z-index: 100;
-      display: none;
+      z-index: 20;
+      background: #000c;
+      padding: 16px;
       align-items: center;
       justify-content: center;
-      padding: 15px;
-      background: #000d;
-      backdrop-filter: blur(5px);
     }
 
-    .modal.aberto {
+    .modal.open {
       display: flex;
     }
 
     .modal-box {
-      width: min(850px, 100%);
+      width: min(760px, 100%);
       max-height: 92vh;
       overflow-y: auto;
-      background: #0b100c;
-      border: 1px solid #3c5942;
-      box-shadow: 0 0 45px #000;
-      animation: aparecer 0.2s ease-out;
+      background: #101013;
+      border: 1px solid #49494f;
+      box-shadow: 0 20px 80px #000;
+      animation: enter .18s ease-out;
     }
 
-    @keyframes aparecer {
+    @keyframes enter {
       from {
         opacity: 0;
-        transform: translateY(10px) scale(0.99);
+        transform: translateY(8px);
       }
       to {
         opacity: 1;
-        transform: translateY(0) scale(1);
+        transform: translateY(0);
       }
     }
 
-    .modal-header {
+    .modal-head {
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
@@ -414,34 +381,35 @@
     }
 
     .modal-kicker {
-      color: var(--green-dim);
-      font-size: 10px;
-      margin-bottom: 8px;
+      color: var(--red);
+      font-size: 9px;
       letter-spacing: 2px;
+      margin-bottom: 9px;
     }
 
     .modal-title {
-      color: #f0f5f0;
-      font-size: clamp(17px, 4vw, 24px);
+      font-size: clamp(17px, 4vw, 23px);
+      font-weight: bold;
       overflow-wrap: anywhere;
     }
 
-    .fechar {
+    .close {
+      width: 34px;
+      height: 34px;
       flex-shrink: 0;
-      width: 35px;
-      height: 35px;
+      color: #ddd;
+      background: #19191d;
+      border: 1px solid #414148;
       cursor: pointer;
-      border: 1px solid #543030;
-      background: #1a0d0d;
-      color: var(--red);
       font-size: 20px;
     }
 
-    .fechar:hover {
-      background: #341010;
+    .close:hover {
+      color: var(--red);
+      border-color: var(--red-dim);
     }
 
-    .modal-meta {
+    .metadata {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 1px;
@@ -449,9 +417,9 @@
       border-bottom: 1px solid var(--border);
     }
 
-    .meta-item {
-      padding: 13px 16px;
-      background: #0d120e;
+    .meta {
+      padding: 14px 16px;
+      background: #121215;
       min-width: 0;
     }
 
@@ -459,133 +427,144 @@
       color: var(--muted);
       font-size: 9px;
       margin-bottom: 8px;
-      letter-spacing: 1px;
+      letter-spacing: .5px;
     }
 
     .meta-value {
-      font-size: 12px;
-      line-height: 1.6;
+      color: #e1e1e4;
+      font-size: 11px;
+      line-height: 1.7;
       overflow-wrap: anywhere;
     }
 
-    .mapa-wrap {
-      position: relative;
-      padding: 14px;
+    .map-wrap {
+      padding: 15px;
     }
 
-    #mapa {
-      height: 340px;
+    .map-frame {
       width: 100%;
-      background: #111812;
-      border: 1px solid #314335;
-      z-index: 1;
+      height: 330px;
+      display: block;
+      background: #19191d;
+      border: 1px solid #36363c;
     }
 
-    .mapa-legenda {
+    .map-placeholder {
+      height: 330px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      gap: 12px;
+      padding: 20px;
+      border: 1px solid #36363c;
+      background:
+        linear-gradient(#ffffff05 1px, transparent 1px),
+        linear-gradient(90deg, #ffffff05 1px, transparent 1px),
+        #111114;
+      background-size: 25px 25px;
+    }
+
+    .map-placeholder .crosshair {
+      font-size: 38px;
+      color: var(--red);
+    }
+
+    .map-placeholder p {
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.8;
+      max-width: 300px;
+    }
+
+    .map-caption {
       display: flex;
       justify-content: space-between;
       flex-wrap: wrap;
-      gap: 10px;
+      gap: 8px;
+      margin-top: 10px;
       color: var(--muted);
       font-size: 9px;
-      margin-top: 10px;
-    }
-
-    .mapa-legenda strong {
-      color: var(--green);
-      font-weight: normal;
-    }
-
-    .coordenadas {
-      padding: 0 16px 16px;
-      color: var(--muted);
-      font-size: 10px;
-      line-height: 1.8;
-      overflow-wrap: anywhere;
-    }
-
-    .coordenadas span {
-      color: var(--green);
-    }
-
-    .leaflet-container {
-      font-family: "Courier New", monospace;
-    }
-
-    .leaflet-popup-content-wrapper,
-    .leaflet-popup-tip {
-      background: #101812;
-      color: #dce5dd;
-      border: 1px solid #3c5942;
-      border-radius: 0;
-    }
-
-    .leaflet-popup-content {
-      font-family: "Courier New", monospace;
-      font-size: 11px;
       line-height: 1.7;
     }
 
-    .leaflet-popup-content strong {
-      color: #8cff9b;
+    .map-caption strong {
+      color: var(--red);
+      font-weight: normal;
     }
 
-    .marcador-pulso {
-      width: 20px;
-      height: 20px;
-      position: relative;
-      border-radius: 50%;
-      background: #ff4747;
-      border: 3px solid #fff;
-      box-shadow: 0 0 12px #ff4747;
+    .map-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 14px;
     }
 
-    .marcador-pulso::after {
-      content: "";
-      position: absolute;
-      inset: -9px;
-      border: 2px solid #ff4747;
-      border-radius: 50%;
-      animation: pulso 1.8s infinite;
+    .map-link {
+      display: inline-block;
+      padding: 11px 13px;
+      background: #19191d;
+      border: 1px solid #494950;
+      color: #ededf0;
+      text-decoration: none;
+      font-size: 10px;
+      transition: .2s;
     }
 
-    @keyframes pulso {
-      0% {
-        transform: scale(0.5);
-        opacity: 1;
-      }
-      100% {
-        transform: scale(1.7);
-        opacity: 0;
-      }
+    .map-link.primary {
+      background: #281417;
+      border-color: #74383e;
+      color: #f0d9db;
     }
 
-    @media (max-width: 650px) {
-      .painel {
-        grid-template-columns: 1fr;
-      }
+    .map-link:hover {
+      border-color: var(--red);
+    }
 
+    .coordinates {
+      padding: 0 16px 18px;
+      font-size: 10px;
+      line-height: 1.8;
+      color: var(--muted);
+      overflow-wrap: anywhere;
+    }
+
+    .coordinates span {
+      color: #dedee2;
+    }
+
+    @media (max-width: 620px) {
       .container {
         padding: 18px 12px 30px;
       }
 
-      .system-strip {
+      .painel {
         grid-template-columns: 1fr;
       }
 
-      .strip-item {
+      .overview {
+        grid-template-columns: 1fr;
+      }
+
+      .overview-item {
         padding: 12px;
       }
 
-      #mapa {
-        height: 290px;
+      .map-frame,
+      .map-placeholder {
+        height: 280px;
+      }
+
+      .footer-info {
+        text-align: left;
       }
     }
 
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after {
-        animation-duration: 0.01ms !important;
-        transition-duration: 0.01ms !important;
+        animation-duration: .01ms !important;
+        transition-duration: .01ms !important;
       }
     }
   </style>
@@ -595,247 +574,272 @@
   <main class="container">
 
     <div class="topbar">
-      <div class="system-name">PROJECT114 // TRACKING DIVISION</div>
-      <div class="classification">ACESSO RESTRITO // NÍVEL 04</div>
+      <div class="brand">PROJECT114 / ARQUIVOS INTERNOS</div>
+      <div class="classification">ACESSO RESTRITO</div>
     </div>
 
     <header>
-      <div class="eyebrow">ARQUIVO DE MONITORAMENTO</div>
-      <h1>ÚLTIMAS APARIÇÕES</h1>
+      <div class="eyebrow">DIVISÃO DE MONITORAMENTO</div>
+      <h1>Últimas Aparições</h1>
       <p class="subtitle">
-        Registro das últimas localizações conhecidas de indivíduos
-        monitorados. Selecione um registro para consultar os dados
-        geográficos disponíveis.
+        Histórico das últimas localizações registradas.
+        Selecione um indivíduo para acessar os dados completos
+        de sua última aparição conhecida.
       </p>
     </header>
 
-    <section class="system-strip" aria-label="Resumo do sistema">
-      <div class="strip-item">
-        <div class="strip-label">REGISTROS INDEXADOS</div>
-        <div class="strip-value">04</div>
+    <section class="overview">
+      <div class="overview-item">
+        <div class="overview-label">REGISTROS ATIVOS NO ARQUIVO</div>
+        <div class="overview-value">04</div>
       </div>
-      <div class="strip-item">
-        <div class="strip-label">SINAL ATUAL</div>
-        <div class="strip-value" id="sinalGeral">INSTÁVEL</div>
+      <div class="overview-item">
+        <div class="overview-label">CONEXÃO DOS INDIVÍDUOS</div>
+        <div class="overview-value red">INTERROMPIDA</div>
       </div>
-      <div class="strip-item">
-        <div class="strip-label">RELÓGIO DO SISTEMA</div>
-        <div class="strip-value" id="relogio">--:--:--</div>
+      <div class="overview-item">
+        <div class="overview-label">HORÁRIO DO SISTEMA</div>
+        <div class="overview-value" id="clock">--:--:--</div>
       </div>
     </section>
 
-    <div class="section-heading">
-      <span>/// INDIVÍDUOS MONITORADOS</span>
-      <span>CLIQUE EM UM REGISTRO PARA ABRIR O MAPA</span>
+    <div class="section-title">
+      <h2>REGISTROS DE LOCALIZAÇÃO</h2>
+      <span>04 ENTRADAS ENCONTRADAS</span>
     </div>
 
-    <section class="painel" id="painel">
+    <section class="painel">
 
-      <button class="relato alerta" type="button" data-id="danii">
-        <div class="card-top">
-          <span class="registro">REGISTRO // D-619</span>
-          <span class="status">SEM SINAL DIRETO</span>
+      <button class="relato" type="button" data-id="danii">
+        <div class="card-head">
+          <span class="record-id">ARQUIVO D-619</span>
+          <span class="status">SINAL PERDIDO</span>
         </div>
-        <div class="card-content">
+        <div class="card-body">
           <div class="personagem">Daniiyel Starmorning</div>
-          <div class="codinome">IDENTIFICAÇÃO: D-619</div>
+          <div class="codinome">IDENTIFICAÇÃO D-619</div>
 
-          <div class="info-label">ÚLTIMA LOCALIZAÇÃO CONHECIDA</div>
-          <div class="local">Setor de observação // Belém, Pará</div>
+          <div class="separator"></div>
 
-          <div class="contador">
-            <div class="contador-label">TEMPO DESDE O ÚLTIMO REGISTRO</div>
-            <div class="tempo" data-timer="danii">Calculando...</div>
+          <div class="label">ÚLTIMA LOCALIZAÇÃO CONHECIDA</div>
+          <div class="location">Setor de observação<br>Belém, Pará, Brasil</div>
+
+          <div class="last-seen">
+            ÚLTIMO REGISTRO: <span data-date="danii"></span>
+          </div>
+
+          <div class="timer-box">
+            <div class="timer-label">TEMPO DESDE A ÚLTIMA APARIÇÃO</div>
+            <div class="tempo" data-timer="danii">--</div>
           </div>
         </div>
-        <div class="card-bottom">
-          <span>ARQUIVO D-619</span>
-          <span class="abrir">ABRIR MAPA ↗</span>
+        <div class="card-foot">
+          <span>CONSULTA DISPONÍVEL</span>
+          <span class="open-label">ABRIR ARQUIVO ↗</span>
         </div>
       </button>
 
-      <button class="relato alerta" type="button" data-id="kin">
-        <div class="card-top">
-          <span class="registro">REGISTRO // K.A-114</span>
-          <span class="status">RASTRO INTERROMPIDO</span>
+      <button class="relato" type="button" data-id="kin">
+        <div class="card-head">
+          <span class="record-id">ARQUIVO K.A-114</span>
+          <span class="status">RASTRO PERDIDO</span>
         </div>
-        <div class="card-content">
+        <div class="card-body">
           <div class="personagem">Kin Atlas</div>
-          <div class="codinome">IDENTIFICAÇÃO: K.A-114</div>
+          <div class="codinome">IDENTIFICAÇÃO K.A-114</div>
 
-          <div class="info-label">ÚLTIMA LOCALIZAÇÃO CONHECIDA</div>
-          <div class="local">Perímetro florestal // Santarém, Pará</div>
+          <div class="separator"></div>
 
-          <div class="contador">
-            <div class="contador-label">TEMPO DESDE O ÚLTIMO REGISTRO</div>
-            <div class="tempo" data-timer="kin">Calculando...</div>
+          <div class="label">ÚLTIMA LOCALIZAÇÃO CONHECIDA</div>
+          <div class="location">Perímetro florestal<br>Santarém, Pará, Brasil</div>
+
+          <div class="last-seen">
+            ÚLTIMO REGISTRO: <span data-date="kin"></span>
+          </div>
+
+          <div class="timer-box">
+            <div class="timer-label">TEMPO DESDE A ÚLTIMA APARIÇÃO</div>
+            <div class="tempo" data-timer="kin">--</div>
           </div>
         </div>
-        <div class="card-bottom">
-          <span>ARQUIVO K.A-114</span>
-          <span class="abrir">ABRIR MAPA ↗</span>
+        <div class="card-foot">
+          <span>CONSULTA DISPONÍVEL</span>
+          <span class="open-label">ABRIR ARQUIVO ↗</span>
         </div>
       </button>
 
-      <button class="relato alerta" type="button" data-id="joao">
-        <div class="card-top">
-          <span class="registro">REGISTRO // J-CM</span>
+      <button class="relato" type="button" data-id="joao">
+        <div class="card-head">
+          <span class="record-id">ARQUIVO J-CM</span>
           <span class="status">TELEMETRIA PERDIDA</span>
         </div>
-        <div class="card-content">
+        <div class="card-body">
           <div class="personagem">João C. Moderno</div>
-          <div class="codinome">IDENTIFICAÇÃO: J-CM</div>
+          <div class="codinome">IDENTIFICAÇÃO J-CM</div>
 
-          <div class="info-label">ÚLTIMA LOCALIZAÇÃO CONHECIDA</div>
-          <div class="local">Zona industrial // Marabá, Pará</div>
+          <div class="separator"></div>
 
-          <div class="contador">
-            <div class="contador-label">TEMPO DESDE O ÚLTIMO REGISTRO</div>
-            <div class="tempo" data-timer="joao">Calculando...</div>
+          <div class="label">ÚLTIMA LOCALIZAÇÃO CONHECIDA</div>
+          <div class="location">Zona industrial<br>Marabá, Pará, Brasil</div>
+
+          <div class="last-seen">
+            ÚLTIMO REGISTRO: <span data-date="joao"></span>
+          </div>
+
+          <div class="timer-box">
+            <div class="timer-label">TEMPO DESDE A ÚLTIMA APARIÇÃO</div>
+            <div class="tempo" data-timer="joao">--</div>
           </div>
         </div>
-        <div class="card-bottom">
-          <span>ARQUIVO J-CM</span>
-          <span class="abrir">ABRIR MAPA ↗</span>
+        <div class="card-foot">
+          <span>CONSULTA DISPONÍVEL</span>
+          <span class="open-label">ABRIR ARQUIVO ↗</span>
         </div>
       </button>
 
-      <button class="relato alerta" type="button" data-id="jade">
-        <div class="card-top">
-          <span class="registro">REGISTRO // J-SL</span>
-          <span class="status">IDENTIFICAÇÃO PENDENTE</span>
+      <button class="relato" type="button" data-id="jade">
+        <div class="card-head">
+          <span class="record-id">ARQUIVO J-SL</span>
+          <span class="status">RASTREIO INCONCLUSIVO</span>
         </div>
-        <div class="card-content">
+        <div class="card-body">
           <div class="personagem">Jade Selene</div>
-          <div class="codinome">IDENTIFICAÇÃO: J-SL</div>
+          <div class="codinome">IDENTIFICAÇÃO J-SL</div>
 
-          <div class="info-label">ÚLTIMA LOCALIZAÇÃO CONHECIDA</div>
-          <div class="local">Setor portuário // Veracruz, México</div>
+          <div class="separator"></div>
 
-          <div class="contador">
-            <div class="contador-label">TEMPO DESDE O ÚLTIMO REGISTRO</div>
-            <div class="tempo" data-timer="jade">Calculando...</div>
+          <div class="label">ÚLTIMA LOCALIZAÇÃO CONHECIDA</div>
+          <div class="location">Setor portuário<br>Veracruz, México</div>
+
+          <div class="last-seen">
+            ÚLTIMO REGISTRO: <span data-date="jade"></span>
+          </div>
+
+          <div class="timer-box">
+            <div class="timer-label">TEMPO DESDE A ÚLTIMA APARIÇÃO</div>
+            <div class="tempo" data-timer="jade">--</div>
           </div>
         </div>
-        <div class="card-bottom">
-          <span>ARQUIVO J-SL</span>
-          <span class="abrir">ABRIR MAPA ↗</span>
+        <div class="card-foot">
+          <span>CONSULTA DISPONÍVEL</span>
+          <span class="open-label">ABRIR ARQUIVO ↗</span>
         </div>
       </button>
 
     </section>
 
-    <div class="aviso">
-      <strong>[NOTA DO SISTEMA]</strong><br>
-      Os contadores representam o tempo transcorrido desde cada registro.
-      A ausência de um sinal atualizado não confirma a presença ou ausência
-      do indivíduo no local indicado.
+    <div class="system-note">
+      <strong>NOTA DO ARQUIVO</strong><br>
+      Os horários indicam o último registro armazenado, não uma confirmação
+      da localização atual. A ausência de sinal não constitui evidência
+      conclusiva sobre o estado do indivíduo.
     </div>
 
-    <footer class="footer">
-      <a href="BASE.html" class="btn-voltar">← VOLTAR AO TERMINAL</a>
-      <div class="footer-note">
+    <footer>
+      <a href="BASE.html" class="back">← VOLTAR AO TERMINAL</a>
+      <div class="footer-info">
         PROJECT114 // DIVISÃO DE MONITORAMENTO<br>
-        REGISTROS INTERNOS // NÃO DISTRIBUIR
+        DOCUMENTO INTERNO // DISTRIBUIÇÃO RESTRITA
       </div>
     </footer>
-
   </main>
 
-  <!-- JANELA DE LOCALIZAÇÃO -->
+  <!-- JANELA DE DETALHES -->
   <div class="modal" id="modal" role="dialog"
-       aria-modal="true" aria-labelledby="modalTitulo">
+       aria-modal="true" aria-labelledby="modalTitle">
 
     <div class="modal-box">
-      <div class="modal-header">
+      <div class="modal-head">
         <div>
-          <div class="modal-kicker">PROJECT114 // CONSULTA GEOGRÁFICA</div>
-          <div class="modal-title" id="modalTitulo">REGISTRO</div>
+          <div class="modal-kicker">CONSULTA DE REGISTRO / GEOLOCALIZAÇÃO</div>
+          <div class="modal-title" id="modalTitle">REGISTRO</div>
         </div>
-        <button class="fechar" id="fechar" type="button"
-                aria-label="Fechar mapa">×</button>
+        <button class="close" id="closeModal"
+                type="button" aria-label="Fechar">×</button>
       </div>
 
-      <div class="modal-meta">
-        <div class="meta-item">
-          <div class="meta-label">ÚLTIMO REGISTRO</div>
-          <div class="meta-value" id="modalData">--</div>
+      <div class="metadata">
+        <div class="meta">
+          <div class="meta-label">DATA E HORA DO REGISTRO</div>
+          <div class="meta-value" id="detailDate">--</div>
         </div>
-        <div class="meta-item">
+        <div class="meta">
           <div class="meta-label">TEMPO TRANSCORRIDO</div>
-          <div class="meta-value" id="modalTempo">--</div>
+          <div class="meta-value" id="detailTimer">--</div>
         </div>
-        <div class="meta-item">
-          <div class="meta-label">LOCALIZAÇÃO</div>
-          <div class="meta-value" id="modalLocal">--</div>
+        <div class="meta">
+          <div class="meta-label">LOCAL REGISTRADO</div>
+          <div class="meta-value" id="detailLocation">--</div>
         </div>
-        <div class="meta-item">
-          <div class="meta-label">ESTADO DO RASTREAMENTO</div>
-          <div class="meta-value" id="modalStatus">--</div>
-        </div>
-      </div>
-
-      <div class="mapa-wrap">
-        <div id="mapa" aria-label="Mapa da última localização"></div>
-        <div class="mapa-legenda">
-          <span><strong>●</strong> ÚLTIMO PONTO REGISTRADO</span>
-          <span>BASE CARTOGRÁFICA: OPENSTREETMAP</span>
+        <div class="meta">
+          <div class="meta-label">ESTADO DO SINAL</div>
+          <div class="meta-value" id="detailStatus">--</div>
         </div>
       </div>
 
-      <div class="coordenadas">
-        COORDENADAS DO REGISTRO: <span id="modalCoords">--</span><br>
-        <span id="modalObservacao">Aguardando consulta...</span>
+      <div class="map-wrap">
+        <div id="mapArea"></div>
+
+        <div class="map-caption">
+          <span><strong>●</strong> PONTO DA ÚLTIMA LOCALIZAÇÃO</span>
+          <span>MAPA: OPENSTREETMAP</span>
+        </div>
+
+        <div class="map-actions">
+          <a class="map-link primary" id="externalMap"
+             href="#" target="_blank" rel="noopener">
+            ABRIR MAPA COMPLETO ↗
+          </a>
+          <a class="map-link" id="externalSatellite"
+             href="#" target="_blank" rel="noopener">
+            VER NO MAPA ALTERNATIVO ↗
+          </a>
+        </div>
+      </div>
+
+      <div class="coordinates">
+        COORDENADAS DO REGISTRO: <span id="detailCoords">--</span><br>
+        <span id="detailNote"></span>
       </div>
     </div>
   </div>
 
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
   <script>
     /*
-      DATAS DOS ÚLTIMOS REGISTROS
-      Formato: AAAA-MM-DDTHH:MM:SS-03:00
+      DATAS E LOCALIZAÇÕES CENOGRÁFICAS PARA A HISTÓRIA.
 
-      Para alterar uma data, edite o campo "ultimaLocalizacao"
-      do personagem correspondente.
-
-      As localizações e os horários são dados cenográficos
-      para o universo da história.
+      Para alterar o horário, edite ultimaLocalizacao.
+      O fuso -03:00 representa o horário de Brasília.
+      Coordenadas: [latitude, longitude].
     */
 
-    const registros = {
+    const records = {
       danii: {
-        nome: "Daniiyel Starmorning",
-        codigo: "D-619",
-        local: "Setor de observação, Belém, Pará",
-        status: "SEM SINAL DIRETO",
+        name: "Daniiyel Starmorning",
+        code: "D-619",
+        location: "Setor de observação, Belém, Pará, Brasil",
+        status: "SINAL PERDIDO",
         ultimaLocalizacao: "2026-10-21T18:44:12-03:00",
         coords: [-1.4558, -48.4902],
-        observacao: "Último sinal recebido nas proximidades do setor de observação."
+        note: "Último registro armazenado pelo setor de observação."
       },
 
       kin: {
-        nome: "Kin Atlas",
-        codigo: "K.A-114",
-        local: "Perímetro florestal, Santarém, Pará",
-        status: "RASTRO INTERROMPIDO",
+        name: "Kin Atlas",
+        code: "K.A-114",
+        location: "Perímetro florestal, Santarém, Pará, Brasil",
+        status: "RASTRO PERDIDO",
         ultimaLocalizacao: "2026-10-21T19:02:21-03:00",
         coords: [-2.4431, -54.7083],
-        observacao: "Sinal perdido após a última leitura do perímetro."
+        note: "Último registro armazenado antes da interrupção do sinal."
       },
 
       joao: {
-        nome: "João C. Moderno",
-        codigo: "J-CM",
-        local: "Zona industrial, Marabá, Pará",
+        name: "João C. Moderno",
+        code: "J-CM",
+        location: "Zona industrial, Marabá, Pará, Brasil",
         status: "TELEMETRIA PERDIDA",
         ultimaLocalizacao: "2026-10-21T20:11:33-03:00",
         coords: [-5.3686, -49.1178],
-        observacao: "Última posição estimada antes da interrupção da telemetria."
-      },
-
-      jade: {
-        nome: "Jade Selene",
-        codigo: "J-SL",
-        local: "Setor portuário, Veracruz, Méxic
+        note: "Última posição estimada disponível no arquivo."
+  
