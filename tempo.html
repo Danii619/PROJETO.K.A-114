@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -33,6 +32,8 @@ body {
 button, a { font: inherit; }
 
 a { color: inherit; }
+
+button, a { -webkit-tap-highlight-color: transparent; }
 
 .page {
   width: min(1040px, 100%);
@@ -251,11 +252,27 @@ h1 {
   margin-bottom: 8px;
 }
 
+/* CONTADOR: DIAS, HORAS E MINUTOS */
+
 .timer {
-  font-size: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 2px 5px;
   color: #e5e5e8;
   font-variant-numeric: tabular-nums;
 }
+
+.t-num { font-size: 21px; }
+
+.t-unit {
+  margin-right: 9px;
+  color: var(--muted);
+  font-size: 9px;
+  letter-spacing: .5px;
+}
+
+.t-unit:last-child { margin-right: 0; }
 
 .record-bottom {
   display: flex;
@@ -317,6 +334,11 @@ footer {
   text-align: right;
 }
 
+a:focus-visible, button:focus-visible {
+  outline: 2px solid var(--red-light);
+  outline-offset: 3px;
+}
+
 /* JANELA DO REGISTRO */
 
 .modal {
@@ -333,8 +355,9 @@ footer {
 .modal.open { display: flex; }
 
 .modal-box {
-  width: min(850px, 100%);
+  width: min(900px, 100%);
   max-height: 94vh;
+  max-height: 94dvh;
   overflow-y: auto;
   background: var(--bg);
   border: 1px solid #454852;
@@ -406,9 +429,18 @@ footer {
   overflow-wrap: anywhere;
 }
 
-/* MAPA LOCAL, DESENHADO DIRETAMENTE NA PÁGINA */
+.meta-value .t-num { font-size: 15px; }
 
-.map-section { padding: 15px; }
+/* MAPA (ESQUERDA) + RELATO (DIREITA) */
+
+.map-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+  gap: 14px;
+  padding: 15px;
+}
+
+.map-col { min-width: 0; }
 
 .map-heading {
   display: flex;
@@ -432,7 +464,6 @@ footer {
 }
 
 .map-canvas {
-  position: relative;
   width: 100%;
   overflow: hidden;
   border: 1px solid #343741;
@@ -443,7 +474,17 @@ footer {
   display: block;
   width: 100%;
   height: auto;
-  min-height: 230px;
+}
+
+.map-canvas .halo {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: ping 2.4s ease-out infinite;
+}
+
+@keyframes ping {
+  0%   { opacity: .55; transform: scale(.35); }
+  100% { opacity: 0;   transform: scale(2.6); }
 }
 
 .map-caption {
@@ -459,38 +500,62 @@ footer {
 
 .map-caption .pin-key { color: #e05a62; }
 
-.map-info {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-  margin-top: 14px;
-}
-
-.map-info-item {
+.sighting {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  min-width: 0;
+  padding: 15px;
   background: var(--panel);
   border: 1px solid var(--border);
-  padding: 12px;
-  min-width: 0;
+  border-left: 3px solid var(--red);
 }
 
-.map-info-label {
+.sighting h3 {
+  margin: 0;
+  color: #d47b80;
+  font-size: 10px;
+  font-weight: normal;
+  letter-spacing: 1.5px;
+}
+
+.s-label {
+  margin-bottom: 6px;
   color: var(--muted);
   font-size: 9px;
-  margin-bottom: 8px;
+  letter-spacing: 1px;
 }
 
-.map-info-value {
+.s-value {
   font-size: 11px;
   line-height: 1.7;
   overflow-wrap: anywhere;
 }
 
-.map-actions {
-  margin-top: 13px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 9px;
+.s-report {
+  margin: 0;
+  color: #cfd0d6;
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  line-height: 1.8;
 }
+
+.map-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 0 15px 17px;
+}
+
+.coordinates {
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.8;
+}
+
+.coordinates span { color: #dedee2; }
 
 .map-link {
   text-decoration: none;
@@ -502,14 +567,9 @@ footer {
 
 .map-link:hover { border-color: var(--red); }
 
-.coordinates {
-  color: var(--muted);
-  font-size: 10px;
-  line-height: 1.8;
-  padding: 0 15px 17px;
+@media (max-width: 760px) {
+  .map-layout { grid-template-columns: 1fr; }
 }
-
-.coordinates span { color: #dedee2; }
 
 @media (max-width: 640px) {
   .page { padding: 16px 12px 28px; }
@@ -519,13 +579,13 @@ footer {
   .overview-item { padding: 12px; }
   .overview-value { font-size: 15px; }
   .footer-info { text-align: left; }
-  .map-info { grid-template-columns: 1fr; }
-  .map-canvas svg { min-height: 190px; }
+  .metadata { grid-template-columns: 1fr; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     transition-duration: .01ms !important;
+    animation: none !important;
   }
 }
 </style>
@@ -573,101 +633,7 @@ footer {
     <span>SELECIONE UM INDIVÍDUO PARA CONSULTAR</span>
   </div>
 
-  <section class="cards">
-
-    <button class="record" type="button" data-id="danii">
-      <div class="record-top">
-        <span class="record-code">ARQUIVO D-619</span>
-        <span class="status">SINAL PERDIDO</span>
-      </div>
-      <div class="record-content">
-        <div class="person-name">Daniiyel Starmorning</div>
-        <div class="person-sub">IDENTIFICAÇÃO: D-619</div>
-        <div class="rule"></div>
-        <div class="label">ÚLTIMA LOCALIZAÇÃO CONHECIDA</div>
-        <div class="location">Setor de observação — Belém, Pará</div>
-        <div class="last-date">REGISTRO: <span data-date="danii"></span></div>
-        <div class="timer-box">
-          <div class="timer-title">TEMPO DESDE O ÚLTIMO REGISTRO</div>
-          <div class="timer" data-timer="danii">Calculando...</div>
-        </div>
-      </div>
-      <div class="record-bottom">
-        <span>CONSULTA DISPONÍVEL</span>
-        <span class="open-label">ABRIR REGISTRO ↗</span>
-      </div>
-    </button>
-
-    <button class="record" type="button" data-id="kin">
-      <div class="record-top">
-        <span class="record-code">ARQUIVO K.A-114</span>
-        <span class="status">RASTRO INTERROMPIDO</span>
-      </div>
-      <div class="record-content">
-        <div class="person-name">Kin Atlas</div>
-        <div class="person-sub">IDENTIFICAÇÃO: K.A-114</div>
-        <div class="rule"></div>
-        <div class="label">ÚLTIMA LOCALIZAÇÃO CONHECIDA</div>
-        <div class="location">Perímetro florestal — Santarém, Pará</div>
-        <div class="last-date">REGISTRO: <span data-date="kin"></span></div>
-        <div class="timer-box">
-          <div class="timer-title">TEMPO DESDE O ÚLTIMO REGISTRO</div>
-          <div class="timer" data-timer="kin">Calculando...</div>
-        </div>
-      </div>
-      <div class="record-bottom">
-        <span>CONSULTA DISPONÍVEL</span>
-        <span class="open-label">ABRIR REGISTRO ↗</span>
-      </div>
-    </button>
-
-    <button class="record" type="button" data-id="joao">
-      <div class="record-top">
-        <span class="record-code">ARQUIVO J-CM</span>
-        <span class="status">TELEMETRIA PERDIDA</span>
-      </div>
-      <div class="record-content">
-        <div class="person-name">João C. Moderno</div>
-        <div class="person-sub">IDENTIFICAÇÃO: J-CM</div>
-        <div class="rule"></div>
-        <div class="label">ÚLTIMA LOCALIZAÇÃO CONHECIDA</div>
-        <div class="location">Zona industrial — Marabá, Pará</div>
-        <div class="last-date">REGISTRO: <span data-date="joao"></span></div>
-        <div class="timer-box">
-          <div class="timer-title">TEMPO DESDE O ÚLTIMO REGISTRO</div>
-          <div class="timer" data-timer="joao">Calculando...</div>
-        </div>
-      </div>
-      <div class="record-bottom">
-        <span>CONSULTA DISPONÍVEL</span>
-        <span class="open-label">ABRIR REGISTRO ↗</span>
-      </div>
-    </button>
-
-    <button class="record" type="button" data-id="jade">
-      <div class="record-top">
-        <span class="record-code">ARQUIVO J-SL</span>
-        <span class="status">RASTREIO INCONCLUSIVO</span>
-      </div>
-      <div class="record-content">
-        <div class="person-name">Jade Selene</div>
-        <div class="person-sub">IDENTIFICAÇÃO: J-SL</div>
-        <div class="rule"></div>
-        <div class="label">ÚLTIMA LOCALIZAÇÃO CONHECIDA</div>
-        <div class="location">Setor portuário — Veracruz, México</div>
-        <div class="last-date">REGISTRO: <span data-date="jade"></span></div>
-        <div class="timer-box">
-          <div class="timer-title">TEMPO DESDE O ÚLTIMO REGISTRO</div>
-          <div class="timer" data-timer="jade">Calculando...</div>
-        </div>
-      </div>
-      <div class="record-bottom">
-        <span>CONSULTA DISPONÍVEL</span>
-        <span class="open-label">ABRIR REGISTRO ↗</span>
-      </div>
-    </button>
-
-  </section>
+  <section class="cards" id="cards"></section>
 
   <div class="note">
     <strong>NOTA DO SISTEMA:</strong><br>
@@ -700,12 +666,12 @@ footer {
 
     <div class="metadata">
       <div class="meta">
-        <div class="meta-label">DATA DO REGISTRO</div>
+        <div class="meta-label">DATA DO REGISTRO (HORA LOCAL)</div>
         <div class="meta-value" id="detailDate">--</div>
       </div>
       <div class="meta">
         <div class="meta-label">TEMPO TRANSCORRIDO</div>
-        <div class="meta-value" id="detailTimer">--</div>
+        <div class="meta-value timer" id="detailTimer">--</div>
       </div>
       <div class="meta">
         <div class="meta-label">LOCAL REGISTRADO</div>
@@ -717,130 +683,277 @@ footer {
       </div>
     </div>
 
-    <section class="map-section">
-      <div class="map-heading">
-        <h3>MAPA DA ÚLTIMA LOCALIZAÇÃO</h3>
-        <span id="mapCode">REGISTRO --</span>
-      </div>
+    <div class="map-layout">
 
-      <div class="map-canvas" id="mapCanvas"></div>
-
-      <div class="map-caption">
-        <span><span class="pin-key">●</span> ÚLTIMO PONTO REGISTRADO</span>
-        <span>REPRESENTAÇÃO CARTOGRÁFICA ESQUEMÁTICA</span>
-      </div>
-
-      <div class="map-info">
-        <div class="map-info-item">
-          <div class="map-info-label">ÁREA DE REGISTRO</div>
-          <div class="map-info-value" id="mapArea">--</div>
+      <div class="map-col">
+        <div class="map-heading">
+          <h3>MAPA DA ÚLTIMA LOCALIZAÇÃO</h3>
+          <span id="mapCode">REGISTRO --</span>
         </div>
-        <div class="map-info-item">
-          <div class="map-info-label">COORDENADAS</div>
-          <div class="map-info-value" id="mapCoords">--</div>
+
+        <div class="map-canvas" id="mapCanvas"></div>
+
+        <div class="map-caption">
+          <span><span class="pin-key">●</span> ÚLTIMO PONTO REGISTRADO</span>
+          <span>REPRESENTAÇÃO ESQUEMÁTICA</span>
         </div>
       </div>
 
-      <div class="map-actions">
-        <a href="#" class="map-link" id="externalMap"
-           target="_blank" rel="noopener">CONSULTAR MAPA GEOGRÁFICO ↗</a>
-      </div>
-    </section>
+      <aside class="sighting" aria-label="Relato do avistamento">
+        <h3>RELATO DO AVISTAMENTO</h3>
 
-    <div class="coordinates">
-      <span id="mapNote"></span>
+        <div>
+          <div class="s-label">ÓRGÃO RESPONSÁVEL</div>
+          <div class="s-value" id="sAgency">--</div>
+        </div>
+
+        <div>
+          <div class="s-label">TIPO DE AVISTAMENTO</div>
+          <div class="s-value" id="sKind">--</div>
+        </div>
+
+        <div>
+          <div class="s-label">DESCRIÇÃO</div>
+          <p class="s-report" id="sReport">--</p>
+        </div>
+
+        <div>
+          <div class="s-label">GRAU DE CONFIANÇA</div>
+          <div class="s-value" id="sConfidence">--</div>
+        </div>
+      </aside>
+
+    </div>
+
+    <div class="map-footer">
+      <div class="coordinates">
+        COORDENADAS: <span id="mapCoords">--</span><br>
+        ÁREA: <span id="mapArea">--</span>
+      </div>
+      <a href="#" class="map-link" id="externalMap"
+         target="_blank" rel="noopener noreferrer">CONSULTAR MAPA GEOGRÁFICO ↗</a>
     </div>
   </div>
 </div>
 
 <script>
 /*
-  MAPA INTEGRADO:
-  O desenho é gerado em SVG dentro desta página.
-  Não depende de bibliotecas, imagens ou serviços externos.
-
-  As coordenadas e os pontos de referência são cenográficos.
-  As datas usam o fuso -03:00.
+  Datas de 2026 (cada uma no fuso do local do avistamento).
+  O mapa é desenhado em SVG dentro da própria página, sem bibliotecas
+  ou serviços externos. Os pontos de referência são cenográficos.
 */
 
 const records = {
   danii: {
     name: "Daniiyel Starmorning",
     code: "D-619",
+    cardCode: "ARQUIVO D-619",
     location: "Setor de observação — Belém, Pará, Brasil",
+    shortLocation: "Setor de observação — Belém, Pará",
     area: "Setor de observação / Distrito Norte",
     status: "SINAL PERDIDO",
-    lastSeen: "2026-10-21T18:44:12-03:00",
+    cardStatus: "SINAL PERDIDO",
+    lastSeen: "2026-02-14T18:44:12-03:00",
+    tz: "America/Belem",
     coords: [-1.4558, -48.4902],
-    mapLabel: "SETOR DE OBSERVAÇÃO",
-    landmarks: ["DISTRITO NORTE", "VIA CENTRAL", "SETOR 04"],
-    note: "Último registro armazenado pelo setor de observação."
+    agency: "Posto de Observação Setorial 04 — Belém",
+    kind: "Visual direto por câmera de rua",
+    report:
+      "Foi captado por uma câmera de vigilância ao atravessar a via central, " +
+      "sozinho e sem pressa. Parou por alguns segundos diante da lente, " +
+      "ergueu o rosto e sorriu. Nenhuma abordagem foi tentada. O sinal da " +
+      "câmera caiu logo depois e não retornou.",
+    confidence: "ALTO",
+    map: {
+      label: "SETOR DE OBSERVAÇÃO",
+      water: "M0 0 L260 0 C238 62 205 118 222 178 C234 226 186 276 124 306 C74 330 34 362 0 384 Z",
+      waterLabel: { t: "BAÍA", x: 60, y: 150 },
+      roads: [
+        { d: "M150 400 C260 330 360 270 640 110", w: 5 },
+        { d: "M330 0 C340 120 330 260 360 400", w: 3 },
+        { d: "M250 300 L640 300", w: 3 },
+        { d: "M300 60 L640 60", w: 2 },
+        { d: "M500 0 L500 400", w: 2 }
+      ],
+      blocks: [],
+      forest: false,
+      landmarks: [
+        { t: "VIA CENTRAL", x: 460, y: 168, r: -24 },
+        { t: "DISTRITO NORTE", x: 380, y: 48 },
+        { t: "SETOR 04", x: 270, y: 330 }
+      ],
+      pin: { x: 430, y: 218 }
+    }
   },
 
   kin: {
     name: "Kin Atlas",
     code: "K.A-114",
+    cardCode: "ARQUIVO K.A-114",
     location: "Perímetro florestal — Santarém, Pará, Brasil",
+    shortLocation: "Perímetro florestal — Santarém, Pará",
     area: "Perímetro florestal / Zona Leste",
     status: "RASTRO INTERROMPIDO",
-    lastSeen: "2026-10-21T19:02:21-03:00",
+    cardStatus: "RASTRO INTERROMPIDO",
+    lastSeen: "2026-05-03T04:27:50-03:00",
+    tz: "America/Santarem",
     coords: [-2.4431, -54.7083],
-    mapLabel: "PERÍMETRO FLORESTAL",
-    landmarks: ["SETOR ARBÓREO", "VIA DE ACESSO", "LIMITE 02"],
-    note: "Última leitura antes da interrupção do sinal."
+    agency: "Vigilância Ambiental de Santarém",
+    kind: "Rastro térmico e testemunha de campo",
+    report:
+      "O sensor térmico de patrulha registrou uma silhueta alta caminhando " +
+      "na borda da mata, em passo constante. Um guarda florestal afirma ter " +
+      "ouvido passos sem ver ninguém. As leituras terminaram de forma " +
+      "abrupta e não houve sinal de deslocamento posterior.",
+    confidence: "MÉDIO",
+    map: {
+      label: "PERÍMETRO FLORESTAL",
+      water: "M0 330 C120 300 220 350 340 320 C460 290 540 330 640 300 L640 400 L0 400 Z",
+      waterLabel: { t: "RIO", x: 470, y: 368 },
+      roads: [
+        { d: "M120 330 C170 260 230 200 300 150 C360 108 440 100 520 60 L640 30", w: 4, dash: "10 6" },
+        { d: "M300 150 C280 100 270 50 280 0", w: 2, dash: "6 6" }
+      ],
+      blocks: [],
+      forest: true,
+      landmarks: [
+        { t: "VIA DE ACESSO", x: 350, y: 176, r: -22 },
+        { t: "LIMITE 02", x: 500, y: 88 },
+        { t: "SETOR ARBÓREO", x: 70, y: 120 }
+      ],
+      pin: { x: 318, y: 140 }
+    }
   },
 
   joao: {
     name: "João C. Moderno",
     code: "J-CM",
+    cardCode: "ARQUIVO J-CM",
     location: "Zona industrial — Marabá, Pará, Brasil",
+    shortLocation: "Zona industrial — Marabá, Pará",
     area: "Zona industrial / Setor de carga",
     status: "TELEMETRIA PERDIDA",
-    lastSeen: "2026-10-21T20:11:33-03:00",
+    cardStatus: "TELEMETRIA PERDIDA",
+    lastSeen: "2026-07-19T22:11:33-03:00",
+    tz: "America/Belem",
     coords: [-5.3686, -49.1178],
-    mapLabel: "ZONA INDUSTRIAL",
-    landmarks: ["SETOR DE CARGA", "AVENIDA 03", "COMPLEXO LESTE"],
-    note: "Última posição estimada antes da perda de telemetria."
+    agency: "Segurança Patrimonial — Complexo Industrial Leste",
+    kind: "Registro de acesso e câmera de doca",
+    report:
+      "Um crachá de acesso antigo, já desativado, foi lido no portão do " +
+      "setor de carga. A câmera da doca mostrou um homem de uniforme sem " +
+      "identificação circulando entre os contêineres e saindo da área em " +
+      "direção à avenida. A telemetria do equipamento parou de responder " +
+      "minutos depois.",
+    confidence: "ALTO",
+    map: {
+      label: "ZONA INDUSTRIAL",
+      water: "M520 0 C500 80 560 140 530 220 C505 290 570 340 550 400 L640 400 L640 0 Z",
+      waterLabel: { t: "RIO", x: 585, y: 200 },
+      roads: [
+        { d: "M0 150 L520 150", w: 4 },
+        { d: "M0 310 L540 310", w: 3 },
+        { d: "M200 0 L200 400", w: 3 },
+        { d: "M350 0 L350 400", w: 3 }
+      ],
+      blocks: [
+        [30, 30, 150, 95], [215, 40, 110, 80], [370, 30, 120, 100],
+        [30, 180, 150, 110], [215, 190, 115, 90], [370, 185, 120, 105],
+        [30, 330, 150, 55], [370, 330, 120, 55]
+      ],
+      forest: false,
+      landmarks: [
+        { t: "SETOR DE CARGA", x: 44, y: 146 },
+        { t: "AVENIDA 03", x: 212, y: 304 },
+        { t: "COMPLEXO LESTE", x: 372, y: 22 }
+      ],
+      pin: { x: 275, y: 150 }
+    }
   },
 
   jade: {
     name: "Jade Selene",
     code: "J-SL",
+    cardCode: "ARQUIVO J-SL",
     location: "Setor portuário — Veracruz, México",
+    shortLocation: "Setor portuário — Veracruz, México",
     area: "Setor portuário / Terminal costeiro",
     status: "RASTREIO INCONCLUSIVO",
-    lastSeen: "2026-10-21T21:23:47-03:00",
+    cardStatus: "RASTREIO INCONCLUSIVO",
+    lastSeen: "2026-09-08T05:48:47-06:00",
+    tz: "America/Mexico_City",
     coords: [19.1738, -96.1342],
-    mapLabel: "SETOR PORTUÁRIO",
-    landmarks: ["TERMINAL COSTEIRO", "VIA PORTUÁRIA", "SETOR 07"],
-    note: "Registro mantido no arquivo para consulta posterior."
+    agency: "Autoridade Portuária de Veracruz",
+    kind: "Relato de terceiros e rádio portuário",
+    report:
+      "Um operador do terminal relatou uma mulher parada na ponta do cais " +
+      "ao amanhecer, falando como se alguém estivesse ao lado. A busca no " +
+      "local não encontrou ninguém. O rastreio ficou inconclusivo: três " +
+      "leituras de sinal divergentes foram registradas no mesmo minuto.",
+    confidence: "BAIXO",
+    map: {
+      label: "SETOR PORTUÁRIO",
+      water: "M0 0 L640 0 L640 400 L470 400 C430 330 470 270 400 220 C330 170 360 100 260 60 C200 36 100 50 0 30 Z",
+      waterLabel: { t: "GOLFO", x: 520, y: 120 },
+      roads: [
+        { d: "M80 400 C180 330 250 260 300 230 C340 205 330 150 300 110", w: 4 },
+        { d: "M0 260 L260 260", w: 3 },
+        { d: "M170 400 L170 130", w: 2 }
+      ],
+      blocks: [
+        [210, 280, 90, 50], [60, 150, 80, 60], [200, 140, 70, 55]
+      ],
+      piers: [
+        "M345 128 L420 150", "M370 168 L440 190"
+      ],
+      forest: false,
+      landmarks: [
+        { t: "TERMINAL COSTEIRO", x: 60, y: 120 },
+        { t: "VIA PORTUÁRIA", x: 96, y: 372, r: -28 },
+        { t: "SETOR 07", x: 310, y: 330 }
+      ],
+      pin: { x: 332, y: 190 }
+    }
   }
 };
 
+const cardsEl = document.getElementById("cards");
 const modal = document.getElementById("modal");
+const closeBtn = document.getElementById("closeModal");
 const mapCanvas = document.getElementById("mapCanvas");
-let activeRecord = null;
+const externalMap = document.getElementById("externalMap");
+
+let activeId = null;
 let previousFocus = null;
 
-function elapsed(ms) {
-  const total = Math.max(0, Math.floor(ms / 1000));
-  const days = Math.floor(total / 86400);
-  const hours = Math.floor((total % 86400) / 3600);
-  const minutes = Math.floor((total % 3600) / 60);
-  const seconds = total % 60;
+/* ---------- TEMPO: DIAS, HORAS E MINUTOS ---------- */
 
-  const h = String(hours).padStart(2, "0");
-  const m = String(minutes).padStart(2, "0");
-  const s = String(seconds).padStart(2, "0");
+function renderElapsed(ms) {
+  const totalMin = Math.max(0, Math.floor(ms / 60000));
+  const days = Math.floor(totalMin / 1440);
+  const hours = Math.floor((totalMin % 1440) / 60);
+  const minutes = totalMin % 60;
 
-  return days > 0
-    ? `${days}d ${h}h ${m}min ${s}s`
-    : `${h}h ${m}min ${s}s`;
+  return (
+    '<span class="t-num">' + days + '</span>' +
+    '<span class="t-unit">' + (days === 1 ? "dia" : "dias") + '</span>' +
+    '<span class="t-num">' + String(hours).padStart(2, "0") + '</span>' +
+    '<span class="t-unit">h</span>' +
+    '<span class="t-num">' + String(minutes).padStart(2, "0") + '</span>' +
+    '<span class="t-unit">min</span>'
+  );
 }
 
-function formatDate(value) {
-  return new Date(value).toLocaleString("pt-BR", {
-    timeZone: "America/Sao_Paulo",
+function setHTML(el, html) {
+  if (el.dataset.last !== html) {
+    el.innerHTML = html;
+    el.dataset.last = html;
+  }
+}
+
+function formatDate(rec) {
+  return new Date(rec.lastSeen).toLocaleString("pt-BR", {
+    timeZone: rec.tz,
     day: "2-digit",
     month: "2-digit",
     year: "numeric",
@@ -851,23 +964,237 @@ function formatDate(value) {
   });
 }
 
+function formatCoords(c) {
+  const lat = Math.abs(c[0]).toFixed(4) + "° " + (c[0] >= 0 ? "N" : "S");
+  const lon = Math.abs(c[1]).toFixed(4) + "° " + (c[1] >= 0 ? "L" : "O");
+  return lat + ", " + lon;
+}
+
 function updateClock() {
   const now = Date.now();
 
   document.getElementById("clock").textContent =
-    new Date().toLocaleTimeString("pt-BR", {
-      timeZone: "America/Sao_Paulo",
-      hour12: false
-    });
+    new Date().toLocaleTimeString("pt-BR", { hour12: false });
 
   document.querySelectorAll("[data-timer]").forEach(el => {
-    const record = records[el.dataset.timer];
-    el.textContent = elapsed(now - new Date(record.lastSeen).getTime());
+    const rec = records[el.dataset.timer];
+    setHTML(el, renderElapsed(now - new Date(rec.lastSeen).getTime()));
   });
 
-  document.querySelectorAll("[data-date]").forEach(el => {
-    const record = records[el.dataset.date];
-    el.textContent = formatDate(record.lastSeen);
+  if (activeId) {
+    const rec = records[activeId];
+    setHTML(
+      document.getElementById("detailTimer"),
+      renderElapsed(now - new Date(rec.lastSeen).getTime())
+    );
+  }
+}
+
+/* ---------- CARTÕES ---------- */
+
+function renderCards() {
+  cardsEl.innerHTML = Object.keys(records).map(id => {
+    const r = records[id];
+    return (
+      '<button class="record" type="button" data-id="' + id + '">' +
+        '<div class="record-top">' +
+          '<span class="record-code">' + r.cardCode + '</span>' +
+          '<span class="status">' + r.cardStatus + '</span>' +
+        '</div>' +
+        '<div class="record-content">' +
+          '<div class="person-name">' + r.name + '</div>' +
+          '<div class="person-sub">IDENTIFICAÇÃO: ' + r.code + '</div>' +
+          '<div class="rule"></div>' +
+          '<div class="label">ÚLTIMA LOCALIZAÇÃO CONHECIDA</div>' +
+          '<div class="location">' + r.shortLocation + '</div>' +
+          '<div class="last-date">REGISTRO: ' + formatDate(r) + ' (HORA LOCAL)</div>' +
+          '<div class="timer-box">' +
+            '<div class="timer-title">TEMPO DESDE O ÚLTIMO REGISTRO</div>' +
+            '<div class="timer" data-timer="' + id + '">--</div>' +
+          '</div>' +
+        '</div>' +
+        '<div class="record-bottom">' +
+          '<span>CONSULTA DISPONÍVEL</span>' +
+          '<span class="open-label">ABRIR REGISTRO ↗</span>' +
+        '</div>' +
+      '</button>'
+    );
+  }).join("");
+
+  cardsEl.querySelectorAll(".record").forEach(btn => {
+    btn.addEventListener("click", () => openRecord(btn.dataset.id, btn));
+  });
+}
+
+/* ---------- MAPA EM SVG ---------- */
+
+function seededRandom(seed) {
+  let s = seed;
+  return function () {
+    s = (s * 1664525 + 1013904223) % 4294967296;
+    return s / 4294967296;
+  };
+}
+
+function buildMap(rec) {
+  const m = rec.map;
+  const p = m.pin;
+  const mono = 'font-family="Courier New, monospace"';
+  let s = "";
+
+  s += '<svg viewBox="0 0 640 400" xmlns="http://www.w3.org/2000/svg" ' +
+       'role="img" aria-label="Mapa esquemático: ' + m.label + '">';
+
+  s += '<defs><pattern id="mapGrid" width="40" height="40" patternUnits="userSpaceOnUse">' +
+       '<path d="M40 0H0V40" fill="none" stroke="#1b1e25" stroke-width="1"/></pattern></defs>';
+
+  s += '<rect width="640" height="400" fill="#12151a"/>';
+  s += '<rect width="640" height="400" fill="url(#mapGrid)"/>';
+
+  /* vegetação */
+  if (m.forest) {
+    const rnd = seededRandom(114);
+    for (let i = 0; i < 110; i++) {
+      const x = Math.round(rnd() * 640);
+      const y = Math.round(rnd() * 285);
+      const r = 2 + Math.round(rnd() * 3);
+      s += '<circle cx="' + x + '" cy="' + y + '" r="' + r + '" fill="#18211d"/>';
+    }
+  }
+
+  /* água */
+  s += '<path d="' + m.water + '" fill="#161c27" stroke="#232b38" stroke-width="1.5"/>';
+
+  /* quarteirões / galpões */
+  (m.blocks || []).forEach(b => {
+    s += '<rect x="' + b[0] + '" y="' + b[1] + '" width="' + b[2] + '" height="' + b[3] +
+         '" fill="#171a21" stroke="#272c36"/>';
   });
 
-  
+  /* píeres */
+  (m.piers || []).forEach(d => {
+    s += '<path d="' + d + '" stroke="#2f3541" stroke-width="6" stroke-linecap="square" fill="none"/>';
+  });
+
+  /* ruas */
+  m.roads.forEach(r => {
+    s += '<path d="' + r.d + '" fill="none" stroke="#2a2f3a" stroke-width="' + r.w + '"' +
+         (r.dash ? ' stroke-dasharray="' + r.dash + '"' : '') + ' stroke-linecap="round"/>';
+  });
+
+  /* rótulos */
+  s += '<text x="' + m.waterLabel.x + '" y="' + m.waterLabel.y + '" ' + mono +
+       ' font-size="11" letter-spacing="4" fill="#3b4555">' + m.waterLabel.t + '</text>';
+
+  m.landmarks.forEach(l => {
+    const rot = l.r ? ' transform="rotate(' + l.r + ' ' + l.x + ' ' + l.y + ')"' : "";
+    s += '<text x="' + l.x + '" y="' + l.y + '" ' + mono +
+         ' font-size="9" letter-spacing="1.5" fill="#707686"' + rot + '>' + l.t + '</text>';
+  });
+
+  /* mira */
+  s += '<line x1="' + p.x + '" y1="0" x2="' + p.x + '" y2="400" stroke="#d44a52" stroke-opacity=".28" stroke-dasharray="4 5"/>';
+  s += '<line x1="0" y1="' + p.y + '" x2="640" y2="' + p.y + '" stroke="#d44a52" stroke-opacity=".28" stroke-dasharray="4 5"/>';
+
+  /* pulso + pino */
+  s += '<circle class="halo" cx="' + p.x + '" cy="' + p.y + '" r="14" fill="#d44a52"/>';
+  s += '<ellipse cx="' + p.x + '" cy="' + p.y + '" rx="7" ry="3" fill="#000" fill-opacity=".45"/>';
+  s += '<g transform="translate(' + p.x + ' ' + p.y + ')">' +
+       '<path d="M0 0 C-4 -8 -14 -16 -14 -27 A14 14 0 1 1 14 -27 C14 -16 4 -8 0 0 Z" ' +
+       'fill="#d44a52" stroke="#2a0c0f" stroke-width="1.5"/>' +
+       '<circle cx="0" cy="-27" r="5" fill="#111318"/></g>';
+
+  s += '<text x="' + (p.x + 22) + '" y="' + (p.y - 24) + '" ' + mono +
+       ' font-size="9" letter-spacing="1" fill="#e8a0a5">ÚLTIMO PONTO</text>';
+
+  /* bússola, coordenadas e escala */
+  s += '<path d="M604 54 L604 26 M598 33 L604 26 L610 33" stroke="#707686" stroke-width="1.5" fill="none"/>';
+  s += '<text x="604" y="68" ' + mono + ' font-size="10" fill="#707686" text-anchor="middle">N</text>';
+  s += '<text x="16" y="24" ' + mono + ' font-size="9" letter-spacing="1" fill="#9296a1">' +
+       formatCoords(rec.coords) + '</text>';
+  s += '<path d="M24 374 H104 M24 369 V379 M104 369 V379" stroke="#707686" fill="none"/>';
+  s += '<text x="24" y="391" ' + mono + ' font-size="8" letter-spacing="1" fill="#707686">ESCALA ESQUEMÁTICA</text>';
+
+  s += '</svg>';
+  return s;
+}
+
+/* ---------- JANELA ---------- */
+
+function openRecord(id, trigger) {
+  const rec = records[id];
+  activeId = id;
+  previousFocus = trigger || document.activeElement;
+
+  document.getElementById("modalTitle").textContent = rec.name.toUpperCase();
+  document.getElementById("detailDate").textContent = formatDate(rec);
+  document.getElementById("detailLocation").textContent = rec.location;
+  document.getElementById("detailStatus").textContent = rec.status;
+  document.getElementById("mapCode").textContent = "REGISTRO " + rec.code;
+  document.getElementById("mapCoords").textContent = formatCoords(rec.coords);
+  document.getElementById("mapArea").textContent = rec.area;
+
+  document.getElementById("sAgency").textContent = rec.agency;
+  document.getElementById("sKind").textContent = rec.kind;
+  document.getElementById("sReport").textContent = rec.report;
+  document.getElementById("sConfidence").textContent = rec.confidence;
+
+  externalMap.href =
+    "https://www.openstreetmap.org/?mlat=" + rec.coords[0] +
+    "&mlon=" + rec.coords[1] +
+    "#map=13/" + rec.coords[0] + "/" + rec.coords[1];
+
+  mapCanvas.innerHTML = buildMap(rec);
+
+  document.getElementById("detailTimer").dataset.last = "";
+  updateClock();
+
+  modal.classList.add("open");
+  document.body.style.overflow = "hidden";
+  closeBtn.focus();
+}
+
+function closeRecord() {
+  modal.classList.remove("open");
+  document.body.style.overflow = "";
+  activeId = null;
+  if (previousFocus) previousFocus.focus();
+}
+
+closeBtn.addEventListener("click", closeRecord);
+
+modal.addEventListener("click", e => {
+  if (e.target === modal) closeRecord();
+});
+
+document.addEventListener("keydown", e => {
+  if (!modal.classList.contains("open")) return;
+
+  if (e.key === "Escape") {
+    closeRecord();
+    return;
+  }
+
+  if (e.key === "Tab") {
+    const items = [closeBtn, externalMap];
+    const first = items[0];
+    const last = items[items.length - 1];
+
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
+  }
+});
+
+/* ---------- INÍCIO ---------- */
+
+renderCards();
+updateClock();
+setInterval(updateClock, 1000);
+</script>
+</body>
+</html>
