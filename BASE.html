@@ -126,6 +126,69 @@
             top: 12px;
         }
 
+        /* TELA DE AUTENTICAÇÃO */
+
+        .boot {
+            position: fixed;
+            inset: 0;
+            z-index: 300;
+            display: grid;
+            padding: 20px;
+            place-items: center;
+            background: #0a0b0e;
+            cursor: pointer;
+            transition: opacity .45s ease, visibility .45s ease;
+        }
+
+        .boot.saindo {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .boot-box {
+            width: 100%;
+            max-width: 420px;
+            font-family: var(--mono);
+        }
+
+        .boot-lines {
+            min-height: 110px;
+            color: #c4c8d1;
+            font-size: 12px;
+            letter-spacing: .8px;
+            line-height: 2;
+        }
+
+        .boot-lines div {
+            animation: fadeUp .25s ease backwards;
+        }
+
+        .boot-lines .ok {
+            color: var(--red-light);
+        }
+
+        .boot-bar {
+            height: 3px;
+            margin-top: 14px;
+            overflow: hidden;
+            background: #22252d;
+        }
+
+        .boot-bar i {
+            display: block;
+            width: 0;
+            height: 100%;
+            background: var(--red-light);
+            transition: width .3s ease;
+        }
+
+        .boot-skip {
+            margin-top: 16px;
+            color: var(--subtle);
+            font-size: 9px;
+            letter-spacing: 1px;
+        }
+
         /* ESTRUTURA PRINCIPAL */
 
         .app {
@@ -307,6 +370,24 @@
             font-weight: normal;
         }
 
+        .sound-toggle {
+            padding: 5px 9px;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--muted);
+            cursor: pointer;
+            font-family: var(--mono);
+            font-size: 9px;
+            letter-spacing: .6px;
+            white-space: nowrap;
+            transition: .2s ease;
+        }
+
+        .sound-toggle:hover {
+            border-color: #634047;
+            color: #fff;
+        }
+
         .restricted {
             display: inline-flex;
             align-items: center;
@@ -457,6 +538,7 @@
         }
 
         .redacted:hover,
+        .redacted:focus,
         .redacted:focus-visible {
             background: #1c1f27;
             color: #e1b2b5;
@@ -799,6 +881,126 @@
             text-align: right;
         }
 
+        /* ERRO 404 (DADOS POLICIAIS) */
+
+        .e404 {
+            position: fixed;
+            inset: 0;
+            z-index: 250;
+            display: grid;
+            padding: 20px;
+            place-items: center;
+            background: rgba(7, 8, 11, 0.94);
+            animation: fadeIn .25s ease;
+        }
+
+        .e404[hidden] {
+            display: none;
+        }
+
+        .e404-box {
+            width: 100%;
+            max-width: 480px;
+            padding: 30px 26px 26px;
+            border: 1px solid #593238;
+            background: #16181f;
+            font-family: var(--mono);
+            text-align: center;
+        }
+
+        .e404-code {
+            margin: 0;
+            color: var(--red-light);
+            font-size: clamp(54px, 16vw, 84px);
+            font-weight: bold;
+            letter-spacing: 6px;
+            line-height: 1;
+            animation: glitch .6s steps(2, end) 2;
+        }
+
+        .e404-title {
+            margin: 14px 0 6px;
+            color: #e1b2b5;
+            font-size: 14px;
+            letter-spacing: 2px;
+        }
+
+        .e404-sub {
+            margin: 0 0 18px;
+            color: var(--red-light);
+            font-size: 10px;
+            letter-spacing: 1.4px;
+        }
+
+        .e404-text {
+            margin: 0 0 22px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border);
+            color: var(--muted);
+            font-family: var(--sans);
+            font-size: 12px;
+            line-height: 1.8;
+        }
+
+        .e404-btn {
+            padding: 11px 18px;
+            border: 1px solid #75404a;
+            background: #59262e;
+            color: #fff;
+            cursor: pointer;
+            font-family: var(--mono);
+            font-size: 11px;
+            letter-spacing: 1px;
+            transition: .2s ease;
+        }
+
+        .e404-btn:hover {
+            background: #71313a;
+        }
+
+        .e404-btn:focus-visible {
+            outline: 2px solid var(--red-light);
+            outline-offset: 4px;
+        }
+
+        /* AVISO (EASTER EGG) */
+
+        .toast {
+            position: fixed;
+            right: 18px;
+            bottom: 18px;
+            z-index: 220;
+            max-width: 320px;
+            padding: 14px 16px;
+            border: 1px solid #75404a;
+            background: #1e171b;
+            font-family: var(--mono);
+            font-size: 10px;
+            letter-spacing: .8px;
+            line-height: 1.8;
+            animation: fadeUp .35s ease;
+        }
+
+        .toast[hidden] {
+            display: none;
+        }
+
+        .toast b {
+            display: block;
+            color: var(--red-light);
+        }
+
+        .toast span {
+            color: #b3a4a8;
+        }
+
+        .toast a {
+            display: inline-block;
+            margin-top: 6px;
+            color: #fff;
+            border-bottom: 1px solid var(--red-light);
+        }
+
         /* ANIMAÇÕES */
 
         @keyframes fadeUp {
@@ -810,6 +1012,11 @@
                 opacity: 1;
                 transform: translateY(0);
             }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         @keyframes blink {
@@ -859,6 +1066,7 @@
         .archive-card:nth-child(5) { animation-delay: .34s; }
         .archive-card:nth-child(6) { animation-delay: .4s; }
         .archive-card:nth-child(7) { animation-delay: .46s; }
+        .archive-card:nth-child(8) { animation-delay: .52s; }
 
         .recovered { animation-delay: .2s; }
 
@@ -959,12 +1167,16 @@
                 font-size: 8px;
             }
 
+            .sound-toggle {
+                font-size: 8px;
+            }
+
             .session-clock {
                 display: none;
             }
 
             .topbar-right {
-                gap: 0;
+                gap: 8px;
             }
 
             .content {
@@ -1025,6 +1237,13 @@
             .footer-right {
                 text-align: left;
             }
+
+            .toast {
+                right: 12px;
+                bottom: 12px;
+                left: 12px;
+                max-width: none;
+            }
         }
 
         @media (max-width: 390px) {
@@ -1055,6 +1274,37 @@
 <body>
 <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
 
+<!-- TELA DE AUTENTICAÇÃO -->
+<div class="boot" id="boot" role="status" aria-live="polite">
+    <div class="boot-box">
+        <div class="boot-lines" id="bootLines"></div>
+        <div class="boot-bar"><i id="bootFill"></i></div>
+        <div class="boot-skip">CLIQUE OU PRESSIONE QUALQUER TECLA PARA PULAR</div>
+    </div>
+</div>
+
+<!-- ERRO 404: DADOS POLICIAIS -->
+<div class="e404" id="e404" role="dialog" aria-modal="true" aria-labelledby="e404Title" hidden>
+    <div class="e404-box">
+        <p class="e404-code" aria-hidden="true">404</p>
+        <h2 class="e404-title" id="e404Title">REGISTRO NÃO ENCONTRADO</h2>
+        <p class="e404-sub">ACESSO NEGADO // DADOS POLICIAIS</p>
+        <p class="e404-text">
+            O arquivo solicitado não existe ou foi
+            <span class="redacted" tabindex="0">removido por determinação superior</span>.
+            Esta tentativa de acesso foi registrada.
+        </p>
+        <button class="e404-btn" id="e404Close" type="button">VOLTAR À CENTRAL</button>
+    </div>
+</div>
+
+<!-- AVISO DO EASTER EGG -->
+<div class="toast" id="toast" role="status" aria-live="polite" hidden>
+    <b>ARQUIVO OCULTO DETECTADO</b>
+    <span>Um canal de comunicação não listado foi encontrado.</span><br>
+    <a href="sac51.html">Abrir canal SAC 51 ↗</a>
+</div>
+
 <div class="app">
 
     <!-- NAVEGAÇÃO LATERAL -->
@@ -1082,7 +1332,12 @@
 
             <a class="nav-link" href="individuos.html">
                 <span class="nav-icon">◉</span>
-                Indivíduos
+                EXPERIMENTOS
+            </a>
+
+            <a class="nav-link" href="dadospoliciais.html" data-404>
+                <span class="nav-icon">◈</span>
+                Dados Policiais
             </a>
 
             <a class="nav-link" href="seção.html">
@@ -1132,6 +1387,8 @@
                 <div class="session-clock" id="sessionClock" aria-hidden="true">
                     SESSÃO: <b>--/--/---- // --:--:--</b>
                 </div>
+
+                <button class="sound-toggle" id="soundToggle" type="button" aria-pressed="true">SOM: ON</button>
 
                 <div class="restricted">
                     <span class="restricted-dot"></span>
@@ -1196,7 +1453,7 @@
                             os documentos originais antes de estabelecer
                             conclusões sobre os indivíduos registrados.
                             Parte do conteúdo foi
-                            <span class="redacted" tabindex="0">removida por determinação superior</span>
+                            <span class="redacted" id="eggTrigger" tabindex="0">removida por determinação superior</span>
                             e não consta nesta versão.
                         </p>
                     </div>
@@ -1353,7 +1610,7 @@
 
                     <a class="archive-card" href="individuos.html">
                         <div class="archive-icon">02</div>
-                        <h3>Indivíduos</h3>
+                        <h3>EXPERIMENTOS</h3>
                         <p>
                             Fichas, identificações e registros
                             dos indivíduos catalogados.
@@ -1425,6 +1682,19 @@
                         </p>
                         <div class="archive-action">
                             <span>Abrir central</span>
+                            <span>↗</span>
+                        </div>
+                    </a>
+
+                    <a class="archive-card" href="dadospoliciais.html" data-404>
+                        <div class="archive-icon">08</div>
+                        <h3>Dados Policiais</h3>
+                        <p>
+                            Boletins, ocorrências e registros
+                            de órgãos de segurança.
+                        </p>
+                        <div class="archive-action">
+                            <span>Consultar registros</span>
                             <span>↗</span>
                         </div>
                     </a>
@@ -1632,6 +1902,203 @@
         }
 
         setTimeout(digitar, 350);
+    })();
+
+    /* BIP (WEB AUDIO, COM BOTÃO DE MUDO) */
+    (function () {
+        const botao = document.getElementById("soundToggle");
+        let ctx = null;
+        let mudo = false;
+
+        try { mudo = localStorage.getItem("p114_mudo") === "1"; } catch (e) {}
+
+        function atualizarBotao() {
+            botao.textContent = "SOM: " + (mudo ? "OFF" : "ON");
+            botao.setAttribute("aria-pressed", String(!mudo));
+        }
+
+        function bip(freq, duracao, volume) {
+            if (mudo) return;
+            try {
+                ctx = ctx || new (window.AudioContext || window.webkitAudioContext)();
+                if (ctx.state === "suspended") ctx.resume();
+
+                const osc = ctx.createOscillator();
+                const ganho = ctx.createGain();
+                const t = ctx.currentTime;
+
+                osc.type = "square";
+                osc.frequency.value = freq;
+                ganho.gain.setValueAtTime(0.0001, t);
+                ganho.gain.exponentialRampToValueAtTime(volume, t + 0.01);
+                ganho.gain.exponentialRampToValueAtTime(0.0001, t + duracao);
+
+                osc.connect(ganho);
+                ganho.connect(ctx.destination);
+                osc.start(t);
+                osc.stop(t + duracao + 0.02);
+            } catch (e) {}
+        }
+
+        window.p114Bip = bip;
+
+        botao.addEventListener("click", () => {
+            mudo = !mudo;
+            try { localStorage.setItem("p114_mudo", mudo ? "1" : "0"); } catch (e) {}
+            atualizarBotao();
+            bip(1000, 0.07, 0.04);
+        });
+
+        atualizarBotao();
+
+        /* Bip suave ao passar o mouse (só em dispositivos com mouse) */
+        if (window.matchMedia("(hover: hover)").matches) {
+            document.querySelectorAll(".nav-link, .person-card, .archive-card").forEach((el) => {
+                el.addEventListener("mouseenter", () => bip(880, 0.05, 0.025));
+            });
+        }
+
+        /* Bip de clique em links e botões */
+        document.addEventListener("click", (e) => {
+            if (e.target.closest("a, button") && !e.target.closest("#soundToggle")) {
+                bip(1320, 0.08, 0.04);
+            }
+        });
+    })();
+
+    /* TELA DE AUTENTICAÇÃO */
+    (function () {
+        const boot = document.getElementById("boot");
+        if (!boot) return;
+
+        const semMovimento = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        let jaViu = false;
+
+        try { jaViu = sessionStorage.getItem("p114_boot") === "1"; } catch (e) {}
+
+        if (jaViu || semMovimento) {
+            boot.remove();
+            return;
+        }
+
+        const linhas = document.getElementById("bootLines");
+        const barra = document.getElementById("bootFill");
+        const etapas = [
+            "> INICIANDO PROJECT114...",
+            "> VERIFICANDO CREDENCIAIS...",
+            "> NÍVEL DE ACESSO: K.A-114",
+            "> ACESSO CONCEDIDO"
+        ];
+
+        let i = 0;
+        let encerrado = false;
+        let timer = null;
+
+        function encerrar() {
+            if (encerrado) return;
+            encerrado = true;
+            clearTimeout(timer);
+
+            try { sessionStorage.setItem("p114_boot", "1"); } catch (e) {}
+
+            if (window.p114Bip) window.p114Bip(1180, 0.1, 0.04);
+
+            boot.classList.add("saindo");
+            setTimeout(() => boot.remove(), 600);
+        }
+
+        function proxima() {
+            if (encerrado) return;
+
+            const div = document.createElement("div");
+            div.textContent = etapas[i];
+            if (i === etapas.length - 1) div.className = "ok";
+            linhas.appendChild(div);
+
+            i++;
+            barra.style.width = Math.round((i / etapas.length) * 100) + "%";
+
+            if (i < etapas.length) {
+                timer = setTimeout(proxima, 480);
+            } else {
+                timer = setTimeout(encerrar, 650);
+            }
+        }
+
+        boot.addEventListener("click", encerrar);
+        document.addEventListener("keydown", encerrar, { once: true });
+
+        proxima();
+    })();
+
+    /* DADOS POLICIAIS: CAI NO 404 */
+    (function () {
+        const painel = document.getElementById("e404");
+        const fechar = document.getElementById("e404Close");
+        let origem = null;
+
+        function abrir(gatilho) {
+            origem = gatilho;
+            painel.hidden = false;
+            fechar.focus();
+
+            if (window.p114Bip) {
+                window.p114Bip(160, 0.14, 0.05);
+                setTimeout(() => window.p114Bip(140, 0.18, 0.05), 190);
+            }
+        }
+
+        function encerrar() {
+            painel.hidden = true;
+            if (origem) origem.focus();
+        }
+
+        document.querySelectorAll("a[data-404]").forEach((link) => {
+            link.addEventListener("click", (e) => {
+                e.preventDefault();
+                abrir(link);
+            });
+        });
+
+        fechar.addEventListener("click", encerrar);
+
+        painel.addEventListener("click", (e) => {
+            if (e.target === painel) encerrar();
+        });
+
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "Escape" && !painel.hidden) encerrar();
+        });
+    })();
+
+    /* EASTER EGG: 3 CLIQUES NO TEXTO CENSURADO DO ALERTA */
+    (function () {
+        const gatilho = document.getElementById("eggTrigger");
+        const aviso = document.getElementById("toast");
+        if (!gatilho || !aviso) return;
+
+        let cliques = 0;
+        let reset = null;
+        let esconder = null;
+
+        gatilho.addEventListener("click", () => {
+            cliques++;
+            clearTimeout(reset);
+            reset = setTimeout(() => { cliques = 0; }, 1800);
+
+            if (cliques >= 3) {
+                cliques = 0;
+                aviso.hidden = false;
+
+                if (window.p114Bip) {
+                    window.p114Bip(660, 0.08, 0.04);
+                    setTimeout(() => window.p114Bip(990, 0.12, 0.04), 110);
+                }
+
+                clearTimeout(esconder);
+                esconder = setTimeout(() => { aviso.hidden = true; }, 9000);
+            }
+        });
     })();
 </script>
 
