@@ -3,143 +3,1479 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VÍDEOS INFORMATIVOS - K.A-114</title>
+    <meta name="theme-color" content="#080808">
+    <title>ARQUIVO MULTIMÍDIA — K.A-114</title>
+
     <style>
-        /* Visual Aesthetic Minimalista */
+        :root {
+            --bg: #080808;
+            --panel: #101010;
+            --panel-2: #151515;
+            --line: #303030;
+            --line-light: #484848;
+            --text: #c5c5c5;
+            --muted: #777;
+            --dim: #505050;
+            --red: #a63a3a;
+            --red-bright: #d14a4a;
+            --white: #ededed;
+        }
+
+        * { box-sizing: border-box; }
+
+        html {
+            scroll-behavior: smooth;
+            scrollbar-color: #353535 #080808;
+        }
+
         body {
-            background-color: #000;
-            color: #bbb;
-            font-family: 'Courier New', Courier, monospace;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
             margin: 0;
-            text-align: center;
+            min-height: 100vh;
+            background: var(--bg);
+            color: var(--text);
+            font-family: "Courier New", Courier, monospace;
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 20;
+            opacity: .12;
+            background: repeating-linear-gradient(
+                to bottom,
+                transparent 0px,
+                transparent 3px,
+                rgba(255,255,255,.025) 4px
+            );
+        }
+
+        button, input { font: inherit; }
+
+        button:focus-visible,
+        a:focus-visible,
+        input:focus-visible {
+            outline: 1px solid var(--red-bright);
+            outline-offset: 4px;
+        }
+
+        a {
+            color: inherit;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        button {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 13px 5%;
+            background: rgba(8, 8, 8, .96);
+            border-bottom: 1px solid var(--line);
+            backdrop-filter: blur(12px);
+        }
+
+        .brand {
+            color: var(--white);
+            font-size: 12px;
+            font-weight: bold;
+            letter-spacing: 3px;
+            text-decoration: none;
+        }
+
+        .brand span { color: var(--red-bright); }
+
+        .top-status {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            color: var(--muted);
+            font-size: 10px;
+            letter-spacing: 1px;
+            text-align: right;
+        }
+
+        .status-dot {
+            width: 7px;
+            height: 7px;
+            display: inline-block;
+            flex-shrink: 0;
+            border-radius: 50%;
+            background: var(--red);
+            box-shadow: 0 0 8px rgba(209, 74, 74, .35);
+        }
+
+        .page {
+            width: min(100% - 36px, 1040px);
+            margin: 0 auto;
+            padding: 38px 0 60px;
+        }
+
+        .breadcrumb {
+            margin-bottom: 24px;
+            color: var(--dim);
+            font-size: 10px;
+            letter-spacing: 1.5px;
+        }
+
+        .breadcrumb span { color: var(--red); }
+
+        .hero {
+            position: relative;
+            overflow: hidden;
+            padding: 32px;
+            border: 1px solid var(--line);
+            background:
+                radial-gradient(ellipse at 100% 0%, rgba(166,58,58,.09), transparent 50%),
+                linear-gradient(135deg, #121212, #090909 75%);
+        }
+
+        .hero::after {
+            content: "K.A-114";
+            position: absolute;
+            right: 18px;
+            bottom: -23px;
+            color: rgba(255,255,255,.025);
+            font-size: clamp(55px, 12vw, 110px);
+            font-weight: bold;
+            line-height: 1;
+            pointer-events: none;
+        }
+
+        .eyebrow {
+            color: var(--red-bright);
+            font-size: 10px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
         }
 
         h1 {
-            color: #ff0000;
-            font-size: 1.2rem;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            margin-bottom: 40px;
-            border-bottom: 1px solid #222;
-            padding-bottom: 10px;
+            margin: 10px 0 12px;
+            color: var(--white);
+            font-size: clamp(23px, 4vw, 36px);
+            font-weight: normal;
+            letter-spacing: 2px;
+            line-height: 1.25;
         }
 
-        /* Container de Botões */
-        .menu-container {
+        .hero-description {
+            max-width: 610px;
+            margin: 0;
+            color: #929292;
+            font-size: 12px;
+        }
+
+        .hero-meta {
             display: flex;
-            flex-direction: column;
-            gap: 15px;
-            width: 100%;
-            max-width: 500px;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 23px;
         }
 
-        /* Estilo dos Botões Cinzas */
-        .terminal-btn {
-            display: block;
-            padding: 15px 20px;
-            border: 1px solid #444; /* Cinza escuro */
-            color: #888;           /* Texto cinza */
-            text-decoration: none;
-            background: transparent;
-            font-size: 13px;
-            font-weight: bold;
-            text-transform: uppercase;
+        .tag {
+            padding: 5px 9px;
+            border: 1px solid #353535;
+            color: #969696;
+            background: rgba(0,0,0,.25);
+            font-size: 9px;
             letter-spacing: 1px;
-            transition: all 0.3s ease;
+        }
+
+        .tag.restricted {
+            border-color: #593131;
+            color: #c67a7a;
+        }
+
+        .section-heading {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin: 35px 0 14px;
+        }
+
+        .section-heading h2 {
+            margin: 0;
+            color: #dedede;
+            font-size: 12px;
+            font-weight: normal;
+            letter-spacing: 2px;
+        }
+
+        .section-number {
+            margin-right: 10px;
+            color: var(--red-bright);
+        }
+
+        .section-count {
+            color: var(--dim);
+            font-size: 10px;
+        }
+
+        .toolbar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        .search-wrap {
+            position: relative;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .search-icon {
+            position: absolute;
+            top: 50%;
+            left: 13px;
+            color: var(--dim);
+            transform: translateY(-50%);
+            pointer-events: none;
+        }
+
+        .search {
+            width: 100%;
+            padding: 12px 14px 12px 36px;
+            border: 1px solid var(--line);
+            border-radius: 0;
+            background: #0d0d0d;
+            color: var(--white);
+            outline: none;
+        }
+
+        .search:focus { border-color: #686868; }
+        .search::placeholder { color: #555; }
+
+        .terminal-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 11px 14px;
+            border: 1px solid var(--line-light);
+            border-radius: 0;
+            background: transparent;
+            color: #aaa;
+            font-size: 10px;
+            letter-spacing: 1px;
+            text-decoration: none;
+            text-transform: uppercase;
             cursor: pointer;
+            transition: background .2s, border-color .2s, color .2s;
         }
 
         .terminal-btn:hover {
-            border-color: #fff;
+            border-color: #888;
+            background: rgba(255,255,255,.045);
             color: #fff;
-            background: rgba(255, 255, 255, 0.05);
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
         }
 
-        /* Estilo para o botão de voltar (mais discreto) */
-        .btn-voltar {
-            margin-top: 30px;
-            border-color: #222;
-            font-size: 11px;
-            color: #444;
+        .terminal-btn.primary {
+            border-color: #713737;
+            color: #d18b8b;
         }
 
-        /* Player de Vídeo (Oculto inicialmente) */
-        #videoOverlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.95);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
+        .terminal-btn.primary:hover {
+            border-color: var(--red-bright);
+            background: rgba(166,58,58,.1);
+            color: #fff;
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
+        }
+
+        .video-card {
+            position: relative;
+            display: flex;
             flex-direction: column;
+            min-width: 0;
+            padding: 20px;
+            border: 1px solid var(--line);
+            background: var(--panel);
+            transition: border-color .2s, transform .2s;
         }
 
-        video {
-            max-width: 80%;
+        .video-card:hover {
+            border-color: #555;
+            transform: translateY(-2px);
+        }
+
+        .video-card.hidden { display: none; }
+
+        .card-top {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .file-code {
+            color: var(--red-bright);
+            font-size: 10px;
+            letter-spacing: 1.5px;
+        }
+
+        .file-type {
+            padding: 3px 6px;
             border: 1px solid #333;
+            color: #777;
+            font-size: 9px;
+            white-space: nowrap;
         }
 
-        .fechar-video {
-            margin-top: 20px;
-            color: #ff0000;
+        .video-symbol {
+            display: grid;
+            place-items: center;
+            width: 52px;
+            height: 52px;
+            margin: 24px 0 17px;
+            border: 1px solid #3a3a3a;
+            background: #0b0b0b;
+            color: #aaa;
+            font-size: 21px;
+            transition: color .2s, border-color .2s;
+        }
+
+        .video-card:hover .video-symbol {
+            border-color: #784040;
+            color: var(--red-bright);
+        }
+
+        .video-card h3 {
+            margin: 0 0 8px;
+            color: #e1e1e1;
+            font-size: 15px;
+            font-weight: normal;
+            line-height: 1.5;
+        }
+
+        .video-description {
+            flex: 1;
+            margin: 0 0 19px;
+            color: #858585;
+            font-size: 11px;
+        }
+
+        .card-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            padding: 11px 0;
+            border-top: 1px solid #242424;
+            color: #656565;
+            font-size: 9px;
+        }
+
+        .card-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .card-actions button {
+            width: 100%;
+            min-height: 39px;
+            padding: 9px 7px;
+            font-size: 9px;
+        }
+
+        .empty-state {
+            display: none;
+            padding: 28px;
+            border: 1px dashed #333;
+            color: #777;
+            text-align: center;
+        }
+
+        .empty-state.show { display: block; }
+
+        .transcript-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .transcript-item {
+            border: 1px solid var(--line);
+            background: #0d0d0d;
+        }
+
+        .transcript-item[hidden] { display: none; }
+
+        .transcript-toggle {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            gap: 14px;
+            padding: 17px 18px;
+            border: 0;
+            background: transparent;
+            color: var(--text);
+            text-align: left;
             cursor: pointer;
-            text-transform: uppercase;
-            font-size: 12px;
-            letter-spacing: 2px;
+        }
+
+        .transcript-toggle:hover { background: #141414; }
+
+        .transcript-file {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            gap: 3px;
+            min-width: 0;
+        }
+
+        .transcript-file strong {
+            color: #d0d0d0;
+            font-size: 11px;
+            font-weight: normal;
+        }
+
+        .transcript-file small {
+            color: #686868;
+            font-size: 10px;
+        }
+
+        .transcript-toggle .arrow {
+            color: var(--red-bright);
+            transition: transform .2s;
+        }
+
+        .transcript-item.open .arrow { transform: rotate(180deg); }
+
+        .transcript-content {
+            display: none;
+            padding: 0 20px 20px;
+            border-top: 1px solid #252525;
+        }
+
+        .transcript-item.open .transcript-content {
+            display: block;
+            animation: reveal .25s ease;
+        }
+
+        @keyframes reveal {
+            from { opacity: 0; transform: translateY(-4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .transcript-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            padding: 13px 0;
+        }
+
+        .transcript-label {
+            color: var(--red-bright);
+            font-size: 9px;
+            letter-spacing: 1.5px;
+        }
+
+        .transcript-text {
+            color: #aaa;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 13px;
+            line-height: 1.9;
+            white-space: pre-line;
+        }
+
+        .transcript-text p { margin: 0 0 14px; }
+        .transcript-text p:last-child { margin-bottom: 0; }
+
+        .transcript-footer {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 17px;
+        }
+
+        .disclaimer {
+            margin-top: 35px;
+            padding: 15px 0;
+            border-top: 1px solid #222;
+            color: #666;
+            font-size: 10px;
+        }
+
+        .footer {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin-top: 35px;
+            padding-top: 18px;
+            border-top: 1px solid var(--line);
+            color: #505050;
+            font-size: 9px;
+            letter-spacing: 1px;
+        }
+
+        .footer a {
+            color: #777;
+            text-decoration: none;
+        }
+
+        .footer a:hover { color: #ddd; }
+
+        .overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: rgba(0,0,0,.94);
+            backdrop-filter: blur(8px);
+        }
+
+        .overlay.active {
+            display: flex;
+            animation: fade-in .2s ease;
+        }
+
+        @keyframes fade-in {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .player-window {
+            width: min(100%, 850px);
+            max-height: 95vh;
+            overflow-y: auto;
+            border: 1px solid #454545;
+            background: #0b0b0b;
+            box-shadow: 0 20px 80px rgba(0,0,0,.7);
+        }
+
+        .player-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 17px;
+            border-bottom: 1px solid #303030;
+            background: #121212;
+        }
+
+        .player-heading { min-width: 0; }
+
+        .player-heading small {
+            display: block;
+            color: var(--red-bright);
+            font-size: 9px;
+            letter-spacing: 1.5px;
+        }
+
+        .player-heading strong {
+            display: block;
+            overflow: hidden;
+            margin-top: 3px;
+            color: #ddd;
+            font-size: 11px;
+            font-weight: normal;
+            text-overflow: ellipsis;
+        }
+
+        .close-btn {
+            display: grid;
+            place-items: center;
+            width: 35px;
+            height: 35px;
+            flex-shrink: 0;
+            border: 1px solid #383838;
+            background: transparent;
+            color: #999;
+            cursor: pointer;
+        }
+
+        .close-btn:hover {
+            border-color: var(--red);
+            color: #fff;
+        }
+
+        .video-stage {
+            padding: 18px;
+            background: #050505;
+        }
+
+        #videoPlayer {
+            display: block;
+            width: 100%;
+            max-height: 58vh;
+            background: #000;
+            border: 1px solid #252525;
+        }
+
+        .video-error {
+            display: none;
+            padding: 25px;
+            border: 1px solid #472c2c;
+            color: #b9a0a0;
+            text-align: center;
+        }
+
+        .video-error.show { display: block; }
+
+        .video-error strong {
+            display: block;
+            margin-bottom: 7px;
+            color: #d58b8b;
+            font-size: 11px;
+        }
+
+        .player-bottom {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 10px;
+            padding: 13px 17px;
+            border-top: 1px solid #252525;
+            color: #777;
+            font-size: 10px;
+        }
+
+        .player-bottom button {
+            padding: 5px 0;
+            border: 0;
+            background: transparent;
+            color: #aaa;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        .toast {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            z-index: 200;
+            max-width: calc(100% - 40px);
+            padding: 12px 17px;
+            border: 1px solid #484848;
+            background: #111;
+            color: #ddd;
+            font-size: 11px;
+            opacity: 0;
+            transform: translateY(10px);
+            pointer-events: none;
+            transition: opacity .2s, transform .2s;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .back-to-top {
+            position: fixed;
+            right: 18px;
+            bottom: 18px;
+            z-index: 30;
+            display: none;
+            width: 38px;
+            height: 38px;
+            border: 1px solid #3b3b3b;
+            background: #111;
+            color: #bbb;
+            cursor: pointer;
+        }
+
+        .back-to-top.show { display: block; }
+
+        @media (max-width: 680px) {
+            .page {
+                width: min(100% - 24px, 1040px);
+                padding-top: 22px;
+            }
+
+            .topbar { padding: 12px; }
+
+            .brand {
+                font-size: 10px;
+                letter-spacing: 2px;
+            }
+
+            .top-status {
+                font-size: 8px;
+                letter-spacing: .5px;
+            }
+
+            .hero { padding: 23px 19px; }
+
+            .video-grid { grid-template-columns: 1fr; }
+
+            .toolbar { flex-direction: column; }
+
+            .toolbar > .terminal-btn { width: 100%; }
+
+            .overlay { padding: 8px; }
+
+            .video-stage { padding: 8px; }
+
+            .player-header { padding: 11px; }
+
+            .footer { flex-direction: column; }
+
+            .transcript-content { padding: 0 13px 16px; }
+
+            .transcript-toolbar {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                scroll-behavior: auto !important;
+                animation-duration: .01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: .01ms !important;
+            }
         }
     </style>
 </head>
+    
 <body>
+    <header class="topbar">
+        <a class="brand" href="BASE.html">PROJECT<span>114</span></a>
 
-    <h1>VÍDEOS INFORMATIVOS</h1>
+        <div class="top-status">
+            <span class="status-dot"></span>
+            <span>ARQUIVO MULTIMÍDIA // K.A-114</span>
+        </div>
+    </header>
 
-    <div class="menu-container">
-        <a href="javascript:void(0)" class="terminal-btn" onclick="playVideo('daniiestrela.mp4')">
-            Vídeo informativo sobre DANIIYEL STARMORNING
-        </a>
+    <main class="page" id="top">
+        <div class="breadcrumb">
+            TERMINAL PRINCIPAL / <span>ARQUIVOS</span> / VÍDEOS INFORMATIVOS
+        </div>
 
-        <a href="javascript:void(0)" class="terminal-btn" onclick="playVideo('joaomarcos.mp4')">
-            Vídeo informativo sobre o PROTOCOLO ALFA
-        </a>
+        <section class="hero">
+            <div class="eyebrow">Central de registros audiovisuais</div>
+            <h1>VÍDEOS INFORMATIVOS</h1>
 
-        <a href="BASE.html" class="terminal-btn btn-voltar">
-            ← VOLTAR AO TERMINAL
-        </a>
+            <p class="hero-description">
+                Repositório de gravações e transcrições vinculadas a indivíduos,
+                operações e ocorrências registradas no sistema K.A-114.
+                Selecione um arquivo para iniciar a reprodução ou consultar
+                sua transcrição textual.
+            </p>
+
+            <div class="hero-meta">
+                <span class="tag">2 ARQUIVOS INDEXADOS</span>
+                <span class="tag">FORMATO: MP4 / TXT</span>
+                <span class="tag restricted">ACESSO RESTRITO</span>
+            </div>
+        </section>
+
+        <div class="section-heading" id="arquivos">
+            <h2><span class="section-number">01 //</span>REGISTROS DISPONÍVEIS</h2>
+            <span class="section-count" id="visibleCount">02 REGISTROS</span>
+        </div>
+
+        <div class="toolbar">
+            <div class="search-wrap">
+                <span class="search-icon">⌕</span>
+                <input
+                    class="search"
+                    type="search"
+                    id="searchInput"
+                    placeholder="Pesquisar por nome, protocolo ou conteúdo..."
+                    aria-label="Pesquisar arquivos e transcrições"
+                    autocomplete="off"
+                >
+            </div>
+
+            <button class="terminal-btn" id="clearSearch" type="button">
+                LIMPAR BUSCA
+            </button>
+        </div>
+
+        <div class="video-grid" id="videoGrid">
+
+            <article
+                class="video-card"
+                data-search="daniiyel starmorning danii estrela 06 stella eclipse lunar 2006 olho esquerdo matéria simbiótica replicação remoção confidencial"
+            >
+                <div class="card-top">
+                    <span class="file-code">ARQ-001 // EST-06</span>
+                    <span class="file-type">VÍDEO MP4</span>
+                </div>
+
+                <div class="video-symbol" aria-hidden="true">▶</div>
+
+                <h3>ESTRELA-06: STELLA</h3>
+
+                <p class="video-description">
+                    Registro informativo sobre Daniiyel Starmorning,
+                    a manifestação anômala associada ao seu olho esquerdo
+                    e as investigações relacionadas ao fenômeno.
+                </p>
+
+                <div class="card-info">
+                    <span>ASSUNTO: IND-001</span>
+                    <span>ARQUIVO: daniiestrela.mp4</span>
+                </div>
+
+                <div class="card-actions">
+                    <button
+                        class="terminal-btn primary"
+                        type="button"
+                        data-play="daniiestrela.mp4"
+                        data-title="ESTRELA-06: STELLA"
+                    >
+                        ▶ REPRODUZIR
+                    </button>
+
+                    <button
+                        class="terminal-btn"
+                        type="button"
+                        data-transcript="transcript-danii"
+                    >
+                        ☰ TRANSCRIÇÃO
+                    </button>
+                </div>
+            </article>
+
+            <article
+                class="video-card"
+                data-search="protocolo alfa joão carlos moderno borges marcos moderno borges capitão moderno filho pai destacamento lontra amazônia exército brasileiro kin atlas epigmênio selene cartel sky selene são paulo"
+            >
+                <div class="card-top">
+                    <span class="file-code">ARQ-002 // P-ALFA</span>
+                    <span class="file-type">VÍDEO MP4</span>
+                </div>
+
+                <div class="video-symbol" aria-hidden="true">▶</div>
+
+                <h3>PROTOCOLO-ALFA</h3>
+
+                <p class="video-description">
+                    Relatório audiovisual sobre o desaparecimento do
+                    Destacamento Lontra, os registros na Amazônia e
+                    a situação de João Carlos Moderno Borges.
+                </p>
+
+                <div class="card-info">
+                    <span>ASSUNTO: OPERAÇÃO</span>
+                    <span>ARQUIVO: joaomarcos.mp4</span>
+                </div>
+
+                <div class="card-actions">
+                    <button
+                        class="terminal-btn primary"
+                        type="button"
+                        data-play="joaomarcos.mp4"
+                        data-title="PROTOCOLO-ALFA"
+                    >
+                        ▶ REPRODUZIR
+                    </button>
+
+                    <button
+                        class="terminal-btn"
+                        type="button"
+                        data-transcript="transcript-joao"
+                    >
+                        ☰ TRANSCRIÇÃO
+                    </button>
+                </div>
+            </article>
+        </div>
+
+        <div class="empty-state" id="emptyState">
+            NENHUM REGISTRO CORRESPONDE À PESQUISA.
+            <br>
+            Tente outro termo ou limpe a busca.
+        </div>
+
+        <div class="section-heading" id="transcricoes">
+            <h2><span class="section-number">02 //</span>TRANSCRIÇÕES</h2>
+            <span class="section-count">TEXTO INDEXADO</span>
+        </div>
+
+        <div class="transcript-list" id="transcriptList">
+
+            <section
+                class="transcript-item"
+                id="transcript-danii"
+                data-search="daniiyel starmorning estrela 06 stella eclipse lunar total 08 julho 2006 matéria olho pupila esquerda simbiótica ciência replicação remoção kin atlas ka 114"
+            >
+                <button
+                    class="transcript-toggle"
+                    type="button"
+                    aria-expanded="false"
+                    aria-controls="content-danii"
+                >
+                    <span class="file-code">TXT-001</span>
+
+                    <span class="transcript-file">
+                        <strong>TRANSCRIÇÃO // ESTRELA-06: STELLA</strong>
+                        <small>Referência: Daniiyel Starmorning</small>
+                    </span>
+
+                    <span class="arrow" aria-hidden="true">⌄</span>
+                </button>
+
+                <div class="transcript-content" id="content-danii">
+                    <div class="transcript-toolbar">
+                        <span class="transcript-label">INÍCIO DA TRANSCRIÇÃO</span>
+
+                        <button
+                            class="terminal-btn copy-btn"
+                            type="button"
+                            data-copy="transcriptTextDanii"
+                        >
+                            ⧉ COPIAR TEXTO
+                        </button>
+                    </div>
+
+                    <div class="transcript-text" id="transcriptTextDanii">
+                        <p>O vídeo explica que a ESTRELA-06, denominada “Stella”, teve sua primeira aparição registrada em um eclipse lunar total em 08 de julho de 2006.</p>
+
+                        <p>De maneira ainda desconhecida pela ciência, uma amálgama de matéria nasceu conectada ao olho de Daniiyel Starmorning. A estrela funciona de forma simbiótica, porém sem o controle do indivíduo.</p>
+
+                        <p>Ela emite luz própria de forma anormal dentro da pupila esquerda de Daniiyel, e todas as tentativas de replicação ou remoção foram totalmente ineficazes.</p>
+
+                        <p>Estuda-se uma possível ligação com K.A-114, já que Daniiyel Starmorning e K.A-114 (Kin Atlas) são irmãos adotivos.</p>
+
+                        <p>O vídeo encerra reforçando que as informações são confidenciais e não devem ser compartilhadas.</p>
+                    </div>
+
+                    <div class="transcript-footer">
+                        <button
+                            class="terminal-btn primary"
+                            type="button"
+                            data-play="daniiestrela.mp4"
+                            data-title="ESTRELA-06: STELLA"
+                        >
+                            ▶ ABRIR VÍDEO
+                        </button>
+
+                        <button
+                            class="terminal-btn"
+                            type="button"
+                            data-close-transcript="transcript-danii"
+                        >
+                            RECOLHER TEXTO
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <section
+                class="transcript-item"
+                id="transcript-joao"
+                data-search="protocolo alfa 18 agosto 1994 destacamento lontra floresta amazônica exército brasileiro marcos moderno borges capitão moderno pai 42 graus equipamentos kin atlas joão carlos moderno borges foragido guarda costas epigmênio selene cartel sky selene são paulo"
+            >
+                <button
+                    class="transcript-toggle"
+                    type="button"
+                    aria-expanded="false"
+                    aria-controls="content-joao"
+                >
+                    <span class="file-code">TXT-002</span>
+
+                    <span class="transcript-file">
+                        <strong>TRANSCRIÇÃO // PROTOCOLO-ALFA</strong>
+                        <small>Referência: João Carlos Moderno Borges</small>
+                    </span>
+
+                    <span class="arrow" aria-hidden="true">⌄</span>
+                </button>
+
+                <div class="transcript-content" id="content-joao">
+                    <div class="transcript-toolbar">
+                        <span class="transcript-label">INÍCIO DA TRANSCRIÇÃO</span>
+
+                        <button
+                            class="terminal-btn copy-btn"
+                            type="button"
+                            data-copy="transcriptTextJoao"
+                        >
+                            ⧉ COPIAR TEXTO
+                        </button>
+                    </div>
+
+                    <div class="transcript-text" id="transcriptTextJoao">
+                        <p>O Protocolo-Alfa foi ativado em 18 de agosto de 1994, quando a equipe de buscas Destacamento Lontra desapareceu misteriosamente na floresta amazônica.</p>
+
+                        <p>A equipe era um grupo de operações do Exército Brasileiro, selecionado para busca de procurados na Amazônia. Seu líder era Marcos Moderno Borges, major do exército conhecido como Capitão Moderno Pai.</p>
+
+                        <p>Todos desapareceram sem deixar rastros, apenas seus equipamentos. Aparelhos de temperatura remanescentes foram encontrados marcando temperaturas extremas (42°C) para regiões onde não havia vida.</p>
+
+                        <p>O principal suspeito do desaparecimento é K.A-114, cujas informações não constam neste vídeo.</p>
+
+                        <p>João Carlos Moderno Borges (Capitão Moderno Filho), filho de Marcos, é hoje foragido e procurado pelo Exército Brasileiro por ter invadido a casa de Daniiyel Starmorning sem mandado de busca.</p>
+
+                        <p>Novas informações indicam que ele se tornou guarda-costas de Daniiyel e Kin Atlas. João também é major do exército, porém afastado.</p>
+
+                        <p>Suas ações são lembradas pela busca por Epigmênio Selene, líder do Cartel Sky Selene, e por ações em São Paulo.</p>
+
+                        <p>O vídeo pede que qualquer informação sobre o paradeiro de João Carlos seja reportada à polícia local, sem tentativa de contato.</p>
+                    </div>
+
+                    <div class="transcript-footer">
+                        <button
+                            class="terminal-btn primary"
+                            type="button"
+                            data-play="joaomarcos.mp4"
+                            data-title="PROTOCOLO-ALFA"
+                        >
+                            ▶ ABRIR VÍDEO
+                        </button>
+
+                        <button
+                            class="terminal-btn"
+                            type="button"
+                            data-close-transcript="transcript-joao"
+                        >
+                            RECOLHER TEXTO
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div class="disclaimer">
+            <strong>NOTA SOBRE O CONTEÚDO:</strong>
+            PROJECT114 e K.A-114 integram uma obra ficcional. Os vídeos,
+            relatórios, personagens, organizações e acontecimentos exibidos
+            nesta página pertencem ao universo narrativo de Tríade Estrela.
+            Este material não constitui documento oficial nem comunicação
+            emitida por instituições reais.
+        </div>
+
+        <footer class="footer">
+            <span>PROJECT114 // SISTEMA DE ARQUIVOS</span>
+            <a href="BASE.html">← VOLTAR AO TERMINAL</a>
+            <span>FIM DO ÍNDICE</span>
+        </footer>
+    </main>
+
+    <div
+        class="overlay"
+        id="videoOverlay"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="playerTitle"
+        aria-hidden="true"
+    >
+        <div class="player-window">
+            <div class="player-header">
+                <div class="player-heading">
+                    <small>REPRODUÇÃO DE ARQUIVO // MP4</small>
+                    <strong id="playerTitle">CARREGANDO REGISTRO...</strong>
+                </div>
+
+                <button
+                    class="close-btn"
+                    id="closeVideo"
+                    type="button"
+                    aria-label="Fechar reprodução"
+                >✕</button>
+            </div>
+
+            <div class="video-stage">
+                <video
+                    id="videoPlayer"
+                    controls
+                    playsinline
+                    preload="metadata"
+                >
+                    Seu navegador não suporta reprodução de vídeo.
+                </video>
+
+                <div class="video-error" id="videoError" role="status">
+                    <strong>FALHA AO ACESSAR O ARQUIVO</strong>
+                    O vídeo não pôde ser carregado. Verifique se o arquivo
+                    existe na pasta correta e se o nome corresponde ao registro.
+                    <br><br>
+                    <button class="terminal-btn" id="retryVideo" type="button">
+                        TENTAR NOVAMENTE
+                    </button>
+                </div>
+            </div>
+
+            <div class="player-bottom">
+                <span id="playerStatus">AGUARDANDO CARREGAMENTO...</span>
+                <button id="openTranscriptFromPlayer" type="button">
+                    CONSULTAR TRANSCRIÇÃO ↗
+                </button>
+            </div>
+        </div>
     </div>
 
-    <div id="videoOverlay">
-        <video id="videoPlayer" controls></video>
-        <div class="fechar-video" onclick="closeVideo()">[ FECHAR ARQUIVO ]</div>
-    </div>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-    <script>
-        const overlay = document.getElementById('videoOverlay');
-        const player = document.getElementById('videoPlayer');
+    <button
+        class="back-to-top"
+        id="backToTop"
+        type="button"
+        aria-label="Voltar ao topo"
+        title="Voltar ao topo"
+    >↑</button>
+    
+<script>
+    const overlay = document.getElementById("videoOverlay");
+    const player = document.getElementById("videoPlayer");
+    const playerTitle = document.getElementById("playerTitle");
+    const playerStatus = document.getElementById("playerStatus");
+    const videoError = document.getElementById("videoError");
+    const toast = document.getElementById("toast");
+    const searchInput = document.getElementById("searchInput");
+    const visibleCount = document.getElementById("visibleCount");
+    const emptyState = document.getElementById("emptyState");
 
-        function playVideo(src) {
-            player.src = src;
-            overlay.style.display = 'flex';
-            player.play();
+    let currentVideo = "";
+    let currentTranscript = "";
+    let toastTimeout;
+    let lastFocusedElement = null;
+
+    const videoFiles = {
+        "daniiestrela.mp4": {
+            title: "ESTRELA-06: STELLA",
+            transcript: "transcript-danii"
+        },
+        "joaomarcos.mp4": {
+            title: "PROTOCOLO-ALFA",
+            transcript: "transcript-joao"
+        }
+    };
+
+    function showToast(message) {
+        toast.textContent = message;
+        toast.classList.add("show");
+
+        clearTimeout(toastTimeout);
+
+        toastTimeout = setTimeout(() => {
+            toast.classList.remove("show");
+        }, 2600);
+    }
+
+    function playVideo(src, title) {
+        if (!videoFiles[src]) {
+            showToast("ERRO: ARQUIVO NÃO INDEXADO.");
+            return;
         }
 
-        function closeVideo() {
-            player.pause();
-            player.src = "";
-            overlay.style.display = 'none';
-        }
+        lastFocusedElement = document.activeElement;
+        currentVideo = src;
+        currentTranscript = videoFiles[src].transcript;
 
-        // Fecha o vídeo se ele terminar sozinho
-        player.onended = function() {
+        playerTitle.textContent = title || videoFiles[src].title;
+        playerStatus.textContent = "CARREGANDO ARQUIVO...";
+        videoError.classList.remove("show");
+
+        player.pause();
+        player.src = src;
+        player.load();
+
+        overlay.classList.add("active");
+        overlay.setAttribute("aria-hidden", "false");
+        document.body.style.overflow = "hidden";
+
+        document.getElementById("closeVideo").focus();
+
+        const playAttempt = player.play();
+
+        if (playAttempt && typeof playAttempt.catch === "function") {
+            playAttempt.catch(() => {
+                playerStatus.textContent = "PRONTO PARA REPRODUÇÃO";
+            });
+        }
+    }
+
+    function closeVideo() {
+        player.pause();
+        player.removeAttribute("src");
+        player.load();
+
+        overlay.classList.remove("active");
+        overlay.setAttribute("aria-hidden", "true");
+        document.body.style.overflow = "";
+
+        videoError.classList.remove("show");
+        playerStatus.textContent = "REPRODUÇÃO ENCERRADA";
+
+        if (lastFocusedElement &&
+            typeof lastFocusedElement.focus === "function") {
+            lastFocusedElement.focus();
+        }
+    }
+
+    function retryVideo() {
+        if (!currentVideo) return;
+        playVideo(currentVideo, videoFiles[currentVideo].title);
+    }
+
+    player.addEventListener("loadedmetadata", () => {
+        playerStatus.textContent = "ARQUIVO CARREGADO";
+        videoError.classList.remove("show");
+    });
+
+    player.addEventListener("playing", () => {
+        playerStatus.textContent = "REPRODUZINDO";
+    });
+
+    player.addEventListener("pause", () => {
+        if (!player.ended && player.currentSrc) {
+            playerStatus.textContent = "REPRODUÇÃO PAUSADA";
+        }
+    });
+
+    player.addEventListener("ended", () => {
+        playerStatus.textContent = "FIM DO REGISTRO";
+    });
+
+    player.addEventListener("error", () => {
+        if (!overlay.classList.contains("active")) return;
+
+        playerStatus.textContent = "ERRO DE LEITURA";
+        videoError.classList.add("show");
+    });
+
+    document.getElementById("closeVideo")
+        .addEventListener("click", closeVideo);
+
+    document.getElementById("retryVideo")
+        .addEventListener("click", retryVideo);
+
+    overlay.addEventListener("click", event => {
+        if (event.target === overlay) {
             closeVideo();
-        };
-    </script>
+        }
+    });
 
+    document.addEventListener("keydown", event => {
+        if (event.key === "Escape" &&
+            overlay.classList.contains("active")) {
+            closeVideo();
+        }
+    });
+
+    document.querySelectorAll("[data-play]").forEach(button => {
+        button.addEventListener("click", () => {
+            playVideo(button.dataset.play, button.dataset.title);
+        });
+    });
+
+    document.querySelectorAll("[data-transcript]").forEach(button => {
+        button.addEventListener("click", () => {
+            const id = button.dataset.transcript;
+            const item = document.getElementById(id);
+
+            if (!item) return;
+
+            const willOpen = !item.classList.contains("open");
+
+            if (willOpen) {
+                item.classList.add("open");
+
+                item.querySelector(".transcript-toggle")
+                    .setAttribute("aria-expanded", "true");
+
+                item.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
+                });
+            } else {
+                item.classList.remove("open");
+
+                item.querySelector(".transcript-toggle")
+                    .setAttribute("aria-expanded", "false");
+            }
+        });
+    });
+
+    document.querySelectorAll(".transcript-toggle").forEach(button => {
+        button.addEventListener("click", () => {
+            const item = button.closest(".transcript-item");
+            const willOpen = !item.classList.contains("open");
+
+            item.classList.toggle("open", willOpen);
+            button.setAttribute("aria-expanded", String(willOpen));
+        });
+    });
+
+    document.querySelectorAll("[data-close-transcript]").forEach(button => {
+        button.addEventListener("click", () => {
+            const item = document.getElementById(
+                button.dataset.closeTranscript
+            );
+
+            if (!item) return;
+
+            item.classList.remove("open");
+
+            item.querySelector(".transcript-toggle")
+                .setAttribute("aria-expanded", "false");
+        });
+    });
+
+    document.querySelectorAll("[data-copy]").forEach(button => {
+        button.addEventListener("click", async () => {
+            const element = document.getElementById(button.dataset.copy);
+
+            if (!element) return;
+
+            const text = Array.from(element.querySelectorAll("p"))
+                .map(paragraph => paragraph.textContent.trim())
+                .join("\n\n");
+
+            try {
+                await navigator.clipboard.writeText(text);
+                showToast("TRANSCRIÇÃO COPIADA PARA A ÁREA DE TRANSFERÊNCIA.");
+            } catch (error) {
+                const textArea = document.createElement("textarea");
+                textArea.value = text;
+                textArea.setAttribute("readonly", "");
+                textArea.style.position = "fixed";
+                textArea.style.opacity = "0";
+
+                document.body.appendChild(textArea);
+                textArea.select();
+
+                let copied = false;
+
+                try {
+                    copied = document.execCommand("copy");
+                } catch (copyError) {
+                    copied = false;
+                }
+
+                textArea.remove();
+
+                showToast(
+                    copied
+                        ? "TRANSCRIÇÃO COPIADA."
+                        : "NÃO FOI POSSÍVEL COPIAR. SELECIONE O TEXTO MANUALMENTE."
+                );
+            }
+        });
+    });
+
+    document.getElementById("openTranscriptFromPlayer")
+        .addEventListener("click", () => {
+            const transcript = document.getElementById(currentTranscript);
+
+            if (!transcript) return;
+
+            closeVideo();
+
+            transcript.classList.add("open");
+
+            transcript.querySelector(".transcript-toggle")
+                .setAttribute("aria-expanded", "true");
+
+            setTimeout(() => {
+                transcript.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
+                });
+            }, 100);
+        });
+
+    function filterRecords() {
+        const query = searchInput.value
+            .trim()
+            .toLocaleLowerCase("pt-BR");
+
+        const cards = Array.from(document.querySelectorAll(".video-card"));
+        const transcripts = Array.from(
+            document.querySelectorAll(".transcript-item")
+        );
+
+        let visibleVideos = 0;
+
+        cards.forEach(card => {
+            const text = (
+                card.innerText + " " + (card.dataset.search || "")
+            ).toLocaleLowerCase("pt-BR");
+
+            const matches = text.includes(query);
+
+            card.classList.toggle("hidden", !matches);
+
+            if (matches) visibleVideos++;
+        });
+
+        transcripts.forEach(item => {
+            const text = (
+                item.innerText + " " + (item.dataset.search || "")
+            ).toLocaleLowerCase("pt-BR");
+
+            const matches = text.includes(query);
+
+            item.hidden = !matches;
+
+            if (!matches) {
+                item.classList.remove("open");
+
+                item.querySelector(".transcript-toggle")
+                    .setAttribute("aria-expanded", "false");
+            }
+        });
+
+        visibleCount.textContent =
+            String(visibleVideos).padStart(2, "0") +
+            (visibleVideos === 1 ? " REGISTRO" : " REGISTROS");
+
+        emptyState.classList.toggle("show", visibleVideos === 0);
+    }
+
+    searchInput.addEventListener("input", filterRecords);
+
+    document.getElementById("clearSearch").addEventListener("click", () => {
+        searchInput.value = "";
+        filterRecords();
+        searchInput.focus();
+    });
+
+    document.addEventListener("keydown", event => {
+        const target = event.target;
+
+        const typing =
+            target instanceof HTMLInputElement ||
+            target instanceof HTMLTextAreaElement ||
+            target.isContentEditable;
+
+        if (event.key === "/" && !typing &&
+            !overlay.classList.contains("active")) {
+            event.preventDefault();
+            searchInput.focus();
+        }
+    });
+
+    const backToTop = document.getElementById("backToTop");
+
+    window.addEventListener("scroll", () => {
+        backToTop.classList.toggle("show", window.scrollY > 450);
+    }, { passive: true });
+
+    backToTop.addEventListener("click", () => {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    });
+                                  </script>
+    
 </body>
 </html>
