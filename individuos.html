@@ -5,7 +5,659 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Arquivo Central de Indivíduos — PROJECT114</title>
 <meta name="theme-color" content="#111318">
-<meta name="description" content="Registros civis e genealógicos dos indivíduos catalogados pelo PROJECT114.
+<meta name="description" content="Registros civis e genealógicos dos indivíduos catalogados pelo PROJECT114.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23111318'/%3E%3Crect x='3' y='3' width='58' height='58' fill='none' stroke='%23a52a32' stroke-width='3'/%3E%3Ctext x='32' y='41' font-family='Courier New,monospace' font-size='24' font-weight='bold' text-anchor='middle' fill='%23e2a2a6'%3E114%3C/text%3E%3C/svg%3E">
+
+<style>
+:root {
+  --bg: #111318;
+  --sidebar: #15171d;
+  --panel: #191c23;
+  --panel-hover: #20242d;
+  --panel-dark: #14161c;
+  --border: #30343e;
+  --text: #e5e7eb;
+  --muted: #9298a5;
+  --subtle: #7a8190;
+  --red: #a52a32;
+  --red-light: #d75a63;
+  --red-bg: rgba(165, 42, 50, 0.12);
+  --green: #8eaa96;
+  --term: #4cff7a;
+  --black: #090a0d;
+  --mono: "Courier New", monospace;
+  --sans: Arial, Helvetica, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+body::before {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: repeating-linear-gradient(to bottom, rgba(255,255,255,.022) 0, rgba(255,255,255,.022) 1px, transparent 1px, transparent 3px);
+  content: "";
+  pointer-events: none;
+}
+
+a { color: inherit; text-decoration: none; }
+button, input { font: inherit; color: inherit; }
+button, a { -webkit-tap-highlight-color: transparent; }
+
+button:focus-visible, a:focus-visible, input:focus-visible, .redacted:focus-visible {
+  outline: 2px solid var(--red-light);
+  outline-offset: 3px;
+}
+
+.eyebrow { color: var(--muted); font-family: var(--mono); font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; }
+
+/* ===== ESTRUTURA ===== */
+
+.sidebar {
+  position: fixed;
+  inset: 0 auto 0 0;
+  z-index: 10;
+  display: flex;
+  width: 246px;
+  flex-direction: column;
+  padding: 25px 17px 18px;
+  background: var(--sidebar);
+  border-right: 1px solid var(--border);
+}
+
+.brand { display: flex; align-items: center; gap: 12px; padding: 0 8px 26px; border-bottom: 1px solid var(--border); }
+
+.brand-symbol {
+  display: grid;
+  width: 39px;
+  height: 39px;
+  flex-shrink: 0;
+  place-items: center;
+  background: var(--red-bg);
+  border: 1px solid #633039;
+  color: #e2a2a6;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.brand-name { margin: 0; font-size: 15px; letter-spacing: 1.5px; }
+.brand-subtitle { margin-top: 2px; color: var(--muted); font-family: var(--mono); font-size: 9px; letter-spacing: .7px; }
+
+.nav-heading { margin: 27px 8px 10px; color: var(--subtle); font-family: var(--mono); font-size: 10px; letter-spacing: 1.4px; text-transform: uppercase; }
+
+.nav-list { display: grid; gap: 4px; }
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 42px;
+  padding: 10px 12px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  color: #b3b8c3;
+  font-size: 12px;
+  transition: .2s ease;
+}
+
+.nav-icon { width: 19px; color: #9298a5; font-family: var(--mono); font-size: 15px; text-align: center; }
+.nav-link:hover { background: var(--panel-hover); color: #fff; }
+.nav-link.active { background: var(--red-bg); border-color: #493036; color: #fff; }
+.nav-link.active .nav-icon { color: var(--red-light); }
+
+.sidebar-bottom { margin-top: auto; padding: 15px 8px 0; border-top: 1px solid var(--border); }
+.system-status { display: flex; align-items: center; gap: 9px; color: var(--muted); font-size: 11px; }
+
+.status-dot {
+  width: 7px;
+  height: 7px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 8px #8eaa9640;
+  animation: pulse 2.4s ease-in-out infinite;
+}
+
+.status-dot.live { background: var(--term); box-shadow: 0 0 8px #4cff7a80; }
+
+.sidebar-version { margin-top: 9px; color: var(--subtle); font-family: var(--mono); font-size: 9px; }
+
+.main { min-width: 0; margin-left: 246px; }
+
+.topbar {
+  display: flex;
+  min-height: 60px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 0 36px;
+  border-bottom: 1px solid var(--border);
+  background: #14161c;
+}
+
+.breadcrumb { color: var(--muted); font-family: var(--mono); font-size: 10px; }
+.breadcrumb span { color: var(--text); }
+.topbar-right { display: flex; align-items: center; gap: 15px; }
+.session-clock { color: var(--subtle); font-family: var(--mono); font-size: 10px; letter-spacing: .6px; white-space: nowrap; }
+.session-clock b { color: var(--muted); font-weight: normal; }
+
+.restricted {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 9px;
+  border: 1px solid #593238;
+  background: var(--red-bg);
+  color: #dca1a5;
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: .6px;
+}
+
+.restricted-dot { width: 6px; height: 6px; background: var(--red-light); animation: blink 1.8s steps(2, start) infinite; }
+
+.restricted.open { border-color: #2d6b3f; background: rgba(76,255,122,.08); color: var(--term); }
+.restricted.open .restricted-dot { background: var(--term); }
+
+.content { width: 100%; max-width: 1180px; margin: 0 auto; padding: 35px 36px 24px; }
+
+/* ===== HERO ===== */
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  padding: 34px 30px;
+  border: 1px solid var(--border);
+  background: linear-gradient(110deg, #1a1c23 0%, #171920 65%, #21181c 100%);
+  animation: fadeUp .55s ease backwards;
+}
+
+.hero::after {
+  position: absolute;
+  top: -70px;
+  right: -40px;
+  width: 290px;
+  height: 290px;
+  border: 1px solid #ffffff08;
+  border-radius: 50%;
+  box-shadow: 0 0 0 35px #ffffff03, 0 0 0 70px #ffffff02;
+  content: "";
+  pointer-events: none;
+}
+
+.stamp {
+  position: absolute;
+  top: 26px;
+  right: 30px;
+  z-index: 1;
+  padding: 6px 13px;
+  border: 2px solid rgba(215, 90, 99, 0.5);
+  color: rgba(215, 90, 99, 0.55);
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: bold;
+  letter-spacing: 3px;
+  transform: rotate(7deg);
+  pointer-events: none;
+  user-select: none;
+}
+
+.hero-topline { display: flex; align-items: center; gap: 9px; margin-bottom: 18px; color: #c17a80; font-family: var(--mono); font-size: 10px; letter-spacing: 1.4px; }
+.hero h1 { position: relative; z-index: 1; margin: 0; font-size: clamp(26px, 3.6vw, 42px); font-weight: 600; letter-spacing: -.8px; line-height: 1.2; }
+.hero-description { max-width: 640px; margin: 14px 0 25px; color: #a8adb8; font-size: 13px; line-height: 1.9; }
+.hero-meta { position: relative; z-index: 1; display: flex; flex-wrap: wrap; gap: 10px 28px; padding-top: 17px; border-top: 1px solid var(--border); }
+.meta-item { display: flex; flex-direction: column; gap: 4px; }
+.meta-label { color: var(--subtle); font-family: var(--mono); font-size: 9px; letter-spacing: 1px; }
+.meta-value { color: #d7d9df; font-family: var(--mono); font-size: 11px; }
+
+.alertbar {
+  margin-top: 16px;
+  padding: 11px 14px;
+  background: #1a0b0e;
+  border: 1px solid #7a3a42;
+  color: var(--red-light);
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: 1.2px;
+  text-align: center;
+  text-transform: uppercase;
+  animation: fadeUp .55s ease .1s backwards;
+}
+
+.alertbar span { animation: pulse 1.6s ease-in-out infinite; display: inline-block; }
+
+/* ===== SEÇÕES ===== */
+
+.section { margin-top: 38px; scroll-margin-top: 18px; }
+.section-heading { display: flex; align-items: flex-end; justify-content: space-between; gap: 15px; margin-bottom: 15px; }
+.section-heading h2 { margin: 3px 0 0; font-size: 17px; font-weight: 500; letter-spacing: -.2px; }
+.section-count { color: var(--subtle); font-family: var(--mono); font-size: 10px; }
+
+/* ===== FICHA ===== */
+
+.profile {
+  display: grid;
+  grid-template-columns: 250px minmax(0, 1fr);
+  background: var(--panel);
+  border: 1px solid var(--border);
+  animation: fadeUp .55s ease .15s backwards;
+}
+
+.p-side { padding: 20px; background: #15171d; border-right: 1px solid var(--border); }
+
+.photo {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: var(--black);
+  border: 1px solid #303039;
+}
+
+.ph { position: relative; width: 100%; height: 100%; background: #0c0d11; }
+
+.ph::before { content: ""; position: absolute; top: 24%; left: 50%; width: 34%; aspect-ratio: 1; transform: translateX(-50%); border-radius: 50%; background: #1c1f27; }
+.ph::after { content: ""; position: absolute; bottom: -12%; left: 50%; width: 76%; height: 42%; transform: translateX(-50%); border-radius: 50% 50% 0 0; background: #1c1f27; }
+
+.ph span {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 3;
+  padding: 7px;
+  background: rgba(9,10,13,.85);
+  border-top: 1px solid #303039;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: 1px;
+  text-align: center;
+}
+
+.corner { position: absolute; z-index: 2; width: 18px; height: 18px; border: 0 solid var(--red-light); pointer-events: none; }
+.corner.tl { top: 8px; left: 8px; border-top-width: 2px; border-left-width: 2px; }
+.corner.tr { top: 8px; right: 8px; border-top-width: 2px; border-right-width: 2px; }
+.corner.bl { bottom: 8px; left: 8px; border-bottom-width: 2px; border-left-width: 2px; }
+.corner.br { right: 8px; bottom: 8px; border-bottom-width: 2px; border-right-width: 2px; }
+
+.side-box { margin-top: 12px; padding: 12px 13px; background: var(--black); border: 1px solid #303039; }
+.side-label { margin-bottom: 7px; color: var(--subtle); font-family: var(--mono); font-size: 9px; letter-spacing: 1px; }
+.side-value { color: #d7d9df; font-family: var(--mono); font-size: 12px; line-height: 1.6; }
+.side-duo { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.side-duo .side-value { font-family: var(--sans); }
+
+.elapsed { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 5px; }
+.elapsed .n { font-family: var(--mono); font-size: 20px; font-variant-numeric: tabular-nums; }
+.elapsed .u { margin-right: 8px; color: var(--muted); font-family: var(--mono); font-size: 9px; }
+
+.side-link { display: block; margin-top: 9px; color: var(--red-light); font-family: var(--mono); font-size: 9px; letter-spacing: .8px; }
+.side-link:hover { color: #fff; }
+
+.p-main { min-width: 0; padding: 22px 24px; }
+.p-code { color: var(--red-light); font-family: var(--mono); font-size: 10px; letter-spacing: 1.8px; }
+.p-name { margin: 8px 0 18px; font-size: clamp(22px, 3.4vw, 32px); font-weight: 600; letter-spacing: -.4px; line-height: 1.2; }
+
+table.data { width: 100%; border-collapse: collapse; }
+
+table.data th, table.data td {
+  padding: 10px 13px;
+  border: 1px solid var(--border);
+  text-align: left;
+  vertical-align: top;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+
+table.data th { width: 34%; background: #15171d; color: var(--muted); font-family: var(--mono); font-size: 10px; font-weight: normal; letter-spacing: .5px; }
+table.data td { background: var(--panel-dark); font-size: 13px; }
+table.data td.hl { color: var(--term); font-family: var(--mono); font-size: 12px; }
+.age { color: var(--muted); font-family: var(--mono); font-size: 11px; }
+
+.secret {
+  display: inline-block;
+  padding: 0 5px;
+  background: #07080b;
+  border: 1px dashed #3a3f4b;
+  color: var(--subtle);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 1px;
+  transition: .4s ease;
+}
+
+.secret.open { background: transparent; border-color: transparent; color: var(--red-light); font-family: var(--sans); font-size: 13px; letter-spacing: 0; padding: 0; }
+
+.lead { margin: 18px 0 0; color: #c9cad0; font-size: 13px; line-height: 1.9; }
+.lead strong { color: #fff; }
+
+.redacted {
+  padding: 0 3px;
+  background: #07080b;
+  color: transparent;
+  cursor: help;
+  transition: color .25s ease, background .25s ease;
+  user-select: none;
+}
+
+.redacted:hover, .redacted:focus, .redacted:focus-visible { background: #1c1f27; color: #e1b2b5; user-select: text; }
+
+.tag { display: inline-block; margin-left: 6px; padding: 1px 6px; border: 1px solid #5b3a40; background: var(--red-bg); color: #e0a2a8; font-family: var(--mono); font-size: 8px; font-style: normal; letter-spacing: .8px; vertical-align: 2px; white-space: nowrap; }
+
+/* ===== RODAPÉ ===== */
+
+.footer { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; margin-top: 36px; padding: 20px 0 5px; border-top: 1px solid var(--border); color: var(--subtle); font-family: var(--mono); font-size: 9px; line-height: 1.9; }
+.footer p { margin: 0; }
+.footer-right { text-align: right; }
+.footer a { color: #b1a0a4; }
+.footer a:hover { color: #fff; }
+
+/* ===== ANIMAÇÕES ===== */
+
+@keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .45; } }
+@keyframes blinker { 50% { opacity: 0; border-color: transparent; } }
+@keyframes shake { 0%, 100% { transform: translateX(0); } 20% { transform: translateX(-7px); } 40% { transform: translateX(7px); } 60% { transform: translateX(-5px); } 80% { transform: translateX(5px); } }
+
+/* ===== RESPONSIVO ===== */
+
+@media (max-width: 1100px) {
+  .sidebar { width: 215px; }
+  .main { margin-left: 215px; }
+  .topbar { padding: 0 24px; }
+  .content { padding: 27px 24px 22px; }
+}
+
+@media (max-width: 860px) {
+  .profile { grid-template-columns: 1fr; }
+  .p-side { display: grid; grid-template-columns: 170px minmax(0, 1fr); gap: 16px; align-items: start; border-right: 0; border-bottom: 1px solid var(--border); }
+  .p-side .side-box:first-of-type { margin-top: 0; }
+}
+
+@media (max-width: 760px) {
+  .sidebar { position: static; width: 100%; padding: 14px 16px; border-right: 0; border-bottom: 1px solid var(--border); }
+  .brand { padding: 0 0 13px; border-bottom: 0; }
+  .brand-symbol { width: 34px; height: 34px; }
+  .nav-heading, .sidebar-bottom { display: none; }
+  .nav-list { display: flex; gap: 7px; overflow-x: auto; padding: 9px 0 2px; scrollbar-width: thin; }
+  .nav-link { min-height: 35px; flex-shrink: 0; gap: 7px; padding: 7px 10px; border-color: var(--border); font-size: 11px; }
+  .nav-icon { width: auto; font-size: 12px; }
+  .main { margin-left: 0; }
+  .topbar { min-height: 47px; padding: 0 17px; }
+  .breadcrumb { font-size: 9px; }
+  .restricted { font-size: 8px; }
+  .session-clock { display: none; }
+  .content { padding: 20px 16px; }
+  .hero { padding: 24px 19px; }
+  .hero h1 { font-size: 27px; }
+  .hero-description { font-size: 12px; }
+  .hero-meta { gap: 15px 23px; }
+  .stamp { top: 14px; right: 14px; padding: 4px 9px; font-size: 10px; letter-spacing: 2px; }
+  .p-main { padding: 18px 16px; }
+  table.data th { width: 40%; }
+  table.data th, table.data td { padding: 8px 10px; }
+  .stats { grid-template-columns: 1fr; }
+  .block { padding: 16px 14px; }
+  .footer { flex-direction: column; gap: 10px; }
+  .footer-right { text-align: left; }
+}
+
+@media (max-width: 520px) {
+  .p-side { grid-template-columns: 1fr; }
+  .photo { max-width: 240px; }
+  .auth { padding: 22px 14px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}
+
+/* ===== ABAS, BOTÕES, LINHA DO TEMPO ===== */
+
+.tabs { display: flex; gap: 4px; margin-top: 18px; overflow-x: auto; border-bottom: 1px solid var(--border); scrollbar-width: thin; }
+.tab { flex-shrink: 0; padding: 11px 16px; background: transparent; border: 1px solid transparent; border-bottom: 0; color: var(--muted); cursor: pointer; font-family: var(--mono); font-size: 10px; letter-spacing: 1.2px; transition: .2s ease; }
+.tab:hover { color: #fff; background: var(--panel-hover); }
+.tab.active { position: relative; top: 1px; background: var(--panel); border-color: var(--border); color: #fff; box-shadow: inset 0 2px 0 var(--red); }
+
+.btn { display: inline-block; padding: 11px 16px; background: transparent; border: 1px solid #454852; color: #d7d9df; cursor: pointer; font-family: var(--mono); font-size: 10px; letter-spacing: 1px; transition: .2s ease; }
+.btn:hover { border-color: var(--red); background: #191a20; }
+.btn.primary { border-color: #633238; background: var(--red-bg); color: #fff; }
+
+.timeline { margin: 0; padding: 0; list-style: none; }
+.timeline li { position: relative; margin-left: 6px; padding: 0 0 20px 26px; border-left: 1px solid var(--border); }
+.timeline li:last-child { padding-bottom: 4px; border-left-color: transparent; }
+.timeline li::before { position: absolute; top: 5px; left: -5px; width: 9px; height: 9px; background: var(--panel); border: 2px solid var(--subtle); content: ""; }
+.timeline li.last::before { background: var(--red-light); border-color: var(--red-light); }
+.tl-date { color: var(--red-light); font-family: var(--mono); font-size: 10px; letter-spacing: 1px; }
+.tl-text { margin-top: 4px; color: #c9cad0; font-size: 13px; line-height: 1.75; }
+.tl-text a, .note a, .text-block a { color: var(--red-light); border-bottom: 1px solid #633238; }
+
+/* ===== BARRA DE BUSCA ===== */
+
+.toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; margin-top: 16px; padding: 12px 16px; background: var(--panel); border: 1px solid var(--border); }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 18px; color: var(--subtle); font-family: var(--mono); font-size: 10px; letter-spacing: 1px; }
+.search { display: flex; align-items: center; gap: 8px; width: min(340px, 100%); padding: 0 12px; background: var(--black); border: 1px solid #303039; }
+.search:focus-within { border-color: var(--red); }
+.search > span { color: var(--muted); font-size: 16px; }
+.search input { width: 100%; min-height: 40px; background: transparent; border: 0; outline: 0; font-size: 12px; }
+.search input::placeholder { color: var(--subtle); }
+
+/* ===== ÍNDICE ===== */
+
+.group-label { margin: 22px 0 10px; color: var(--red-light); font-family: var(--mono); font-size: 10px; letter-spacing: 1.6px; }
+.group-label:first-of-type { margin-top: 0; }
+.group-label[hidden] { display: none; }
+
+.pgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 12px; }
+
+.pcard { display: flex; flex-direction: column; padding: 0; overflow: hidden; background: var(--panel); border: 1px solid var(--border); color: var(--text); cursor: pointer; text-align: left; transition: transform .2s ease, border-color .2s ease, background .2s ease; }
+.pcard:hover { transform: translateY(-2px); border-color: #633238; background: var(--panel-hover); }
+.pcard.active { border-color: var(--red); box-shadow: inset 0 2px 0 var(--red); }
+.pcard[hidden] { display: none; }
+
+.pphoto { position: relative; aspect-ratio: 4 / 5; overflow: hidden; background: var(--black); }
+.pphoto::after { position: absolute; inset: 0; z-index: 2; background: linear-gradient(to top, rgba(9,10,13,.96) 0%, rgba(9,10,13,.7) 22%, rgba(9,10,13,0) 58%); content: ""; pointer-events: none; }
+.pphoto img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+
+.pcard-status { position: absolute; top: 8px; left: 8px; z-index: 4; padding: 2px 7px; background: rgba(9,10,13,.88); border: 1px solid #2d6b3f; color: var(--term); font-family: var(--mono); font-size: 8px; letter-spacing: 1px; }
+.pcard-status.warn { border-color: #7a3a42; color: var(--red-light); }
+
+.pcard-body { display: flex; flex: 1; flex-direction: column; padding: 13px 14px 12px; }
+.pcode { color: var(--red-light); font-family: var(--mono); font-size: 9px; letter-spacing: 1.4px; }
+.pcard h3 { margin: 6px 0 4px; font-size: 14px; font-weight: 600; line-height: 1.35; }
+.ptag { flex: 1; color: var(--muted); font-size: 11px; line-height: 1.6; }
+.pcard-foot { display: flex; align-items: center; justify-content: space-between; margin-top: 12px; padding-top: 9px; border-top: 1px solid var(--border); color: var(--subtle); font-family: var(--mono); font-size: 9px; letter-spacing: 1px; }
+.pcard:hover .pcard-foot { color: var(--red-light); }
+
+.ph.glyph::before, .ph.glyph::after { display: none; }
+.ph.glyph b { position: absolute; inset: 0 0 28px 0; display: grid; place-items: center; color: #2a2e38; font-family: var(--mono); font-size: 76px; font-weight: normal; }
+
+.empty { display: none; margin-top: 14px; padding: 26px; border: 1px dashed var(--border); color: var(--muted); font-family: var(--mono); font-size: 11px; letter-spacing: 1px; text-align: center; }
+.empty.show { display: block; }
+
+/* ===== DOSSIÊ ===== */
+
+.dossier { display: grid; grid-template-columns: 260px minmax(0, 1fr); background: var(--panel); border: 1px solid var(--border); }
+.d-side { background: #15171d; border-right: 1px solid var(--border); }
+.d-side-inner { position: sticky; top: 12px; padding: 20px; }
+.d-photo { position: relative; aspect-ratio: 4 / 5; overflow: hidden; background: var(--black); border: 1px solid #303039; }
+.photo-btn { display: block; width: 100%; height: 100%; padding: 0; background: none; border: 0; cursor: zoom-in; }
+.photo-btn img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.zoom-hint { position: absolute; right: 10px; bottom: 10px; z-index: 3; padding: 2px 6px; background: rgba(9,10,13,.88); border: 1px solid #303039; color: var(--muted); font-family: var(--mono); font-size: 8px; letter-spacing: 1px; pointer-events: none; }
+
+.d-main { min-width: 0; padding: 22px 24px; }
+.d-code { color: var(--red-light); font-family: var(--mono); font-size: 10px; letter-spacing: 1.8px; }
+.d-name { margin: 8px 0 6px; font-size: clamp(22px, 3.2vw, 30px); font-weight: 600; letter-spacing: -.4px; line-height: 1.2; }
+.d-alias { color: var(--muted); font-family: var(--mono); font-size: 10px; letter-spacing: 1px; }
+.d-body { min-height: 200px; padding: 20px 0 4px; animation: fadeUp .3s ease backwards; }
+.d-nav { display: flex; justify-content: space-between; gap: 10px; margin-top: 22px; padding-top: 16px; border-top: 1px solid var(--border); }
+
+.block-label { margin: 22px 0 10px; color: var(--red-light); font-family: var(--mono); font-size: 10px; font-weight: normal; letter-spacing: 1.6px; }
+.d-body > .block-label:first-child { margin-top: 0; }
+
+.text-block p { margin: 0 0 12px; color: #c9cad0; font-size: 13px; line-height: 1.85; }
+
+.note { margin: 0 0 20px; padding: 13px 15px; background: var(--red-bg); border: 1px solid #493036; border-left: 3px solid var(--red); color: #d9c2c4; font-size: 13px; line-height: 1.8; }
+
+.rel-list { display: grid; gap: 8px; margin-bottom: 18px; }
+
+.rel-link { display: flex; width: 100%; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 14px; background: var(--panel-dark); border: 1px solid var(--border); color: var(--text); cursor: pointer; text-align: left; transition: .2s ease; }
+.rel-link:hover { border-color: #633238; background: var(--panel-hover); }
+.rel-link > span { min-width: 0; }
+.rel-link b { flex-shrink: 0; color: var(--red-light); font-family: var(--mono); font-size: 9px; font-weight: normal; letter-spacing: 1px; }
+.rel-link small { display: block; margin-top: 2px; color: var(--muted); font-size: 11px; }
+.rel-code { display: block; color: var(--red-light); font-family: var(--mono); font-size: 9px; letter-spacing: 1.4px; }
+.rel-name { display: block; margin-top: 2px; font-size: 13px; }
+
+details.rel { background: var(--panel-dark); border: 1px solid var(--border); }
+details.rel summary { display: flex; align-items: center; padding: 12px 14px; cursor: pointer; list-style: none; }
+details.rel summary::-webkit-details-marker { display: none; }
+details.rel summary::after { margin-left: auto; color: var(--red-light); font-family: var(--mono); content: "+"; }
+details.rel[open] summary::after { content: "−"; }
+.rel-body { padding: 2px 14px 16px; border-top: 1px solid var(--border); }
+.rel-body table.data { margin-top: 12px; }
+details.rel.flash { animation: flash 1.6s ease; }
+@keyframes flash { 0%, 60% { border-color: var(--red-light); background: var(--red-bg); } }
+
+/* ===== FAMÍLIAS ===== */
+
+.fam-tabs { display: flex; gap: 4px; margin-bottom: -1px; overflow-x: auto; scrollbar-width: thin; }
+.fam-tab { flex-shrink: 0; padding: 11px 14px; background: transparent; border: 1px solid transparent; border-bottom: 0; color: var(--muted); cursor: pointer; font-family: var(--mono); font-size: 10px; letter-spacing: 1.1px; transition: .2s ease; }
+.fam-tab:hover { color: #fff; background: var(--panel-hover); }
+.fam-tab.active { position: relative; background: var(--panel); border-color: var(--border); color: #fff; box-shadow: inset 0 2px 0 var(--red); }
+
+.panel { padding: 22px 24px; background: var(--panel); border: 1px solid var(--border); }
+.p-title { margin: 0 0 6px; font-size: 18px; font-weight: 500; }
+.panel .p-code { margin-bottom: 18px; }
+
+ul.list { margin: 0 0 16px; padding: 0; list-style: none; }
+ul.list li { position: relative; padding: 10px 14px 10px 30px; background: var(--panel-dark); border: 1px solid var(--border); border-top: 0; color: #c9cad0; font-size: 13px; line-height: 1.75; }
+ul.list li:first-child { border-top: 1px solid var(--border); }
+ul.list li::before { position: absolute; top: 10px; left: 12px; color: var(--red-light); font-family: var(--mono); content: "›"; }
+ul.list li b { color: #fff; }
+
+.tree { display: flex; flex-direction: column; align-items: center; margin: 14px 0 6px; }
+.tree .gen { margin: 0 0 8px; color: var(--subtle); font-family: var(--mono); font-size: 9px; letter-spacing: 1.4px; text-align: center; }
+.tree .row { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; width: 100%; }
+.tree .link { width: 1px; height: 22px; margin: 8px 0; background: #50545f; }
+
+.node { width: min(260px, 100%); padding: 13px 14px; background: var(--panel-dark); border: 1px solid var(--border); color: var(--text); text-align: center; transition: transform .2s ease, border-color .2s ease; }
+.node strong { display: block; font-size: 13px; font-weight: 600; line-height: 1.35; }
+.node small { display: block; margin-top: 5px; color: var(--muted); font-size: 11px; line-height: 1.55; }
+.node.root { border-color: #8d4147; background: #1d171b; }
+button.node, a.node { cursor: pointer; }
+button.node:hover, a.node:hover { transform: translateY(-2px); border-color: var(--red-light); }
+a.node { display: block; }
+
+.tree-hint { margin: 8px 0 16px; color: var(--subtle); font-family: var(--mono); font-size: 9px; letter-spacing: 1.2px; text-align: center; }
+
+.final-note { margin-top: 18px; padding: 14px 16px; background: var(--black); border: 1px solid #303039; border-left: 3px solid var(--red); color: #c9cad0; font-size: 13px; line-height: 1.85; }
+.final-note strong { display: block; margin-bottom: 4px; color: var(--red-light); font-family: var(--mono); font-size: 10px; font-weight: normal; letter-spacing: 1.4px; }
+
+/* ===== FOTO AMPLIADA ===== */
+
+.lightbox { position: fixed; inset: 0; z-index: 400; display: grid; place-items: center; padding: 24px; background: rgba(0,0,0,.88); }
+.lightbox[hidden] { display: none; }
+.lb-box { position: relative; max-width: min(560px, 100%); max-height: 100%; }
+.lb-box img { display: block; max-width: 100%; max-height: 80vh; margin: 0 auto; border: 1px solid #303039; }
+.lb-close { position: absolute; top: -14px; right: -14px; width: 32px; height: 32px; background: var(--bg); border: 1px solid #454852; color: #fff; cursor: pointer; font-size: 18px; line-height: 1; }
+.lb-cap { margin-top: 10px; color: var(--muted); font-family: var(--mono); font-size: 10px; letter-spacing: 1px; text-align: center; }
+
+@media (max-width: 860px) {
+  .dossier { grid-template-columns: 1fr; }
+  .d-side { border-right: 0; border-bottom: 1px solid var(--border); }
+  .d-side-inner { position: static; display: grid; grid-template-columns: 170px minmax(0, 1fr); gap: 16px; align-items: start; }
+  .d-side-inner .side-box:first-of-type { margin-top: 0; }
+}
+
+@media (max-width: 760px) {
+  .d-main, .panel { padding: 18px 16px; }
+  .toolbar { padding: 12px; }
+}
+
+@media (max-width: 520px) {
+  .d-side-inner { grid-template-columns: 1fr; }
+  .d-photo { max-width: 240px; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app" id="app">
+
+  <aside class="sidebar">
+    <a class="brand" href="BASE.html" aria-label="PROJECT114, central de arquivos">
+      <div class="brand-symbol">114</div>
+      <div>
+        <h1 class="brand-name">PROJECT114</h1>
+        <div class="brand-subtitle">CENTRAL DE ARQUIVOS</div>
+      </div>
+    </a>
+
+    <div class="nav-heading">Navegação principal</div>
+
+    <nav class="nav-list" aria-label="Navegação principal">
+      <a class="nav-link" href="BASE.html"><span class="nav-icon">▦</span>Visão geral</a>
+      <a class="nav-link" href="ka114.html"><span class="nav-icon">▤</span>Dados classificados</a>
+      <a class="nav-link active" href="individuos.html" aria-current="page"><span class="nav-icon">◉</span>Experimentos</a>
+      <a class="nav-link" href="seção.html"><span class="nav-icon">▷</span>Registros audiovisuais</a>
+      <a class="nav-link" href="tempo.html"><span class="nav-icon">◷</span>Últimas aparições</a>
+      <a class="nav-link" href="zero.html"><span class="nav-icon">▧</span>Arquivo: Team Zero</a>
+      <a class="nav-link" href="daniirecuperado.html"><span class="nav-icon">▣</span>Comunicação recuperada</a>
+      <a class="nav-link" href="sac51.html"><span class="nav-icon">⌘</span>Base SAC 51</a>
+    </nav>
+
+    <div class="nav-heading">Nesta página</div>
+
+    <nav class="nav-list" aria-label="Seções desta página">
+      <a class="nav-link" href="#indice" data-spy="indice"><span class="nav-icon">01</span>Índice</a>
+      <a class="nav-link" href="#dossie" data-spy="dossie"><span class="nav-icon">02</span>Dossiê</a>
+      <a class="nav-link" href="#familias" data-spy="familias"><span class="nav-icon">03</span>Famílias</a>
+      <a class="nav-link" href="#resumo" data-spy="resumo"><span class="nav-icon">04</span>Resumo</a>
+    </nav>
+
+    <div class="sidebar-bottom">
+      <div class="system-status"><span class="status-dot"></span><span>Registros civis disponíveis</span></div>
+      <div class="sidebar-version">PROJECT114 // SETOR K.A-114</div>
+    </div>
+  </aside>
+
+  <main class="main">
+
+    <header class="topbar">
+      <div class="breadcrumb">PROJECT114 / ARQUIVOS / <span>INDIVÍDUOS</span></div>
+      <div class="topbar-right">
+        <div class="session-clock" id="sessionClock" aria-hidden="true">SESSÃO: <b>--/--/---- // --:--:--</b></div>
+        <div class="restricted"><span class="restricted-dot"></span><span>ACESSO RESTRITO</span></div>
+      </div>
+    </header>
+
+    <div class="content">
+
+      <section class="hero">
+        <div class="stamp">RESTRITO</div>
+        <div class="hero-topline"><span>■</span>REGISTROS CIVIS // SETOR K.A-114</div>
+        <h1>Arquivo Central de Indivíduos</h1>
+        <p class="hero-description">
+          Registros civis e genealógicos dos indivíduos catalogados pelo PROJECT114.
           Selecione um registro para abrir o dossiê completo, consultar parentes,
           conferir a cronologia e navegar pelas árvores genealógicas.
           Acesso não autorizado será
@@ -39,12 +691,7 @@
           </div>
           <span class="section-count" id="indexCount">05 REGISTROS</span>
         </div>
-        <div class="group-label" id="lblMain">REGISTROS PRINCIPAIS</div>
         <div class="pgrid" id="pgrid"></div>
-        <div class="group-label" id="lblAssoc">ASSOCIADO AO REGISTRO IND-004</div>
-        <div class="pgrid" id="pgridAssoc"></div>
-        <div class="group-label" id="lblOrg">ENTIDADES</div>
-        <div class="pgrid" id="pgridOrg"></div>
         <div class="empty" id="emptyMsg">NENHUM REGISTRO CORRESPONDE À BUSCA.</div>
       </section>
 
@@ -92,7 +739,7 @@
             <tr><th>Fontes</th><td>Isadora Selene Fontes (1976–2023) é a mãe de Jade e foi casada com Epigmênio.</td></tr>
             <tr><th>Selene</th><td>Epigmênio Selene Escadria, do Cartel Sky Selene, é o pai de Jade.</td></tr>
             <tr><th>Escadria</th><td>Sobrenome paterno de Jade, herdado de Epigmênio.</td></tr>
-            <tr><th>Team Zero</th><td>Célula clandestina ligada ao cartel, com arquivo próprio: <a href="teamzero.html" style="color:var(--red-light);border-bottom:1px solid #633238">abrir arquivo ↗</a></td></tr>
+            <tr><th>Team Zero</th><td>Célula clandestina ligada ao cartel, com arquivo próprio: <a href="zero.html" style="color:var(--red-light);border-bottom:1px solid #633238">abrir arquivo ↗</a></td></tr>
           </table>
           <div class="final-note">
             <strong>NOTA FINAL DO ARQUIVO</strong>
@@ -131,7 +778,7 @@
 <script>
 /* ============================================================
    DADOS
-   Campos: [rótulo, valor, proposto?]. Use [[texto]] para censura.
+   Campos: [rótulo, valor, -, mostrar idade?]. Use [[texto]] para censura.
    ============================================================ */
 
 const IMG = {
@@ -447,7 +1094,7 @@ const people = [
         note: "[[Executada por Epigmênio em 2023, após ser descoberta conspirando internamente para desmantelar o braço criminoso da organização.]]"
       },
       { link: "ind-004-b", code: "IND-004-B", name: "Epigmênio Selene Escadria", brief: "Pai de Jade · Cartel Sky Selene" },
-      { href: "teamzero.html#cove", code: "ARQUIVO", name: "C.O.V.E.", brief: "Sistema criado por Isadora para proteger Jade" },
+      { href: "zero.html#cove", code: "ARQUIVO", name: "C.O.V.E.", brief: "Sistema criado por Isadora para proteger Jade" },
       { link: "ind-001", code: "IND-001", name: "Daniiyel Starmorning Lindóia", brief: "Namorado" }
     ],
     fam: "esc"
@@ -455,7 +1102,7 @@ const people = [
 
   /* ================= IND-004-B · EPIGMÊNIO ================= */
   {
-    id: "ind-004-b", code: "IND-004-B", group: "assoc", suffix: " · ASSOCIADO AO REGISTRO IND-004",
+    id: "ind-004-b", code: "IND-004-B", group: "none", suffix: " · ASSOCIADO AO REGISTRO IND-004",
     name: "Epigmênio Selene Escadria", usual: "Epigmênio Selene",
     aliasLine: "IDENTIDADE ALTERNATIVA: EMÍLIO P. NEGREÊS",
     photo: null, status: "ATENÇÃO", warn: true,
@@ -494,7 +1141,7 @@ const people = [
         "Os registros disponíveis indicam que Epigmênio prioriza a eficiência, o sigilo e a preservação de seus próprios objetivos, tratando relações profissionais como vínculos estratégicos e informações pessoais como recursos que devem permanecer sob controle."
       ]},
       { t: "Antecedentes", note: true, p: [
-        "Procurado pela CIA e pelo FBI desde 2008, quando agentes americanos foram assassinados no México durante operações relacionadas ao cartel. Supõe-se que ele financie diretamente a organização, embora nunca tenha sido produzida uma comprovação oficial. [[Líder supremo do Cartel Sky Selene, ativo desde 2001, e responsável pelo massacre de 28 agentes americanos.]] Mais sobre a estrutura que ele comanda está no <a href=\"teamzero.html\">arquivo Team Zero ↗</a>."
+        "Procurado pela CIA e pelo FBI desde 2008, quando agentes americanos foram assassinados no México durante operações relacionadas ao cartel. Supõe-se que ele financie diretamente a organização, embora nunca tenha sido produzida uma comprovação oficial. [[Líder supremo do Cartel Sky Selene, ativo desde 2001, e responsável pelo massacre de 28 agentes americanos.]] Mais sobre a estrutura que ele comanda está no <a href=\"zero.html\">arquivo Team Zero ↗</a>."
       ]}
     ],
     timeline: [
@@ -511,8 +1158,8 @@ const people = [
     relatives: [
       { link: "ind-004", code: "IND-004", name: "Jade Selene Escadria", brief: "Filha" },
       { link: "ind-004-a", code: "IND-004-A", name: "Isadora Selene Fontes", brief: "Esposa, mãe de Jade" },
-      { href: "teamzero.html#zero-r", code: "TEAM ZERO", name: "Juan Regland (Zero-R)", brief: "Recrutado para a Team Zero em 2011" },
-      { href: "teamzero.html#zero-hele", code: "TEAM ZERO", name: "Helena Friedrick Klaus (Zero-Hele)", brief: "Recrutada por Epigmênio em 2011" },
+      { href: "zero.html#zero-r", code: "TEAM ZERO", name: "Juan Regland (Zero-R)", brief: "Recrutado para a Team Zero em 2011" },
+      { href: "zero.html#zero-hele", code: "TEAM ZERO", name: "Helena Friedrick Klaus (Zero-Hele)", brief: "Recrutada por Epigmênio em 2011" },
       { link: "ind-003", code: "IND-003", name: "João Carlos Moderno Borges", brief: "Persegue Epigmênio" }
     ],
     fam: "cartel"
@@ -520,7 +1167,7 @@ const people = [
 
   /* ================= ORG-001 · TRÍADE ESTRELA ================= */
   {
-    id: "org-tri", code: "ORG-001", group: "org", suffix: " · ENTIDADE",
+    id: "org-tri", code: "ORG-001", group: "none", suffix: " · ENTIDADE",
     name: "Tríade Estrela", usual: "STARTRIAL INC",
     aliasLine: "RAZÃO SOCIAL: STARTRIAL INC · NOME FANTASIA: TRÍADE ESTRELA",
     photo: null, glyph: "★", glyphLabel: "MEI", status: "MEI", warn: false,
@@ -569,7 +1216,7 @@ const people = [
 
   /* ================= ORG-002 · TEAM ZERO (arquivo próprio) ================= */
   {
-    id: "org-tz", code: "ORG-002", group: "org", suffix: " · ENTIDADE", href: "teamzero.html",
+    id: "org-tz", code: "ORG-002", group: "none", suffix: " · ENTIDADE", href: "zero.html",
     name: "Team Zero", usual: "Team Zero",
     aliasLine: "", photo: null, glyph: "0", glyphLabel: "RESTRITO", status: "RESTRITO", warn: true,
     rep: null, dir: null,
@@ -687,7 +1334,7 @@ const families = {
         '<h4 class="block-label">RAMO PATERNO DE JADE</h4>' +
         '<div class="text-block"><p>O pai de Jade é Epigmênio Selene Escadria, do Cartel Sky Selene, de quem vem o sobrenome Escadria. Ele também aparece sob a identidade alternativa Emílio P. Negreês. Os antepassados paternos seguem sem registro.</p></div>' +
         '<h4 class="block-label">SELENE FOUNDATION</h4>' +
-        '<div class="text-block"><p>Criada em 1999 por Isadora Selene Fontes, em conjunto com o marido, Epigmênio, que financiou sua fundação. Publicamente, apresentava-se como instituição dedicada às ciências humanitárias, à pesquisa científica e à tecnologia, sem uso de recursos públicos. Parte de sua estrutura passou a ser usada para ocultar recursos e financiar pesquisas sigilosas; os detalhes estão no <a href="teamzero.html">arquivo Team Zero ↗</a>.</p></div>'
+        '<div class="text-block"><p>Criada em 1999 por Isadora Selene Fontes, em conjunto com o marido, Epigmênio, que financiou sua fundação. Publicamente, apresentava-se como instituição dedicada às ciências humanitárias, à pesquisa científica e à tecnologia, sem uso de recursos públicos. Parte de sua estrutura passou a ser usada para ocultar recursos e financiar pesquisas sigilosas; os detalhes estão no <a href="zero.html">arquivo Team Zero ↗</a>.</p></div>'
       );
     }
   },
@@ -702,12 +1349,12 @@ const families = {
       ]},
       { label: "BRAÇOS INFLUENTES · LADO PÚBLICO E LADO CLANDESTINO", nodes: [
         { name: "Selene Foundation", sub: "Criada em 1999 por Isadora Selene Fontes", to: "ind-004-a" },
-        { name: "Team Zero", sub: "Célula clandestina com autonomia parcial", href: "teamzero.html" }
+        { name: "Team Zero", sub: "Célula clandestina com autonomia parcial", href: "zero.html" }
       ]},
       { label: "TEAM ZERO · ARQUIVO PRÓPRIO", nodes: [
-        { name: "Zero-R · Juan Regland", sub: "Coordenador operacional", href: "teamzero.html#zero-r" },
-        { name: "Zero-Hele · Helena Friedrick Klaus", sub: "Especialista científica", href: "teamzero.html#zero-hele" },
-        { name: "C.O.V.E.", sub: "Plataforma tática e bélica", href: "teamzero.html#cove" }
+        { name: "Zero-R · Juan Regland", sub: "Coordenador operacional", href: "zero.html#zero-r" },
+        { name: "Zero-Hele · Helena Friedrick Klaus", sub: "Especialista científica", href: "zero.html#zero-hele" },
+        { name: "C.O.V.E.", sub: "Plataforma tática e bélica", href: "zero.html#cove" }
       ]}
     ],
     note: "A Selene Foundation e a Team Zero representam os lados público e clandestino do império Selene. Supõe-se que Epigmênio financie diretamente a organização, embora nunca tenha havido comprovação oficial.",
@@ -806,14 +1453,10 @@ function cardHTML(p) {
 }
 
 function renderIndex() {
-  ["main", "assoc", "org"].forEach(function (g) {
-    const el = $(g === "main" ? "pgrid" : g === "assoc" ? "pgridAssoc" : "pgridOrg");
-    el.innerHTML = people.filter(function (p) { return p.group === g; }).map(cardHTML).join("");
-  });
-
-  const total = String(dossiers.length).padStart(2, "0");
-  $("metaCount").textContent = total;
-  $("indexCount").textContent = String(people.length).padStart(2, "0") + " REGISTROS";
+  const cards = people.filter(function (p) { return p.group === "main"; });
+  $("pgrid").innerHTML = cards.map(cardHTML).join("");
+  $("metaCount").textContent = String(cards.length).padStart(2, "0");
+  $("indexCount").textContent = String(cards.length).padStart(2, "0") + " REGISTROS";
 }
 
 function markActiveCard() {
@@ -1062,9 +1705,6 @@ $("searchInput").addEventListener("input", function (e) {
     const ok = !q || c.dataset.search.indexOf(q) !== -1;
     c.hidden = !ok;
     if (ok) shown++;
-  });
-  [["lblMain", "pgrid"], ["lblAssoc", "pgridAssoc"], ["lblOrg", "pgridOrg"]].forEach(function (g) {
-    $(g[0]).hidden = !$(g[1]).querySelector(".pcard:not([hidden])");
   });
   $("emptyMsg").classList.toggle("show", shown === 0);
   $("indexCount").textContent = String(shown).padStart(2, "0") + (q ? " ENCONTRADO(S)" : " REGISTROS");
