@@ -1,0 +1,1861 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ARQUIVO: TEAM ZERO // CONEXÃO DE SENHA: SELENE 10</title>
+<meta name="theme-color" content="#111318">
+<meta name="description" content="Arquivo da Team Zero, célula clandestina ligada ao Cartel Sky Selene — PROJECT114, acesso restrito nível 4.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23111318'/%3E%3Crect x='3' y='3' width='58' height='58' fill='none' stroke='%23a52a32' stroke-width='3'/%3E%3Ctext x='32' y='41' font-family='Courier New,monospace' font-size='24' font-weight='bold' text-anchor='middle' fill='%23e2a2a6'%3E114%3C/text%3E%3C/svg%3E">
+
+<style>
+:root {
+  --bg: #111318;
+  --sidebar: #15171d;
+  --panel: #191c23;
+  --panel-hover: #20242d;
+  --panel-dark: #14161c;
+  --border: #30343e;
+  --text: #e5e7eb;
+  --muted: #9298a5;
+  --subtle: #7a8190;
+  --red: #a52a32;
+  --red-light: #d75a63;
+  --red-bg: rgba(165, 42, 50, 0.12);
+  --green: #8eaa96;
+  --term: #4cff7a;
+  --black: #090a0d;
+  --mono: "Courier New", monospace;
+  --sans: Arial, Helvetica, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+body::before {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: repeating-linear-gradient(to bottom, rgba(255,255,255,.022) 0, rgba(255,255,255,.022) 1px, transparent 1px, transparent 3px);
+  content: "";
+  pointer-events: none;
+}
+
+a { color: inherit; text-decoration: none; }
+button, input { font: inherit; color: inherit; }
+button, a { -webkit-tap-highlight-color: transparent; }
+
+button:focus-visible, a:focus-visible, input:focus-visible, .redacted:focus-visible {
+  outline: 2px solid var(--red-light);
+  outline-offset: 3px;
+}
+
+.eyebrow { color: var(--muted); font-family: var(--mono); font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; }
+
+/* ===== ESTRUTURA ===== */
+
+.sidebar {
+  position: fixed;
+  inset: 0 auto 0 0;
+  z-index: 10;
+  display: flex;
+  width: 246px;
+  flex-direction: column;
+  padding: 25px 17px 18px;
+  background: var(--sidebar);
+  border-right: 1px solid var(--border);
+}
+
+.brand { display: flex; align-items: center; gap: 12px; padding: 0 8px 26px; border-bottom: 1px solid var(--border); }
+
+.brand-symbol {
+  display: grid;
+  width: 39px;
+  height: 39px;
+  flex-shrink: 0;
+  place-items: center;
+  background: var(--red-bg);
+  border: 1px solid #633039;
+  color: #e2a2a6;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.brand-name { margin: 0; font-size: 15px; letter-spacing: 1.5px; }
+.brand-subtitle { margin-top: 2px; color: var(--muted); font-family: var(--mono); font-size: 9px; letter-spacing: .7px; }
+
+.nav-heading { margin: 27px 8px 10px; color: var(--subtle); font-family: var(--mono); font-size: 10px; letter-spacing: 1.4px; text-transform: uppercase; }
+
+.nav-list { display: grid; gap: 4px; }
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 42px;
+  padding: 10px 12px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  color: #b3b8c3;
+  font-size: 12px;
+  transition: .2s ease;
+}
+
+.nav-icon { width: 19px; color: #9298a5; font-family: var(--mono); font-size: 15px; text-align: center; }
+.nav-link:hover { background: var(--panel-hover); color: #fff; }
+.nav-link.active { background: var(--red-bg); border-color: #493036; color: #fff; }
+.nav-link.active .nav-icon { color: var(--red-light); }
+
+.sidebar-bottom { margin-top: auto; padding: 15px 8px 0; border-top: 1px solid var(--border); }
+.system-status { display: flex; align-items: center; gap: 9px; color: var(--muted); font-size: 11px; }
+
+.status-dot {
+  width: 7px;
+  height: 7px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 8px #8eaa9640;
+  animation: pulse 2.4s ease-in-out infinite;
+}
+
+.status-dot.live { background: var(--term); box-shadow: 0 0 8px #4cff7a80; }
+
+.sidebar-version { margin-top: 9px; color: var(--subtle); font-family: var(--mono); font-size: 9px; }
+
+.main { min-width: 0; margin-left: 246px; }
+
+.topbar {
+  display: flex;
+  min-height: 60px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 0 36px;
+  border-bottom: 1px solid var(--border);
+  background: #14161c;
+}
+
+.breadcrumb { color: var(--muted); font-family: var(--mono); font-size: 10px; }
+.breadcrumb span { color: var(--text); }
+.topbar-right { display: flex; align-items: center; gap: 15px; }
+.session-clock { color: var(--subtle); font-family: var(--mono); font-size: 10px; letter-spacing: .6px; white-space: nowrap; }
+.session-clock b { color: var(--muted); font-weight: normal; }
+
+.restricted {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 9px;
+  border: 1px solid #593238;
+  background: var(--red-bg);
+  color: #dca1a5;
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: .6px;
+}
+
+.restricted-dot { width: 6px; height: 6px; background: var(--red-light); animation: blink 1.8s steps(2, start) infinite; }
+
+.restricted.open { border-color: #2d6b3f; background: rgba(76,255,122,.08); color: var(--term); }
+.restricted.open .restricted-dot { background: var(--term); }
+
+.content { width: 100%; max-width: 1180px; margin: 0 auto; padding: 35px 36px 24px; }
+
+/* ===== HERO ===== */
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  padding: 34px 30px;
+  border: 1px solid var(--border);
+  background: linear-gradient(110deg, #1a1c23 0%, #171920 65%, #21181c 100%);
+  animation: fadeUp .55s ease backwards;
+}
+
+.hero::after {
+  position: absolute;
+  top: -70px;
+  right: -40px;
+  width: 290px;
+  height: 290px;
+  border: 1px solid #ffffff08;
+  border-radius: 50%;
+  box-shadow: 0 0 0 35px #ffffff03, 0 0 0 70px #ffffff02;
+  content: "";
+  pointer-events: none;
+}
+
+.stamp {
+  position: absolute;
+  top: 26px;
+  right: 30px;
+  z-index: 1;
+  padding: 6px 13px;
+  border: 2px solid rgba(215, 90, 99, 0.5);
+  color: rgba(215, 90, 99, 0.55);
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: bold;
+  letter-spacing: 3px;
+  transform: rotate(7deg);
+  pointer-events: none;
+  user-select: none;
+}
+
+.hero-topline { display: flex; align-items: center; gap: 9px; margin-bottom: 18px; color: #c17a80; font-family: var(--mono); font-size: 10px; letter-spacing: 1.4px; }
+.hero h1 { position: relative; z-index: 1; margin: 0; font-size: clamp(26px, 3.6vw, 42px); font-weight: 600; letter-spacing: -.8px; line-height: 1.2; }
+.hero-description { max-width: 640px; margin: 14px 0 25px; color: #a8adb8; font-size: 13px; line-height: 1.9; }
+.hero-meta { position: relative; z-index: 1; display: flex; flex-wrap: wrap; gap: 10px 28px; padding-top: 17px; border-top: 1px solid var(--border); }
+.meta-item { display: flex; flex-direction: column; gap: 4px; }
+.meta-label { color: var(--subtle); font-family: var(--mono); font-size: 9px; letter-spacing: 1px; }
+.meta-value { color: #d7d9df; font-family: var(--mono); font-size: 11px; }
+
+.alertbar {
+  margin-top: 16px;
+  padding: 11px 14px;
+  background: #1a0b0e;
+  border: 1px solid #7a3a42;
+  color: var(--red-light);
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: 1.2px;
+  text-align: center;
+  text-transform: uppercase;
+  animation: fadeUp .55s ease .1s backwards;
+}
+
+.alertbar span { animation: pulse 1.6s ease-in-out infinite; display: inline-block; }
+
+/* ===== SEÇÕES ===== */
+
+.section { margin-top: 38px; scroll-margin-top: 18px; }
+.section-heading { display: flex; align-items: flex-end; justify-content: space-between; gap: 15px; margin-bottom: 15px; }
+.section-heading h2 { margin: 3px 0 0; font-size: 17px; font-weight: 500; letter-spacing: -.2px; }
+.section-count { color: var(--subtle); font-family: var(--mono); font-size: 10px; }
+
+/* ===== FICHA ===== */
+
+.profile {
+  display: grid;
+  grid-template-columns: 250px minmax(0, 1fr);
+  background: var(--panel);
+  border: 1px solid var(--border);
+  animation: fadeUp .55s ease .15s backwards;
+}
+
+.p-side { padding: 20px; background: #15171d; border-right: 1px solid var(--border); }
+
+.photo {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: var(--black);
+  border: 1px solid #303039;
+}
+
+.ph { position: relative; width: 100%; height: 100%; background: #0c0d11; }
+
+.ph::before { content: ""; position: absolute; top: 24%; left: 50%; width: 34%; aspect-ratio: 1; transform: translateX(-50%); border-radius: 50%; background: #1c1f27; }
+.ph::after { content: ""; position: absolute; bottom: -12%; left: 50%; width: 76%; height: 42%; transform: translateX(-50%); border-radius: 50% 50% 0 0; background: #1c1f27; }
+
+.ph span {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 3;
+  padding: 7px;
+  background: rgba(9,10,13,.85);
+  border-top: 1px solid #303039;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: 1px;
+  text-align: center;
+}
+
+.corner { position: absolute; z-index: 2; width: 18px; height: 18px; border: 0 solid var(--red-light); pointer-events: none; }
+.corner.tl { top: 8px; left: 8px; border-top-width: 2px; border-left-width: 2px; }
+.corner.tr { top: 8px; right: 8px; border-top-width: 2px; border-right-width: 2px; }
+.corner.bl { bottom: 8px; left: 8px; border-bottom-width: 2px; border-left-width: 2px; }
+.corner.br { right: 8px; bottom: 8px; border-bottom-width: 2px; border-right-width: 2px; }
+
+.side-box { margin-top: 12px; padding: 12px 13px; background: var(--black); border: 1px solid #303039; }
+.side-label { margin-bottom: 7px; color: var(--subtle); font-family: var(--mono); font-size: 9px; letter-spacing: 1px; }
+.side-value { color: #d7d9df; font-family: var(--mono); font-size: 12px; line-height: 1.6; }
+.side-duo { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.side-duo .side-value { font-family: var(--sans); }
+
+.elapsed { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 5px; }
+.elapsed .n { font-family: var(--mono); font-size: 20px; font-variant-numeric: tabular-nums; }
+.elapsed .u { margin-right: 8px; color: var(--muted); font-family: var(--mono); font-size: 9px; }
+
+.side-link { display: block; margin-top: 9px; color: var(--red-light); font-family: var(--mono); font-size: 9px; letter-spacing: .8px; }
+.side-link:hover { color: #fff; }
+
+.p-main { min-width: 0; padding: 22px 24px; }
+.p-code { color: var(--red-light); font-family: var(--mono); font-size: 10px; letter-spacing: 1.8px; }
+.p-name { margin: 8px 0 18px; font-size: clamp(22px, 3.4vw, 32px); font-weight: 600; letter-spacing: -.4px; line-height: 1.2; }
+
+table.data { width: 100%; border-collapse: collapse; }
+
+table.data th, table.data td {
+  padding: 10px 13px;
+  border: 1px solid var(--border);
+  text-align: left;
+  vertical-align: top;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+
+table.data th { width: 34%; background: #15171d; color: var(--muted); font-family: var(--mono); font-size: 10px; font-weight: normal; letter-spacing: .5px; }
+table.data td { background: var(--panel-dark); font-size: 13px; }
+table.data td.hl { color: var(--term); font-family: var(--mono); font-size: 12px; }
+.age { color: var(--muted); font-family: var(--mono); font-size: 11px; }
+
+.secret {
+  display: inline-block;
+  padding: 0 5px;
+  background: #07080b;
+  border: 1px dashed #3a3f4b;
+  color: var(--subtle);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 1px;
+  transition: .4s ease;
+}
+
+.secret.open { background: transparent; border-color: transparent; color: var(--red-light); font-family: var(--sans); font-size: 13px; letter-spacing: 0; padding: 0; }
+
+.lead { margin: 18px 0 0; color: #c9cad0; font-size: 13px; line-height: 1.9; }
+.lead strong { color: #fff; }
+
+.redacted {
+  padding: 0 3px;
+  background: #07080b;
+  color: transparent;
+  cursor: help;
+  transition: color .25s ease, background .25s ease;
+  user-select: none;
+}
+
+.redacted:hover, .redacted:focus, .redacted:focus-visible { background: #1c1f27; color: #e1b2b5; user-select: text; }
+
+.tag { display: inline-block; margin-left: 6px; padding: 1px 6px; border: 1px solid #5b3a40; background: var(--red-bg); color: #e0a2a8; font-family: var(--mono); font-size: 8px; font-style: normal; letter-spacing: .8px; vertical-align: 2px; white-space: nowrap; }
+
+/* ===== AUTENTICAÇÃO ===== */
+
+.auth {
+  position: relative;
+  padding: 28px 24px;
+  background: #080a0c;
+  border: 1px solid #2d6b3f;
+  text-align: center;
+  overflow: hidden;
+  animation: fadeUp .55s ease .2s backwards;
+}
+
+.auth::before {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 0%, rgba(76,255,122,.07), transparent 65%);
+  content: "";
+  pointer-events: none;
+}
+
+.auth-title { position: relative; margin: 0 0 6px; color: var(--term); font-family: var(--mono); font-size: 11px; letter-spacing: 2px; }
+.auth-text { position: relative; max-width: 520px; margin: 0 auto 20px; color: var(--muted); font-family: var(--mono); font-size: 11px; line-height: 1.8; }
+
+.auth-row { position: relative; display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
+
+.auth-field {
+  display: flex;
+  align-items: center;
+  width: min(300px, 100%);
+  background: #000;
+  border: 1px solid var(--term);
+}
+
+.auth-field input {
+  width: 100%;
+  min-height: 44px;
+  padding: 0 12px;
+  background: transparent;
+  border: 0;
+  outline: 0;
+  color: var(--term);
+  font-family: var(--mono);
+  font-size: 15px;
+  letter-spacing: 3px;
+  text-align: center;
+  text-shadow: 0 0 8px rgba(76,255,122,.35);
+}
+
+.auth-field input::placeholder { color: #2d6b3f; letter-spacing: 2px; font-size: 11px; }
+
+.auth-field .eye {
+  min-height: 44px;
+  padding: 0 11px;
+  background: transparent;
+  border: 0;
+  border-left: 1px solid #1f4a2c;
+  color: #2d9b4f;
+  cursor: pointer;
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 1px;
+}
+
+.auth-field .eye:hover { color: var(--term); }
+
+.btn-auth {
+  min-height: 46px;
+  padding: 0 22px;
+  background: #000;
+  border: 1px solid var(--term);
+  color: var(--term);
+  cursor: pointer;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  transition: .2s ease;
+}
+
+.btn-auth:hover:not(:disabled) { background: var(--term); color: #000; }
+.btn-auth:disabled { cursor: wait; opacity: .6; }
+
+.shake { animation: shake .4s ease; }
+
+.auth-msg { position: relative; min-height: 20px; margin-top: 14px; color: #d9a94a; font-family: var(--mono); font-size: 11px; letter-spacing: 1px; }
+
+.decrypt { position: relative; display: none; max-width: 420px; margin: 18px auto 0; text-align: left; }
+.decrypt.show { display: block; }
+.decrypt-lines { min-height: 62px; color: #2d9b4f; font-family: var(--mono); font-size: 11px; letter-spacing: .8px; line-height: 1.9; }
+.decrypt-bar { height: 3px; margin-top: 8px; overflow: hidden; background: #12281a; }
+.decrypt-bar i { display: block; width: 0; height: 100%; background: var(--term); box-shadow: 0 0 8px var(--term); }
+
+/* ===== RELATÓRIO (APÓS SENHA) ===== */
+
+.report { display: none; margin-top: 18px; border-top: 3px double var(--red); padding-top: 22px; }
+.report.show { display: block; animation: fadeUp .9s ease backwards; }
+
+.report-banner {
+  padding: 12px 14px;
+  background: #1a0b0e;
+  border: 1px solid #7a3a42;
+  color: var(--red-light);
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: 1.2px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.tabs { display: flex; gap: 4px; margin-top: 18px; overflow-x: auto; border-bottom: 1px solid var(--border); scrollbar-width: thin; }
+
+.tab {
+  flex-shrink: 0;
+  padding: 11px 16px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-bottom: 0;
+  color: var(--muted);
+  cursor: pointer;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 1.2px;
+  transition: .2s ease;
+}
+
+.tab:hover { color: #fff; background: var(--panel-hover); }
+.tab.active { position: relative; top: 1px; background: var(--bg); border-color: var(--border); color: #fff; box-shadow: inset 0 2px 0 var(--red); }
+
+.tab-panel { padding: 22px 0 6px; animation: fadeUp .35s ease backwards; }
+
+.block {
+  margin-bottom: 18px;
+  padding: 20px;
+  background: rgba(165, 42, 50, 0.05);
+  border: 1px solid var(--border);
+  border-left: 4px solid #633238;
+}
+
+.block h3 { margin: 0 0 4px; font-size: clamp(16px, 3vw, 20px); font-weight: 500; letter-spacing: .3px; }
+.block .sub { margin: 0 0 16px; color: var(--muted); font-family: var(--mono); font-size: 10px; letter-spacing: 1.2px; }
+.block p { margin: 0 0 12px; color: #c9cad0; font-size: 13px; line-height: 1.85; }
+
+.block ul { margin: 12px 0; padding: 0; list-style: none; }
+
+.block li {
+  position: relative;
+  padding: 10px 14px 10px 30px;
+  background: var(--panel-dark);
+  border: 1px solid var(--border);
+  border-top: 0;
+  color: #c9cad0;
+  font-size: 13px;
+  line-height: 1.75;
+}
+
+.block li:first-child { border-top: 1px solid var(--border); }
+.block li::before { position: absolute; top: 10px; left: 12px; color: var(--red-light); font-family: var(--mono); content: "›"; }
+.block li strong { color: #fff; }
+
+.red { color: var(--red-light); font-weight: bold; }
+
+.stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin: 14px 0; }
+
+.stat { padding: 14px; background: var(--black); border: 1px solid #303039; text-align: center; }
+.stat b { display: block; color: var(--red-light); font-family: var(--mono); font-size: 28px; font-weight: normal; font-variant-numeric: tabular-nums; line-height: 1.2; }
+.stat span { display: block; margin-top: 6px; color: var(--muted); font-family: var(--mono); font-size: 9px; letter-spacing: 1px; line-height: 1.5; }
+
+.xlink { display: inline-block; margin-top: 6px; color: var(--red-light); font-family: var(--mono); font-size: 10px; letter-spacing: 1px; border-bottom: 1px solid #633238; }
+.xlink:hover { color: #fff; }
+
+/* ORGANOGRAMA */
+
+.org { display: flex; flex-direction: column; align-items: center; margin: 12px 0 8px; }
+
+.org-node {
+  width: min(280px, 100%);
+  padding: 13px 16px;
+  background: var(--panel-dark);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  text-align: center;
+  transition: border-color .2s ease, background .2s ease, transform .2s ease;
+}
+
+.org-node:hover { transform: translateY(-2px); border-color: var(--red-light); }
+.org-node.active { border-color: var(--red); background: #1d171b; }
+.org-node.top { border-color: #8d4147; }
+.org-node.dashed { border-style: dashed; color: var(--muted); }
+
+.org-node strong { display: block; font-family: var(--mono); font-size: 11px; letter-spacing: 1px; }
+.org-node small { display: block; margin-top: 4px; color: var(--muted); font-size: 11px; line-height: 1.5; }
+
+.org-link { width: 1px; height: 22px; background: #50545f; }
+.org-row { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; width: 100%; }
+
+.org-detail {
+  margin-top: 14px;
+  padding: 15px 16px;
+  background: var(--black);
+  border: 1px solid #303039;
+  border-left: 3px solid var(--red);
+  color: #c9cad0;
+  font-size: 13px;
+  line-height: 1.85;
+}
+
+.org-detail b { display: block; margin-bottom: 4px; color: var(--red-light); font-family: var(--mono); font-size: 10px; font-weight: normal; letter-spacing: 1.4px; }
+
+.status-line {
+  margin-top: 18px;
+  padding: 12px 14px;
+  background: #1a0b0e;
+  border: 1px solid #7a3a42;
+  color: var(--red-light);
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: .8px;
+  line-height: 1.7;
+  text-transform: uppercase;
+}
+
+/* TEAM ZERO */
+
+.members { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin: 16px 0 6px; }
+.member { display: flex; flex-direction: column; padding: 14px; background: var(--panel-dark); border: 1px solid var(--border); }
+.member small { color: var(--subtle); font-family: var(--mono); font-size: 9px; letter-spacing: 1px; }
+.member strong { margin: 5px 0 8px; font-size: 14px; }
+.member p { flex: 1; margin: 0 0 8px; font-size: 12px; line-height: 1.75; }
+@media (max-width: 860px) { .members { grid-template-columns: 1fr; } }
+
+/* CRONOLOGIA */
+
+.timeline { margin: 0; padding: 0; list-style: none; }
+
+.timeline li { position: relative; margin-left: 6px; padding: 0 0 20px 26px; border-left: 1px solid var(--border); }
+.timeline li:last-child { padding-bottom: 4px; border-left-color: transparent; }
+.timeline li::before { position: absolute; top: 5px; left: -5px; width: 9px; height: 9px; background: var(--bg); border: 2px solid var(--subtle); content: ""; }
+.timeline li.hot::before { background: var(--red-light); border-color: var(--red-light); }
+.tl-date { color: var(--red-light); font-family: var(--mono); font-size: 10px; letter-spacing: 1px; }
+.tl-text { margin-top: 4px; color: #c9cad0; font-size: 13px; line-height: 1.75; }
+
+.end-line { margin: 30px 0 14px; color: var(--term); font-family: var(--mono); font-size: 11px; letter-spacing: 1.5px; text-align: center; }
+
+.btn {
+  display: inline-block;
+  padding: 11px 16px;
+  background: transparent;
+  border: 1px solid #454852;
+  color: #d7d9df;
+  cursor: pointer;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 1px;
+  transition: .2s ease;
+}
+
+.btn:hover { border-color: var(--red); background: #191a20; }
+.center { text-align: center; }
+
+/* ===== RODAPÉ ===== */
+
+.footer { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; margin-top: 36px; padding: 20px 0 5px; border-top: 1px solid var(--border); color: var(--subtle); font-family: var(--mono); font-size: 9px; line-height: 1.9; }
+.footer p { margin: 0; }
+.footer-right { text-align: right; }
+.footer a { color: #b1a0a4; }
+.footer a:hover { color: #fff; }
+
+/* ===== ALERTA DE PÂNICO ===== */
+
+.panic {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  display: none;
+  padding: 20px;
+  place-items: center;
+  background: #000;
+}
+
+.panic.show { display: grid; }
+
+.panic-box {
+  width: min(560px, 100%);
+  padding: 38px 26px;
+  border: 5px solid #ff0000;
+  color: #ff0000;
+  font-family: var(--mono);
+  text-align: center;
+  animation: blinker .5s linear infinite;
+}
+
+.panic-box h2 { margin: 0 0 14px; font-size: clamp(17px, 4.6vw, 26px); letter-spacing: 1px; line-height: 1.5; }
+.panic-box p { margin: 0; font-size: clamp(14px, 3.6vw, 20px); font-weight: bold; letter-spacing: 1px; }
+
+.panic-trace { width: min(560px, 100%); margin: 20px auto 0; color: #7a1d1d; font-family: var(--mono); font-size: 11px; letter-spacing: 1px; line-height: 1.9; text-align: left; }
+.panic-wrap { width: min(560px, 100%); }
+
+.panic-retry {
+  display: none;
+  margin: 22px auto 0;
+  padding: 11px 18px;
+  background: transparent;
+  border: 1px solid #5a1a1a;
+  color: #a33;
+  cursor: pointer;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 1.4px;
+}
+
+.panic-retry.show { display: block; }
+.panic-retry:hover { border-color: #ff0000; color: #ff0000; }
+
+/* ===== ANIMAÇÕES ===== */
+
+@keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .45; } }
+@keyframes blinker { 50% { opacity: 0; border-color: transparent; } }
+@keyframes shake { 0%, 100% { transform: translateX(0); } 20% { transform: translateX(-7px); } 40% { transform: translateX(7px); } 60% { transform: translateX(-5px); } 80% { transform: translateX(5px); } }
+
+/* ===== RESPONSIVO ===== */
+
+@media (max-width: 1100px) {
+  .sidebar { width: 215px; }
+  .main { margin-left: 215px; }
+  .topbar { padding: 0 24px; }
+  .content { padding: 27px 24px 22px; }
+}
+
+@media (max-width: 860px) {
+  .profile { grid-template-columns: 1fr; }
+  .p-side { display: grid; grid-template-columns: 170px minmax(0, 1fr); gap: 16px; align-items: start; border-right: 0; border-bottom: 1px solid var(--border); }
+  .p-side .side-box:first-of-type { margin-top: 0; }
+}
+
+@media (max-width: 760px) {
+  .sidebar { position: static; width: 100%; padding: 14px 16px; border-right: 0; border-bottom: 1px solid var(--border); }
+  .brand { padding: 0 0 13px; border-bottom: 0; }
+  .brand-symbol { width: 34px; height: 34px; }
+  .nav-heading, .sidebar-bottom { display: none; }
+  .nav-list { display: flex; gap: 7px; overflow-x: auto; padding: 9px 0 2px; scrollbar-width: thin; }
+  .nav-link { min-height: 35px; flex-shrink: 0; gap: 7px; padding: 7px 10px; border-color: var(--border); font-size: 11px; }
+  .nav-icon { width: auto; font-size: 12px; }
+  .main { margin-left: 0; }
+  .topbar { min-height: 47px; padding: 0 17px; }
+  .breadcrumb { font-size: 9px; }
+  .restricted { font-size: 8px; }
+  .session-clock { display: none; }
+  .content { padding: 20px 16px; }
+  .hero { padding: 24px 19px; }
+  .hero h1 { font-size: 27px; }
+  .hero-description { font-size: 12px; }
+  .hero-meta { gap: 15px 23px; }
+  .stamp { top: 14px; right: 14px; padding: 4px 9px; font-size: 10px; letter-spacing: 2px; }
+  .p-main { padding: 18px 16px; }
+  table.data th { width: 40%; }
+  table.data th, table.data td { padding: 8px 10px; }
+  .stats { grid-template-columns: 1fr; }
+  .block { padding: 16px 14px; }
+  .footer { flex-direction: column; gap: 10px; }
+  .footer-right { text-align: left; }
+}
+
+@media (max-width: 520px) {
+  .p-side { grid-template-columns: 1fr; }
+  .photo { max-width: 240px; }
+  .auth { padding: 22px 14px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}
+
+/* ===== TEAM ZERO ===== */
+
+.ph.glyph::before, .ph.glyph::after { display: none; }
+.ph.glyph b { position: absolute; inset: 0 0 28px 0; display: grid; place-items: center; color: #2a2e38; font-family: var(--mono); font-size: 96px; font-weight: normal; }
+
+.block table.data { margin: 14px 0 6px; }
+.block h4 { margin: 20px 0 8px; color: var(--red-light); font-family: var(--mono); font-size: 10px; font-weight: normal; letter-spacing: 1.5px; }
+.block li a, .block p a { color: var(--red-light); border-bottom: 1px solid #633238; }
+.tab-panel[hidden] { display: none; }
+.cmp { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 14px 0; }
+.cmp > div { padding: 14px; background: var(--panel-dark); border: 1px solid var(--border); }
+.cmp > div.now { border-color: #7a3a42; background: #1a0b0e; }
+.cmp b { display: block; margin-bottom: 8px; color: var(--red-light); font-family: var(--mono); font-size: 10px; font-weight: normal; letter-spacing: 1.4px; }
+.cmp p { margin: 0 0 6px; font-size: 12px; line-height: 1.7; }
+@media (max-width: 760px) { .cmp { grid-template-columns: 1fr; } }
+
+/* ===== INTERATIVIDADE ===== */
+
+.mcards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin: 18px 0; }
+.mcard { position: relative; display: block; padding: 0; overflow: hidden; background: var(--panel-dark); border: 1px solid var(--border); color: var(--text); cursor: pointer; text-align: left; transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease; }
+.mcard:hover { transform: translateY(-3px); border-color: var(--red); box-shadow: 0 10px 28px rgba(0,0,0,.45); }
+.mglyph { display: grid; height: 96px; place-items: center; background: linear-gradient(to top, rgba(9,10,13,.95), #0c0d11); color: #2e323d; font-family: var(--mono); font-size: 46px; transition: color .25s ease, text-shadow .25s ease; }
+.mcard:hover .mglyph { color: var(--red-light); text-shadow: 0 0 22px rgba(215,90,99,.45); }
+.mbody { padding: 12px 14px 14px; }
+.mbody small { display: block; color: var(--red-light); font-family: var(--mono); font-size: 9px; letter-spacing: 1.4px; }
+.mbody strong { display: block; margin: 4px 0; font-size: 14px; }
+.mbody span { display: block; color: var(--muted); font-size: 11px; line-height: 1.6; }
+.mbody em { display: block; margin-top: 10px; color: var(--subtle); font-family: var(--mono); font-size: 9px; font-style: normal; letter-spacing: 1px; }
+.mcard:hover .mbody em { color: var(--red-light); }
+
+.mhead { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 22px; align-items: center; margin: 8px 0 18px; }
+.mono-box { position: relative; display: grid; aspect-ratio: 1; place-items: center; overflow: hidden; background: var(--black); border: 1px solid #303039; }
+.mono-box b { color: #2e323d; font-family: var(--mono); font-size: 76px; font-weight: normal; text-shadow: 0 0 24px rgba(215,90,99,.22); }
+.mono-box::after { position: absolute; top: -30%; right: 0; left: 0; height: 30%; background: linear-gradient(to bottom, transparent, rgba(215,90,99,.18), transparent); content: ""; animation: scan 3.6s linear infinite; }
+@keyframes scan { to { top: 110%; } }
+.mcode { color: var(--red-light); font-family: var(--mono); font-size: 10px; letter-spacing: 1.6px; }
+.mname { margin: 6px 0 4px; font-size: clamp(21px, 3.6vw, 32px); font-weight: 600; letter-spacing: -.5px; line-height: 1.15; }
+.mreal { color: var(--muted); font-family: var(--mono); font-size: 11px; letter-spacing: 1px; }
+
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 10px; }
+.chip { padding: 9px 13px; background: var(--panel-dark); border: 1px solid var(--border); color: #c9cad0; cursor: pointer; font-family: var(--mono); font-size: 10px; letter-spacing: .8px; transition: .2s ease; }
+.chip:hover { border-color: #633238; color: #fff; transform: translateY(-1px); }
+.chip.active { background: var(--red-bg); border-color: var(--red); color: #fff; box-shadow: 0 0 16px rgba(165,42,50,.28); }
+.chip-detail { min-height: 64px; margin-bottom: 8px; padding: 14px 16px; background: var(--black); border: 1px solid #303039; border-left: 3px solid var(--red); color: #c9cad0; font-size: 13px; line-height: 1.85; animation: fadeUp .3s ease backwards; }
+.chip-detail b { display: block; margin-bottom: 4px; color: var(--red-light); font-family: var(--mono); font-size: 10px; font-weight: normal; letter-spacing: 1.4px; }
+.hint { margin: 0 0 6px; color: var(--subtle); font-family: var(--mono); font-size: 9px; letter-spacing: 1.2px; }
+
+.switch { display: inline-flex; margin: 8px 0 16px; background: var(--black); border: 1px solid var(--border); }
+.switch button { padding: 13px 18px; background: transparent; border: 0; color: var(--muted); cursor: pointer; font-family: var(--mono); font-size: 10px; letter-spacing: 1.2px; transition: .2s ease; }
+.switch button:hover { color: #fff; }
+.switch button.on { background: var(--red-bg); color: #fff; box-shadow: inset 0 -2px 0 var(--red); }
+.cv-panel { animation: fadeUp .35s ease backwards; }
+.cv-panel[hidden] { display: none; }
+
+.exp-layout { display: grid; grid-template-columns: 240px minmax(0, 1fr); gap: 14px; margin: 16px 0; }
+.exp-list { display: grid; gap: 8px; align-content: start; }
+.exp-item { padding: 13px 14px; background: var(--panel-dark); border: 1px solid var(--border); color: var(--text); cursor: pointer; text-align: left; transition: .2s ease; }
+.exp-item:hover { border-color: #633238; transform: translateX(2px); }
+.exp-item.active { background: #1d171b; border-color: var(--red); box-shadow: inset 3px 0 0 var(--red); }
+.exp-item small { display: block; color: var(--red-light); font-family: var(--mono); font-size: 9px; letter-spacing: 1.4px; }
+.exp-item strong { display: block; margin: 4px 0 3px; font-size: 14px; }
+.exp-item span { display: block; color: var(--muted); font-size: 11px; line-height: 1.55; }
+
+.exp-file { position: relative; padding: 22px; overflow: hidden; background: var(--black); border: 1px solid #303039; animation: fadeUp .35s ease backwards; }
+.exp-file::before { position: absolute; top: -40px; right: -30px; color: rgba(255,255,255,.025); font-family: var(--mono); font-size: 190px; content: "0"; pointer-events: none; }
+.exp-top { position: relative; display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 12px; }
+.exp-code { color: var(--red-light); font-family: var(--mono); font-size: 10px; letter-spacing: 1.8px; }
+.exp-name { margin: 6px 0 2px; font-size: clamp(20px, 3.2vw, 26px); font-weight: 600; letter-spacing: -.3px; }
+.exp-area { color: var(--muted); font-size: 12px; }
+.exp-stamp { padding: 5px 11px; border: 2px solid rgba(215,90,99,.55); color: rgba(215,90,99,.75); font-family: var(--mono); font-size: 11px; font-weight: bold; letter-spacing: 2.4px; transform: rotate(4deg); user-select: none; }
+.xsec { position: relative; margin-top: 18px; padding-left: 14px; border-left: 2px solid #3a2a2e; animation: fadeUp .4s ease backwards; }
+.xsec h5 { margin: 0 0 5px; color: var(--red-light); font-family: var(--mono); font-size: 10px; font-weight: normal; letter-spacing: 1.5px; }
+.xsec p { margin: 0; color: #c9cad0; font-size: 13px; line-height: 1.9; }
+.xdetail { position: relative; margin-top: 20px; padding: 15px 16px; background: #14090b; border: 1px dashed #7a3a42; }
+.xdetail h5 { margin: 0 0 8px; color: var(--red-light); font-family: var(--mono); font-size: 10px; font-weight: normal; letter-spacing: 1.5px; }
+.xdetail .xbar { height: 38px; background: repeating-linear-gradient(90deg, #07080b 0 14px, #0d0f13 14px 16px); border: 1px solid #1c1f27; }
+.xdetail p { margin: 0; color: #e6c3c6; font-size: 13px; line-height: 1.9; animation: fadeUp .5s ease backwards; }
+.xbtn { margin-top: 10px; padding: 9px 14px; background: transparent; border: 1px solid #7a3a42; color: var(--red-light); cursor: pointer; font-family: var(--mono); font-size: 10px; letter-spacing: 1.2px; transition: .2s ease; }
+.xbtn:hover { background: var(--red-bg); color: #fff; }
+.xnone { color: var(--subtle); font-family: var(--mono); font-size: 10px; letter-spacing: 1px; }
+.counter { margin: 4px 0 0; color: var(--subtle); font-family: var(--mono); font-size: 10px; letter-spacing: 1.2px; }
+.counter b { color: var(--red-light); font-weight: normal; }
+
+.conn { display: block; width: 100%; height: auto; margin: 12px 0 4px; }
+.conn .cl path { fill: none; stroke: #3a3f4b; stroke-width: 1.5; stroke-dasharray: 5 5; transition: stroke .25s ease; }
+.conn .cl path.on { stroke: var(--red-light); stroke-dasharray: none; }
+.conn .cn { cursor: pointer; }
+.conn .cn rect { fill: var(--panel-dark); stroke: var(--border); transition: .25s ease; }
+.conn .cn:hover rect { stroke: #633238; }
+.conn .cn.on rect { fill: #1d171b; stroke: var(--red-light); }
+.conn text { fill: #c9cad0; font-family: var(--mono); font-size: 11px; text-anchor: middle; pointer-events: none; }
+.conn .cn .c1 { fill: var(--red-light); font-size: 9px; letter-spacing: 1px; }
+.conn .cn .c3 { fill: var(--muted); font-family: Arial, sans-serif; font-size: 10px; }
+.conn .core rect { fill: #1a0b0e; stroke: #7a3a42; }
+.conn .core text { fill: var(--red-light); font-size: 10px; letter-spacing: 1.2px; }
+
+@media (max-width: 860px) { .exp-layout { grid-template-columns: 1fr; } .exp-list { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 760px) { .mcards { grid-template-columns: 1fr; } .mhead { grid-template-columns: 96px minmax(0, 1fr); gap: 14px; } .mono-box b { font-size: 46px; } .exp-list { grid-template-columns: 1fr; } .switch { display: flex; } .switch button { flex: 1; padding: 12px 8px; } }
+</style>
+</head>
+
+<body>
+
+<div class="app" id="app">
+
+  <aside class="sidebar">
+    <a class="brand" href="BASE.html" aria-label="PROJECT114, central de arquivos">
+      <div class="brand-symbol">114</div>
+      <div>
+        <h1 class="brand-name">PROJECT114</h1>
+        <div class="brand-subtitle">CENTRAL DE ARQUIVOS</div>
+      </div>
+    </a>
+
+    <div class="nav-heading">Navegação principal</div>
+
+    <nav class="nav-list" aria-label="Navegação principal">
+      <a class="nav-link" href="BASE.html"><span class="nav-icon">▦</span>Visão geral</a>
+      <a class="nav-link" href="ka114.html"><span class="nav-icon">▤</span>Dados classificados</a>
+      <a class="nav-link" href="individuos.html"><span class="nav-icon">◉</span>Experimentos</a>
+      <a class="nav-link" href="seção.html"><span class="nav-icon">▷</span>Registros audiovisuais</a>
+      <a class="nav-link" href="tempo.html"><span class="nav-icon">◷</span>Últimas aparições</a>
+      <a class="nav-link active" href="zero.html" aria-current="page"><span class="nav-icon">▧</span>Arquivo: Team Zero</a>
+      <a class="nav-link" href="daniirecuperado.html"><span class="nav-icon">▣</span>Comunicação recuperada</a>
+      <a class="nav-link" href="sac51.html"><span class="nav-icon">⌘</span>Base SAC 51</a>
+    </nav>
+
+    <div class="sidebar-bottom">
+      <div class="system-status"><span class="status-dot" id="sideDot"></span><span id="sideStatus">Conexão aguardando chave</span></div>
+      <div class="sidebar-version">PROJECT114 // NÍVEL 4</div>
+    </div>
+  </aside>
+
+  <main class="main">
+
+    <header class="topbar">
+      <div class="breadcrumb">PROJECT114 / ARQUIVOS / <span>TEAM ZERO</span></div>
+      <div class="topbar-right">
+        <div class="session-clock" id="sessionClock" aria-hidden="true">SESSÃO: <b>--/--/---- // --:--:--</b></div>
+        <div class="restricted" id="topBadge"><span class="restricted-dot"></span><span id="topBadgeText">ACESSO RESTRITO</span></div>
+      </div>
+    </header>
+
+    <div class="content">
+
+      <section class="hero">
+        <div class="stamp">NÍVEL 4</div>
+        <div class="hero-topline"><span>■</span>ARQUIVO DE ENTIDADE // CÉLULA CLANDESTINA</div>
+        <h1>Team Zero</h1>
+        <p class="hero-description">
+          Arquivo da célula clandestina Team Zero, ligada ao Cartel Sky Selene.
+          Parte do conteúdo deste arquivo está criptografada e exige a chave do crachá para ser lida.
+          Acesso não autorizado será
+          <span class="redacted" tabindex="0">devidamente registrado</span>.
+        </p>
+        <div class="hero-meta">
+          <div class="meta-item"><span class="meta-label">REGISTRO</span><span class="meta-value">ORG-002 / K.A</span></div>
+          <div class="meta-item"><span class="meta-label">CLASSIFICAÇÃO</span><span class="meta-value">NÍVEL 4</span></div>
+          <div class="meta-item"><span class="meta-label">VÍNCULO</span><span class="meta-value">CARTEL SKY SELENE</span></div>
+          <div class="meta-item"><span class="meta-label">DADOS</span><span class="meta-value" id="metaData">CRIPTOGRAFADOS</span></div>
+        </div>
+      </section>
+
+      <div class="alertbar"><span>⚠ ACESSO RESTRITO - NÍVEL 4 // CÉLULA ATIVA ⚠</span></div>
+
+      <!-- FICHA -->
+      <section class="section" id="ficha">
+        <div class="section-heading">
+          <div>
+            <div class="eyebrow">Cadastro / 01</div>
+            <h2>Ficha da entidade</h2>
+          </div>
+          <span class="section-count">ORG-002</span>
+        </div>
+
+        <div class="profile">
+          <aside class="p-side">
+            <div>
+              <div class="photo">
+                <div class="ph glyph"><b>0</b><span>RESTRITO</span></div>
+                <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+              </div>
+            </div>
+            <div>
+              <div class="side-box">
+                <div class="side-label">SITUAÇÃO NO ARQUIVO</div>
+                <div class="side-value">RESTRITO</div>
+              </div>
+              <div class="side-box">
+                <div class="side-label">LADO NO IMPÉRIO SELENE</div>
+                <div class="side-value">Clandestino</div>
+              </div>
+              <div class="side-box">
+                <div class="side-label">ARQUIVO CENTRAL</div>
+                <a class="side-link" style="margin-top:0" href="individuos.html#fam-cartel">ABRIR ESTRUTURA DO CARTEL ↗</a>
+              </div>
+            </div>
+          </aside>
+
+          <div class="p-main">
+            <div class="p-code">ORG-002 / K.A</div>
+            <h3 class="p-name">Team Zero</h3>
+
+            <table class="data">
+              <tr><th>NATUREZA</th><td>Célula clandestina ligada ao Cartel Sky Selene</td></tr>
+              <tr><th>EXISTÊNCIA</th><td class="hl">Sempre secreta</td></tr>
+              <tr><th>AUTONOMIA</th><td>Parcial em relação ao cartel</td></tr>
+              <tr><th>ÁREA DE ATUAÇÃO</th><td>América Latina</td></tr>
+              <tr><th>FUNÇÕES</th><td>Operações especiais, coleta de informações, pesquisa de fenômenos anômalos e tecnologia experimental</td></tr>
+              <tr><th>RECRUTADOR</th><td><span class="secret" data-secret="Epigmênio Selene Escadria">████████████</span></td></tr>
+              <tr><th>MEMBROS DOCUMENTADOS</th><td><span class="secret" data-secret="Juan Regland (Zero-R) e Helena Friedrick Klaus (Zero-Hele)">████████████</span></td></tr>
+              <tr><th>PLATAFORMA</th><td><span class="secret" data-secret="C.O.V.E. — plataforma tática e bélica">████████████</span></td></tr>
+            </table>
+
+            <p class="lead">
+              A <strong>Team Zero</strong> é o lado clandestino do império Selene. Enquanto a
+              <strong>Selene Foundation</strong> mantinha um rosto público, a Team Zero sempre existiu
+              em segredo, com operações próprias e autonomia crescente em relação ao
+              <strong>Cartel Sky Selene</strong>.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- AUTENTICAÇÃO -->
+      <section class="section" id="acesso">
+        <div class="section-heading">
+          <div>
+            <div class="eyebrow">Descriptografia / 02</div>
+            <h2>Dossiê completo da Team Zero</h2>
+          </div>
+          <span class="section-count" id="authState">BLOQUEADO</span>
+        </div>
+
+        <div class="auth" id="authBox">
+          <h3 class="auth-title">▌ TERMINAL DE DESCRIPTOGRAFIA</h3>
+          <p class="auth-text">INSIRA A CHAVE DO SEU CRACHÁ PARA DESCRIPTOGRAFAR OS DADOS DA TEAM ZERO:</p>
+
+          <div class="auth-row">
+            <div class="auth-field" id="authField">
+              <input type="password" id="passInput" placeholder="CHAVE DE ACESSO" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Chave de acesso">
+              <button class="eye" id="eyeBtn" type="button" aria-label="Mostrar ou ocultar chave">VER</button>
+            </div>
+            <button class="btn-auth" id="authBtn" type="button">EXECUTAR DESCRIPTOGRAFIA</button>
+          </div>
+
+          <div class="auth-msg" id="authMsg" role="status" aria-live="polite"></div>
+
+          <div class="decrypt" id="decrypt">
+            <div class="decrypt-lines" id="decryptLines"></div>
+            <div class="decrypt-bar"><i id="decryptFill"></i></div>
+          </div>
+        </div>
+
+        <!-- RELATÓRIO -->
+        <div class="report" id="report">
+          <div class="report-banner">Relatório de inteligência: Team Zero</div>
+
+          <div class="tabs" role="tablist" aria-label="Seções do relatório">
+            <button class="tab active" type="button" role="tab" data-tab="visao" aria-selected="true">1 · VISÃO GERAL</button>
+            <button class="tab" type="button" role="tab" data-tab="estr" aria-selected="false">2 · ESTRUTURA</button>
+            <button class="tab" type="button" role="tab" data-tab="zr" aria-selected="false">3 · ZERO-R</button>
+            <button class="tab" type="button" role="tab" data-tab="zh" aria-selected="false">4 · ZERO-HELE</button>
+            <button class="tab" type="button" role="tab" data-tab="cove" aria-selected="false">5 · C.O.V.E.</button>
+            <button class="tab" type="button" role="tab" data-tab="exp" aria-selected="false">6 · EXPERIMENTOS E PESQUISAS</button>
+            <button class="tab" type="button" role="tab" data-tab="atua" aria-selected="false">7 · ATUAÇÃO</button>
+            <button class="tab" type="button" role="tab" data-tab="vinc" aria-selected="false">8 · VÍNCULOS</button>
+            <button class="tab" type="button" role="tab" data-tab="cron" aria-selected="false">CRONOLOGIA</button>
+            <button class="tab" type="button" role="tab" data-tab="lac" aria-selected="false">LACUNAS</button>
+          </div>
+
+          <!-- 1 · VISÃO GERAL -->
+          <div class="tab-panel" id="tab-visao" role="tabpanel">
+            <div class="block">
+              <h3>1. Team Zero</h3>
+              <div class="sub">CÉLULA CLANDESTINA LIGADA AO CARTEL SKY SELENE</div>
+
+              <div class="stats">
+                <div class="stat"><b data-count="2">0</b><span>MEMBROS HUMANOS<br>DOCUMENTADOS</span></div>
+                <div class="stat"><b data-count="1">0</b><span>PLATAFORMA TÁTICA E BÉLICA<br>C.O.V.E.</span></div>
+                <div class="stat"><b data-count="15" data-suffix=" anos">0</b><span>DESDE OS RECRUTAMENTOS<br>DOCUMENTADOS (2011)</span></div>
+              </div>
+
+              <div class="hint">CLIQUE EM UM CARD PARA ABRIR O DOSSIÊ</div>
+              <div class="mcards">
+                <button class="mcard" type="button" data-go="zr">
+                  <div class="mglyph">R</div>
+                  <div class="mbody"><small>ZERO-R</small><strong>Zero-Reg'ocaned</strong><span>Juan Regland · coordenador operacional, estrategista e responsável por missões externas.</span><em>ABRIR DOSSIÊ ↗</em></div>
+                </button>
+                <button class="mcard" type="button" data-go="zh">
+                  <div class="mglyph">H</div>
+                  <div class="mbody"><small>ZERO-HELE</small><strong>Zero-Helec'talizing</strong><span>Helena Friedrick Klaus · principal especialista científica da Team Zero.</span><em>ABRIR DOSSIÊ ↗</em></div>
+                </button>
+                <button class="mcard" type="button" data-go="cove">
+                  <div class="mglyph">C</div>
+                  <div class="mbody"><small>SISTEMA</small><strong>C.O.V.E.</strong><span>Comando Operacional Veicular Experimental · plataforma de suporte tático, inteligência e combate.</span><em>ABRIR DOSSIÊ ↗</em></div>
+                </button>
+              </div>
+
+              <p>A Team Zero surgiu a partir de uma célula clandestina ligada ao Cartel Sky Selene. Diferentemente da Selene Foundation, sua existência sempre foi secreta. O grupo foi criado para operações especiais, coleta de informações, pesquisa de fenômenos anômalos e desenvolvimento de tecnologia experimental.</p>
+              <p>Com o tempo, a Team Zero adquiriu autonomia operacional e passou a agir de forma parcialmente independente do cartel, tornando-se uma das estruturas mais perigosas associadas ao legado de Epigmênio Selene.</p>
+              <p>No desenho do império Selene, a Fundação e a Team Zero representam os dois lados da mesma estrutura: o público e o clandestino. A Fundação atraía pesquisadores, médicos, engenheiros e cientistas; a Team Zero reunia o trabalho que não podia aparecer.</p>
+
+              <h4>FICHA RESUMIDA</h4>
+              <table class="data">
+                <tr><th>Designação</th><td>Team Zero</td></tr>
+                <tr><th>Registro</th><td>ORG-002 / K.A</td></tr>
+                <tr><th>Natureza</th><td>Célula clandestina de operações especiais, inteligência e pesquisa experimental</td></tr>
+                <tr><th>Organização de origem</th><td>Cartel Sky Selene (organização internacional mexicana, ativa desde 2001)</td></tr>
+                <tr><th>Autonomia</th><td>Parcial: age de forma independente do cartel em parte de suas operações</td></tr>
+                <tr><th>Recrutador dos membros documentados</th><td>Epigmênio Selene Escadria</td></tr>
+                <tr><th>Coordenação operacional</th><td>Zero-R · Juan Regland</td></tr>
+                <tr><th>Núcleo científico</th><td>Zero-Hele · Helena Friedrick Klaus</td></tr>
+                <tr><th>Plataforma tática e bélica</th><td>C.O.V.E.</td></tr>
+                <tr><th>Área de atuação</th><td>América Latina</td></tr>
+                <tr><th>Data de fundação</th><td>Não estabelecida (anterior a 2011)</td></tr>
+                <tr><th>Situação</th><td>Em atividade</td></tr>
+              </table>
+              <a class="xlink" href="individuos.html#fam-cartel">ABRIR ORGANOGRAMA DO CARTEL NO ARQUIVO CENTRAL ↗</a>
+            </div>
+          </div>
+
+          <!-- 2 · ESTRUTURA -->
+          <div class="tab-panel" id="tab-estr" role="tabpanel" hidden>
+            <div class="block">
+              <h3>2. Estrutura operacional</h3>
+              <div class="sub">CLIQUE EM UM NÓ PARA VER OS DETALHES</div>
+
+              <div class="org" role="group" aria-label="Organograma da Team Zero">
+                <button class="org-node top" type="button" data-org="cartel">
+                  <strong>CARTEL SKY SELENE</strong><small>Epigmênio Selene Escadria</small>
+                </button>
+                <div class="org-link"></div>
+                <div class="org-row">
+                  <button class="org-node dashed" type="button" data-org="fund">
+                    <strong>SELENE FOUNDATION</strong><small>Lado público</small>
+                  </button>
+                  <button class="org-node active" type="button" data-org="zero">
+                    <strong>TEAM ZERO</strong><small>Lado clandestino</small>
+                  </button>
+                </div>
+                <div class="org-link"></div>
+                <div class="org-row">
+                  <button class="org-node" type="button" data-org="zr">
+                    <strong>ZERO-R</strong><small>Coordenação operacional</small>
+                  </button>
+                  <button class="org-node" type="button" data-org="zh">
+                    <strong>ZERO-HELE</strong><small>Núcleo científico</small>
+                  </button>
+                  <button class="org-node" type="button" data-org="cove">
+                    <strong>C.O.V.E.</strong><small>Plataforma tática e bélica</small>
+                  </button>
+                </div>
+              </div>
+
+              <div class="org-detail" id="orgDetail" aria-live="polite"></div>
+
+              <h4>DIVISÃO DE FUNÇÕES</h4>
+              <table class="data">
+                <tr><th>Estratégia e coordenação</th><td>Zero-R define o planejamento das operações e responde pelas missões externas.</td></tr>
+                <tr><th>Pesquisa e desenvolvimento</th><td>Zero-Hele conduz engenharia avançada, inteligência artificial e sistemas operacionais experimentais.</td></tr>
+                <tr><th>Suporte tecnológico e bélico</th><td>O C.O.V.E. concentra o apoio tático e bélico da célula.</td></tr>
+                <tr><th>Cadeia de origem</th><td>Os dois membros documentados foram recrutados por Epigmênio Selene Escadria, em 2011.</td></tr>
+              </table>
+
+              <h4>RELAÇÃO COM O CARTEL E COM A FUNDAÇÃO</h4>
+              <p>A Selene Foundation e a Team Zero formam os braços influentes do império Selene. A Fundação, criada em 1999 por Isadora Selene Fontes com o financiamento de Epigmênio, tinha parte de sua estrutura usada para ocultar recursos e financiar pesquisas sigilosas. A Team Zero é o lado em que esse trabalho sigiloso acontece de fato, sem exposição pública.</p>
+              <p>Com a autonomia operacional adquirida ao longo dos anos, a célula deixou de ser apenas uma extensão do cartel e passou a funcionar com liberdade própria em parte de suas operações.</p>
+
+              <div class="status-line">STATUS ATUAL: CÉLULA ATIVA, COM AUTONOMIA PARCIAL EM RELAÇÃO AO CARTEL.</div>
+            </div>
+          </div>
+
+          <!-- 3 · ZERO-R -->
+          <div class="tab-panel" id="tab-zr" role="tabpanel" hidden>
+            <div class="block">
+              <h3>3. Zero-Reg'ocaned (Zero-R)</h3>
+              <div class="sub">JUAN REGLAND · COORDENADOR OPERACIONAL</div>
+
+              <div class="mhead">
+                <div class="mono-box"><b>R</b></div>
+                <div>
+                  <div class="mcode">ZERO-R · IND-004-C</div>
+                  <div class="mname">Zero-Reg'ocaned</div>
+                  <div class="mreal">CODINOME DE JUAN REGLAND</div>
+                </div>
+              </div>
+
+              <p>Zero-Reg'ocaned, conhecido operacionalmente como Zero-R, é o codinome de Juan Regland. Ele foi recrutado para a Team Zero em 2011, quando tinha apenas 17 anos e acabara de perder os pais.</p>
+              <p>Juan é considerado um indivíduo superdotado, possuindo grande capacidade analítica, raciocínio estratégico avançado e facilidade para operações de campo. Apresenta também um grau leve de sociopatia, característica que influencia sua dificuldade em estabelecer vínculos emocionais profundos e sua postura fria durante missões.</p>
+              <p>Dentro da Team Zero, Zero-R atua principalmente como coordenador operacional, estrategista e responsável por missões externas.</p>
+
+              <h4>CARACTERÍSTICAS</h4>
+              <div class="hint">CLIQUE EM UMA CARACTERÍSTICA</div>
+              <div class="chips" data-chips="zr">
+                <button class="chip" type="button" data-i="0">SUPERDOTADO</button>
+                <button class="chip" type="button" data-i="1">CAPACIDADE ANALÍTICA</button>
+                <button class="chip" type="button" data-i="2">RACIOCÍNIO ESTRATÉGICO</button>
+                <button class="chip" type="button" data-i="3">OPERAÇÕES DE CAMPO</button>
+                <button class="chip" type="button" data-i="4">SOCIOPATIA LEVE</button>
+              </div>
+              <div class="chip-detail" id="chipd-zr" aria-live="polite"></div>
+
+              <h4>REGISTRO</h4>
+              <table class="data">
+                <tr><th>Codinome</th><td>Zero-Reg'ocaned</td></tr>
+                <tr><th>Designação operacional</th><td>Zero-R</td></tr>
+                <tr><th>Nome</th><td>Juan Regland</td></tr>
+                <tr><th>Recrutamento</th><td>2011</td></tr>
+                <tr><th>Idade ao ser recrutado</th><td>17 anos</td></tr>
+                <tr><th>Situação familiar</th><td>Acabara de perder os pais</td></tr>
+                <tr><th>Função</th><td>Coordenador operacional, estrategista e responsável por missões externas</td></tr>
+                <tr><th>Idade estimada em 2026</th><td>Cerca de 32 anos (estimativa a partir do recrutamento)</td></tr>
+                <tr><th>Aparência</th><td>Não documentada</td></tr>
+                <tr><th>Paradeiro</th><td>Não documentado</td></tr>
+              </table>
+              <a class="xlink" href="individuos.html#ind-004-b">ABRIR REGISTRO DE EPIGMÊNIO ↗</a>
+            </div>
+          </div>
+
+          <!-- 4 · ZERO-HELE -->
+          <div class="tab-panel" id="tab-zh" role="tabpanel" hidden>
+            <div class="block">
+              <h3>4. Zero-Helec'talizing (Zero-Hele)</h3>
+              <div class="sub">HELENA FRIEDRICK KLAUS · ESPECIALISTA CIENTÍFICA</div>
+
+              <div class="mhead">
+                <div class="mono-box"><b>H</b></div>
+                <div>
+                  <div class="mcode">ZERO-HELE · IND-004-D</div>
+                  <div class="mname">Zero-Helec'talizing</div>
+                  <div class="mreal">CODINOME DE HELENA FRIEDRICK KLAUS</div>
+                </div>
+              </div>
+
+              <p>Zero-Helec'talizing, conhecida como Zero-Hele, é o codinome de Helena Friedrick Klaus. Ela foi recrutada por Epigmênio Selene em 2011, aos 16 anos de idade.</p>
+              <p>Assim como Juan, Helena também é órfã. Dotada de inteligência extraordinária, possui um QI extremamente elevado, frequentemente comparado ao de Isadora Selene Fontes. Seu talento científico precoce levou Epigmênio a incorporá-la aos projetos tecnológicos mais sigilosos do cartel.</p>
+              <p>Helena tornou-se a principal especialista científica da Team Zero, responsável por engenharia avançada, inteligência artificial, sistemas operacionais experimentais e tecnologias de suporte militar.</p>
+
+              <h4>CARACTERÍSTICAS</h4>
+              <div class="hint">CLIQUE EM UMA CARACTERÍSTICA</div>
+              <div class="chips" data-chips="zh">
+                <button class="chip" type="button" data-i="0">INTELIGÊNCIA EXTRAORDINÁRIA</button>
+                <button class="chip" type="button" data-i="1">TALENTO CIENTÍFICO PRECOCE</button>
+                <button class="chip" type="button" data-i="2">ENGENHARIA AVANÇADA</button>
+                <button class="chip" type="button" data-i="3">INTELIGÊNCIA ARTIFICIAL</button>
+                <button class="chip" type="button" data-i="4">SISTEMAS EXPERIMENTAIS</button>
+                <button class="chip" type="button" data-i="5">SUPORTE MILITAR</button>
+              </div>
+              <div class="chip-detail" id="chipd-zh" aria-live="polite"></div>
+
+              <h4>REGISTRO</h4>
+              <table class="data">
+                <tr><th>Codinome</th><td>Zero-Helec'talizing</td></tr>
+                <tr><th>Designação operacional</th><td>Zero-Hele</td></tr>
+                <tr><th>Nome</th><td>Helena Friedrick Klaus</td></tr>
+                <tr><th>Recrutamento</th><td>2011, por Epigmênio Selene</td></tr>
+                <tr><th>Idade ao ser recrutada</th><td>16 anos</td></tr>
+                <tr><th>Situação familiar</th><td>Órfã</td></tr>
+                <tr><th>Função</th><td>Principal especialista científica da Team Zero</td></tr>
+                <tr><th>Responsabilidades</th><td>Engenharia avançada, inteligência artificial, sistemas operacionais experimentais e tecnologias de suporte militar</td></tr>
+                <tr><th>Obra registrada</th><td>Reprogramação do C.O.V.E.</td></tr>
+                <tr><th>Idade estimada em 2026</th><td>Cerca de 31 anos (estimativa a partir do recrutamento)</td></tr>
+                <tr><th>Aparência</th><td>Não documentada</td></tr>
+                <tr><th>Paradeiro</th><td>Não documentado</td></tr>
+              </table>
+              <a class="xlink" href="individuos.html#ind-004-a">ABRIR REGISTRO DE ISADORA ↗</a>
+            </div>
+          </div>
+
+          <!-- 5 · C.O.V.E. -->
+          <div class="tab-panel" id="tab-cove" role="tabpanel" hidden>
+            <div class="block">
+              <h3>5. C.O.V.E.</h3>
+              <div class="sub">COMANDO OPERACIONAL VEICULAR EXPERIMENTAL</div>
+
+              <div class="mhead">
+                <div class="mono-box"><b>C</b></div>
+                <div>
+                  <div class="mcode">SISTEMA · IND-004-E</div>
+                  <div class="mname">C.O.V.E.</div>
+                  <div class="mreal">COMANDO OPERACIONAL VEICULAR EXPERIMENTAL</div>
+                </div>
+              </div>
+
+              <p>C.O.V.E. é a sigla para Comando Operacional Veicular Experimental. Trata-se de um sistema operacional versátil criado originalmente por Isadora Selene Fontes em sua primeira versão.</p>
+
+              <h4>DUAS VERSÕES</h4>
+              <div class="hint">ALTERNE ENTRE AS VERSÕES</div>
+              <div class="switch" role="tablist" aria-label="Versões do C.O.V.E.">
+                <button type="button" class="on" data-cv="orig">1ª VERSÃO · ISADORA</button>
+                <button type="button" data-cv="atual">REPROGRAMAÇÃO · HELENA</button>
+              </div>
+
+              <div class="cv-panel" id="cv-orig">
+                <p>O projeto foi concebido como um robô de proteção pessoal destinado a defender sua filha, Jade Selene, funcionando inicialmente como um sistema de assistência e segurança.</p>
+                <table class="data">
+                  <tr><th>Criadora</th><td>Isadora Selene Fontes</td></tr>
+                  <tr><th>Finalidade</th><td>Proteger Jade Selene</td></tr>
+                  <tr><th>Função</th><td>Sistema de assistência e segurança</td></tr>
+                </table>
+              </div>
+
+              <div class="cv-panel" id="cv-atual" hidden>
+                <p>Após o assassinato de Isadora, o projeto foi confiscado pelo Cartel Sky Selene. Sob ordens de Epigmênio, Helena Friedrick Klaus reprogramou o C.O.V.E., convertendo-o em uma plataforma operacional de suporte tático, inteligência e combate.</p>
+                <p>Desde então, o C.O.V.E. passou a atuar como o principal suporte tecnológico e bélico da Team Zero.</p>
+                <div class="hint">FUNÇÕES ATUAIS · CLIQUE PARA DETALHAR</div>
+                <div class="chips" data-chips="cove">
+                  <button class="chip" type="button" data-i="0">DEFESA</button>
+                  <button class="chip" type="button" data-i="1">ANÁLISE DE DADOS</button>
+                  <button class="chip" type="button" data-i="2">VIGILÂNCIA</button>
+                  <button class="chip" type="button" data-i="3">COORDENAÇÃO DE OPERAÇÕES</button>
+                  <button class="chip" type="button" data-i="4">ASSISTÊNCIA ESTRATÉGICA</button>
+                </div>
+                <div class="chip-detail" id="chipd-cove" aria-live="polite"></div>
+                <table class="data">
+                  <tr><th>Reprogramação</th><td>Helena Friedrick Klaus (Zero-Hele), sob ordens de Epigmênio</td></tr>
+                  <tr><th>Controle atual</th><td>Cartel Sky Selene, por meio da Team Zero</td></tr>
+                  <tr><th>Classificação</th><td>Plataforma operacional de suporte tático, inteligência e combate</td></tr>
+                </table>
+              </div>
+
+              <div class="status-line">A TRANSFORMAÇÃO DO C.O.V.E. SIMBOLIZA A CORRUPÇÃO DO LEGADO CIENTÍFICO DE ISADORA: UMA CRIAÇÃO CONCEBIDA PARA PROTEGER JADE ACABOU CONVERTIDA EM INSTRUMENTO DE PODER DO PRÓPRIO IMPÉRIO QUE DESTRUIU SUA FAMÍLIA.</div>
+              <a class="xlink" href="individuos.html#ind-004">ABRIR REGISTRO DE JADE ↗</a>
+            </div>
+          </div>
+
+          <!-- 6 · EXPERIMENTOS E PESQUISAS -->
+          <div class="tab-panel" id="tab-exp" role="tabpanel" hidden>
+            <div class="block">
+              <h3>6. Experimentos e Pesquisas</h3>
+              <div class="sub">ARQUIVO K.A-114 — EXPERIMENTOS HUMANOS</div>
+
+              <p>A Team Zero não era só uma equipe de operações especiais: ela também lidava com pesquisas anômalas, tecnologia experimental e experimentos humanos. Os quatro projetos abaixo constam nos arquivos da célula, cada um com objetivo, procedimento, resultado e desfecho.</p>
+
+              <div class="stats">
+                <div class="stat"><b data-count="4">0</b><span>PROJETOS<br>CATALOGADOS</span></div>
+                <div class="stat"><b id="declCount">0</b><span>DETALHES INQUIETANTES<br>DECLASSIFICADOS</span></div>
+                <div class="stat"><b data-count="3">0</b><span>DETALHES<br>DISPONÍVEIS</span></div>
+              </div>
+
+              <h4>PROJETOS</h4>
+              <div class="hint">SELECIONE UM PROJETO PARA ABRIR O ARQUIVO</div>
+              <div class="exp-layout">
+                <div class="exp-list" id="expList"></div>
+                <div id="expView" aria-live="polite"></div>
+              </div>
+
+              <h4>O QUE CONECTA OS QUATRO EXPERIMENTOS</h4>
+              <div class="hint">CLIQUE EM UM NÓ PARA ABRIR O PROJETO</div>
+              <svg class="conn" viewBox="0 0 640 250" role="group" aria-label="Linha investigativa entre os experimentos">
+                <g class="cl">
+                  <path data-l="0" d="M80 84 C80 140 320 130 320 186"/>
+                  <path data-l="1" d="M240 84 C240 140 320 130 320 186"/>
+                  <path data-l="2" d="M400 84 C400 140 320 130 320 186"/>
+                  <path data-l="3" d="M560 84 C560 140 320 130 320 186"/>
+                </g>
+                <g class="cn" data-n="0"><rect x="10" y="30" width="140" height="54"/><text class="c1" x="80" y="48">TZ-001</text><text x="80" y="64">Vigília</text><text class="c3" x="80" y="78">percepção alterada</text></g>
+                <g class="cn" data-n="1"><rect x="170" y="30" width="140" height="54"/><text class="c1" x="240" y="48">TZ-014</text><text x="240" y="64">Limiar</text><text class="c3" x="240" y="78">sensibilidade a objetos</text></g>
+                <g class="cn" data-n="2"><rect x="330" y="30" width="140" height="54"/><text class="c1" x="400" y="48">TZ-027</text><text x="400" y="64">Eco</text><text class="c3" x="400" y="78">informação sem fonte</text></g>
+                <g class="cn" data-n="3"><rect x="490" y="30" width="140" height="54"/><text class="c1" x="560" y="48">TZ-041</text><text x="560" y="64">Espelho</text><text class="c3" x="560" y="78">fenômenos compartilhados</text></g>
+                <g class="core"><rect x="190" y="186" width="260" height="44"/><text x="320" y="213">INDÍCIOS DE UM MESMO FENÔMENO</text></g>
+              </svg>
+
+              <ul>
+                <li><strong>Vigília</strong> investigava alterações na percepção.</li>
+                <li><strong>Limiar</strong> investigava a sensibilidade a objetos anômalos.</li>
+                <li><strong>Eco</strong> investigava informações que pareciam surgir sem uma fonte conhecida.</li>
+                <li><strong>Espelho</strong> investigava fenômenos compartilhados por pessoas que nunca deveriam ter contato.</li>
+              </ul>
+              <p>Todos começaram como projetos independentes e, posteriormente, revelaram indícios de um mesmo fenômeno. A Team Zero não sabia exatamente o que estava produzindo: alguns pesquisadores acreditavam estar desenvolvendo métodos de investigação e contenção; outros perceberam que os resultados não correspondiam às hipóteses originais.</p>
+
+              <div class="status-line">OS ARQUIVOS DOS PROJETOS ESTÃO INCOMPLETOS. PARTE DOS DOCUMENTOS DESAPARECEU OU FOI ALTERADA.</div>
+            </div>
+          </div>
+
+          <!-- 6 · ATUAÇÃO -->
+          <div class="tab-panel" id="tab-atua" role="tabpanel" hidden>
+            <div class="block">
+              <h3>7. Atuação e capacidades</h3>
+              <div class="sub">O QUE A TEAM ZERO FAZ, SEGUNDO OS REGISTROS</div>
+
+              <ul>
+                <li><strong>Operações especiais:</strong> missões conduzidas por Zero-R, fora da estrutura da célula.</li>
+                <li><strong>Coleta de informações:</strong> reunião de dados sobre pessoas, organizações e eventos de interesse.</li>
+                <li><strong>Pesquisa de fenômenos anômalos:</strong> estudo de ocorrências que escapam à explicação convencional.</li>
+                <li><strong>Tecnologia experimental:</strong> engenharia avançada, inteligência artificial e sistemas operacionais experimentais, sob Zero-Hele.</li>
+                <li><strong>Atentados e desenvolvimento bélico:</strong> a Team Zero é apontada como braço responsável por atentados e pelo desenvolvimento bélico do cartel na América Latina.</li>
+              </ul>
+
+              <h4>MODELO DE FUNCIONAMENTO</h4>
+              <p>A célula opera com três peças complementares: uma mente de campo (Zero-R), uma mente de laboratório (Zero-Hele) e uma plataforma que une as duas (C.O.V.E.). O planejamento nasce na coordenação operacional, a tecnologia nasce na pesquisa e o resultado é executado em campo com apoio da plataforma tática.</p>
+
+              <h4>SIGILO</h4>
+              <p>A Team Zero nunca teve face pública. A Selene Foundation podia ser visitada, financiada e elogiada em círculos acadêmicos; a Team Zero não aparece em nenhum registro público. O sigilo é parte da própria razão de existir da célula.</p>
+
+              <h4>AVALIAÇÃO DE AMEAÇA</h4>
+              <table class="data">
+                <tr><th>Capacidade técnica</th><td>Muito alta: Zero-Hele e o C.O.V.E. reúnem engenharia avançada, IA e sistemas experimentais.</td></tr>
+                <tr><th>Capacidade operacional</th><td>Alta: Zero-R coordena missões externas com perfil analítico e estratégico.</td></tr>
+                <tr><th>Autonomia</th><td>Parcial em relação ao cartel, e crescente com o tempo.</td></tr>
+                <tr><th>Visibilidade</th><td>Mínima: existência sempre secreta.</td></tr>
+                <tr><th>Classificação do setor</th><td>Uma das estruturas mais perigosas associadas ao legado de Epigmênio Selene.</td></tr>
+              </table>
+
+              <div class="status-line">ORIENTAÇÃO: NÃO ESTABELECER CONTATO. QUALQUER INFORMAÇÃO DEVE SER REPASSADA AO SETOR.</div>
+            </div>
+          </div>
+
+          <!-- 7 · VÍNCULOS -->
+          <div class="tab-panel" id="tab-vinc" role="tabpanel" hidden>
+            <div class="block">
+              <h3>8. Vínculos</h3>
+              <div class="sub">PESSOAS E ESTRUTURAS LIGADAS À TEAM ZERO</div>
+
+              <ul>
+                <li><strong>Epigmênio Selene Escadria:</strong> líder supremo do Cartel Sky Selene e recrutador de Helena e Juan, em 2011. Também ordenou a reprogramação do C.O.V.E. <a href="individuos.html#ind-004-b">Abrir registro ↗</a></li>
+                <li><strong>Isadora Selene Fontes:</strong> criadora da primeira versão do C.O.V.E. e fundadora da Selene Foundation. Executada por Epigmênio em 2023. <a href="individuos.html#ind-004-a">Abrir registro ↗</a></li>
+                <li><strong>Jade Selene Escadria:</strong> filha de Epigmênio e Isadora, e destinatária original da proteção do C.O.V.E. Circula entre o cotidiano comum, o cartel e a tecnologia secreta da Team Zero. <a href="individuos.html#ind-004">Abrir registro ↗</a></li>
+                <li><strong>Selene Foundation:</strong> o lado público do império Selene, criada em 1999. <a href="individuos.html#fam-esc">Abrir quadro familiar ↗</a></li>
+                <li><strong>Tríade Estrela:</strong> o grupo de Daniiyel, Kin e João. Jade atua ao lado dele, sem integrá-lo. <a href="individuos.html#org-tri">Abrir registro ↗</a></li>
+                <li><strong>João Carlos Moderno Borges:</strong> persegue Epigmênio, o recrutador e a origem da cadeia da Team Zero. <a href="individuos.html#ind-003">Abrir registro ↗</a></li>
+              </ul>
+
+              <h4>PONTOS DE CONTATO</h4>
+              <table class="data">
+                <tr><th>Team Zero ↔ Jade</th><td>O C.O.V.E. foi criado para protegê-la e hoje pertence à estrutura da célula.</td></tr>
+                <tr><th>Team Zero ↔ Isadora</th><td>A obra científica de Isadora foi confiscada e reaproveitada pela célula.</td></tr>
+                <tr><th>Team Zero ↔ Epigmênio</th><td>Os membros documentados foram recrutados por ele, e a célula integra o império Selene.</td></tr>
+                <tr><th>Team Zero ↔ Tríade Estrela</th><td>Ligação indireta: a Tríade atua ao lado de Jade, e João busca Epigmênio.</td></tr>
+              </table>
+            </div>
+          </div>
+
+          <!-- CRONOLOGIA -->
+          <div class="tab-panel" id="tab-cron" role="tabpanel" hidden>
+            <div class="block">
+              <h3>Cronologia reconstituída</h3>
+              <div class="sub">DATAS ESTABELECIDAS PELO RELATÓRIO</div>
+              <ul class="timeline">
+                <li><div class="tl-date">1999</div><div class="tl-text">Isadora Selene Fontes cria a Selene Foundation, com o financiamento de Epigmênio. Publicamente, a fundação se dedica a ciências humanitárias.</div></li>
+                <li><div class="tl-date">2001</div><div class="tl-text">Início da atuação ativa do Cartel Sky Selene. Parte da estrutura da fundação passa a ocultar recursos e financiar pesquisas sigilosas.</div></li>
+                <li><div class="tl-date">SEM DATA</div><div class="tl-text">Surgimento da Team Zero, a partir de uma célula clandestina ligada ao cartel. A data de fundação não foi estabelecida, mas é anterior a 2011.</div></li>
+                <li class="hot"><div class="tl-date">2008</div><div class="tl-text">Agentes americanos são assassinados no México durante operações do cartel. Epigmênio passa a ser procurado pela CIA e pelo FBI.</div></li>
+                <li class="hot"><div class="tl-date">2011</div><div class="tl-text">Epigmênio recruta Helena Friedrick Klaus, aos 16 anos, e Juan Regland, aos 17, para a Team Zero.</div></li>
+                <li><div class="tl-date">SEM DATA</div><div class="tl-text">A Team Zero adquire autonomia operacional e passa a agir de forma parcialmente independente do cartel.</div></li>
+                <li class="hot"><div class="tl-date">2023</div><div class="tl-text">Isadora descobre a natureza do cartel, encerra seus projetos e planeja asilo em São Paulo com Jade. É executada por Epigmênio. O C.O.V.E. é confiscado pelo cartel.</div></li>
+                <li><div class="tl-date">SEM DATA</div><div class="tl-text">Helena reprograma o C.O.V.E. sob ordens de Epigmênio. O sistema passa a ser o principal suporte tecnológico e bélico da Team Zero.</div></li>
+                <li class="hot"><div class="tl-date">08/09/2026</div><div class="tl-text">Última aparição de Jade registrada, no setor portuário de Veracruz, México. <a href="tempo.html">Ver detalhes ↗</a></div></li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- LACUNAS -->
+          <div class="tab-panel" id="tab-lac" role="tabpanel" hidden>
+            <div class="block">
+              <h3>Lacunas documentais</h3>
+              <div class="sub">O QUE O ARQUIVO AINDA NÃO ESTABELECE</div>
+
+              <ul>
+                <li><strong>Fundação:</strong> a data de criação da Team Zero e o nome de quem a idealizou.</li>
+                <li><strong>Efetivo:</strong> se existem outros integrantes além de Zero-R e Zero-Hele.</li>
+                <li><strong>Base:</strong> o local onde a célula opera, pesquisa e abriga o C.O.V.E.</li>
+                <li><strong>Financiamento:</strong> qual parte dos recursos ocultos pela Fundação chegava à Team Zero.</li>
+                <li><strong>Operações:</strong> a lista de atentados e missões atribuídos à célula.</li>
+                <li><strong>Pesquisa de fenômenos anômalos:</strong> quais fenômenos foram estudados e com que resultado.</li>
+                <li><strong>C.O.V.E.:</strong> forma física, armamento e data exata da reprogramação.</li>
+                <li><strong>Membros:</strong> paradeiro atual de Juan e de Helena, e as circunstâncias da orfandade de ambos.</li>
+                <li><strong>Autonomia:</strong> até que ponto a célula ainda responde a Epigmênio.</li>
+              </ul>
+
+              <div class="status-line">DADOS PENDENTES DE VERIFICAÇÃO. ATUALIZAÇÃO CONFORME NOVOS MATERIAIS FOREM RECUPERADOS.</div>
+            </div>
+          </div>
+
+          <div class="end-line">[ FINAL DO ARQUIVO - CONEXÃO ENCERRADA ]</div>
+          <div class="center"><button class="btn" id="lockBtn" type="button">ENCERRAR CONEXÃO E CRIPTOGRAFAR NOVAMENTE</button></div>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <div>
+          <p>PROJECT114 // CENTRAL DE ARQUIVOS</p>
+          <p>ARQUIVO: TEAM ZERO · NÍVEL 4</p>
+        </div>
+        <div class="footer-right">
+          <p>ACESSO RESTRITO</p>
+          <p><a href="individuos.html">← ARQUIVO CENTRAL</a> · <a href="BASE.html">TERMINAL</a></p>
+        </div>
+      </footer>
+
+    </div>
+  </main>
+</div>
+
+<!-- ALERTA DE CRACHÁ INVÁLIDO -->
+<div class="panic" id="panic" role="alert">
+  <div class="panic-wrap">
+    <div class="panic-box">
+      <h2>AVISO. CRACHÁ INVÁLIDO. DADOS ENCERRADOS.</h2>
+      <p>VOCÊ SERÁ PROCURADO.</p>
+    </div>
+    <div class="panic-trace" id="panicTrace"></div>
+    <button class="panic-retry" id="panicRetry" type="button">REINICIAR SESSÃO</button>
+  </div>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  var PASS = "0982";
+
+  var $ = function (id) { return document.getElementById(id); };
+  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function pad(n) { return String(n).padStart(2, "0"); }
+
+  /* ----- relógio ----- */
+
+  function tick() {
+    var d = new Date();
+    var clock = document.querySelector("#sessionClock b");
+    if (clock) {
+      clock.textContent = pad(d.getDate()) + "/" + pad(d.getMonth() + 1) + "/" + d.getFullYear() +
+        " // " + pad(d.getHours()) + ":" + pad(d.getMinutes()) + ":" + pad(d.getSeconds());
+    }
+  }
+  tick();
+  setInterval(tick, 1000);
+
+  /* ----- endereço: #zero-r, #zero-hele, #cove ----- */
+
+  var ROUTES = { "zero-r": "zr", "zero-hele": "zh", "cove": "cove", "estrutura": "estr", "cronologia": "cron", "experimentos": "exp", "pesquisas": "exp" };
+  var pending = null;
+
+  function readHash() {
+    var h = location.hash.slice(1);
+    return ROUTES[h] || null;
+  }
+
+  pending = readHash();
+
+  window.addEventListener("hashchange", function () {
+    var k = readHash();
+    if (!k) return;
+    if ($("report").classList.contains("show")) { showTab(k); $("report").scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" }); }
+    else pending = k;
+  });
+
+  /* ----- descriptografia ----- */
+
+  var input = $("passInput");
+  var btn = $("authBtn");
+  var msg = $("authMsg");
+  var busy = false;
+
+  $("eyeBtn").addEventListener("click", function () {
+    var show = input.type === "password";
+    input.type = show ? "text" : "password";
+    this.textContent = show ? "OCULTAR" : "VER";
+    input.focus();
+  });
+
+  input.addEventListener("keydown", function (e) {
+    if (e.key === "Enter") { e.preventDefault(); attempt(); }
+  });
+
+  btn.addEventListener("click", attempt);
+
+  function attempt() {
+    if (busy) return;
+    var pass = input.value;
+
+    if (!pass) {
+      msg.textContent = "INSIRA A CHAVE DE ACESSO PARA CONTINUAR.";
+      var f = $("authField");
+      f.classList.remove("shake");
+      void f.offsetWidth;
+      f.classList.add("shake");
+      input.focus();
+      return;
+    }
+
+    busy = true;
+    btn.disabled = true;
+    input.disabled = true;
+    msg.textContent = "";
+
+    runDecrypt(function () {
+      if (pass === PASS) unlock(); else panic();
+    });
+  }
+
+  function runDecrypt(done) {
+    var box = $("decrypt");
+    var lines = $("decryptLines");
+    var fill = $("decryptFill");
+    var steps = [
+      "> LENDO CHAVE DO CRACHÁ...",
+      "> VALIDANDO CREDENCIAL NÍVEL 4...",
+      "> DESCRIPTOGRAFANDO BLOCOS DE DADOS..."
+    ];
+
+    box.classList.add("show");
+    lines.innerHTML = "";
+    fill.style.width = "0";
+
+    var gap = reduced ? 10 : 520;
+    var i = 0;
+
+    (function next() {
+      if (i < steps.length) {
+        var div = document.createElement("div");
+        div.textContent = steps[i];
+        lines.appendChild(div);
+        i++;
+        fill.style.transition = "width " + gap + "ms linear";
+        fill.style.width = Math.round((i / steps.length) * 100) + "%";
+        setTimeout(next, gap);
+      } else {
+        setTimeout(done, reduced ? 10 : 250);
+      }
+    })();
+  }
+
+  function unlock() {
+    $("authBox").style.display = "none";
+    $("report").classList.add("show");
+    $("authState").textContent = "DESCRIPTOGRAFADO";
+    $("metaData").textContent = "ABERTOS";
+    $("sideStatus").textContent = "Conexão descriptografada";
+    $("sideDot").classList.add("live");
+    $("topBadge").classList.add("open");
+    $("topBadgeText").textContent = "ACESSO CONCEDIDO";
+
+    document.querySelectorAll(".secret").forEach(function (el) {
+      el.textContent = el.dataset.secret;
+      el.classList.add("open");
+    });
+
+    showTab(pending || "visao");
+    pending = null;
+    $("report").scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" });
+  }
+
+  function lock() {
+    $("report").classList.remove("show");
+    $("authBox").style.display = "";
+    $("decrypt").classList.remove("show");
+    $("authState").textContent = "BLOQUEADO";
+    $("metaData").textContent = "CRIPTOGRAFADOS";
+    $("sideStatus").textContent = "Conexão aguardando chave";
+    $("sideDot").classList.remove("live");
+    $("topBadge").classList.remove("open");
+    $("topBadgeText").textContent = "ACESSO RESTRITO";
+
+    document.querySelectorAll(".secret").forEach(function (el) {
+      el.textContent = "████████████";
+      el.classList.remove("open");
+    });
+
+    input.value = "";
+    input.type = "password";
+    $("eyeBtn").textContent = "VER";
+    input.disabled = false;
+    btn.disabled = false;
+    busy = false;
+    msg.textContent = "CONEXÃO ENCERRADA. DADOS CRIPTOGRAFADOS NOVAMENTE.";
+    $("ficha").scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" });
+  }
+
+  $("lockBtn").addEventListener("click", lock);
+
+  /* ----- alerta de crachá inválido ----- */
+
+  function panic() {
+    $("app").style.display = "none";
+    document.body.style.backgroundColor = "#000";
+    $("panic").classList.add("show");
+
+    var trace = $("panicTrace");
+    var lines = [
+      "> RASTREAMENTO INICIADO...",
+      "> ORIGEM DO ACESSO: ████████████",
+      "> TENTATIVA REGISTRADA NO ARQUIVO K.A-114"
+    ];
+    var i = 0;
+
+    (function next() {
+      if (i < lines.length) {
+        var d = document.createElement("div");
+        d.textContent = lines[i++];
+        trace.appendChild(d);
+        setTimeout(next, reduced ? 10 : 900);
+      } else {
+        setTimeout(function () { $("panicRetry").classList.add("show"); }, reduced ? 10 : 1200);
+      }
+    })();
+  }
+
+  $("panicRetry").addEventListener("click", function () { window.location.reload(); });
+
+  /* ----- abas ----- */
+
+  var tabs = document.querySelectorAll(".tab");
+
+  function showTab(key) {
+    tabs.forEach(function (t) {
+      var on = t.dataset.tab === key;
+      t.classList.toggle("active", on);
+      t.setAttribute("aria-selected", on ? "true" : "false");
+    });
+    document.querySelectorAll(".tab-panel").forEach(function (p) {
+      p.hidden = p.id !== "tab-" + key;
+    });
+    if (key === "visao" || key === "exp") animateCounters();
+    if (key === "estr") orgShow("zero");
+  }
+
+  tabs.forEach(function (t) {
+    t.addEventListener("click", function () { showTab(t.dataset.tab); });
+  });
+
+  /* ----- números animados ----- */
+
+  function animateCounters() {
+    document.querySelectorAll("[data-count]").forEach(function (el) {
+      var target = parseInt(el.dataset.count, 10);
+      var suffix = el.dataset.suffix || "";
+      if (reduced) { el.textContent = target + suffix; return; }
+      var start = null;
+      function step(ts) {
+        if (!start) start = ts;
+        var p = Math.min(1, (ts - start) / 1100);
+        el.textContent = Math.round(target * (1 - Math.pow(1 - p, 3))) + suffix;
+        if (p < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    });
+  }
+
+  /* ----- organograma ----- */
+
+  var ORG = {
+    cartel: ["CARTEL SKY SELENE", "Organização internacional mexicana de narcotráfico e terrorismo, ativa desde 2001, associada a Epigmênio Selene Escadria. Expandiu-se pela América Espanhola e pela América Latina, formando uma rede de influência política, econômica e clandestina."],
+    fund: ["SELENE FOUNDATION", "Lado público do império Selene. Criada em 1999 por Isadora, com o financiamento de Epigmênio, apresentava-se como instituição de ciências humanitárias. Parte de sua estrutura passou a ocultar recursos e financiar pesquisas sigilosas."],
+    zero: ["TEAM ZERO", "Lado clandestino do império Selene. Célula de existência sempre secreta, voltada a operações especiais, coleta de informações, pesquisa de fenômenos anômalos e tecnologia experimental. Age com autonomia parcial em relação ao cartel."],
+    zr: ["ZERO-R · ZERO-REG'OCANED", "Codinome de Juan Regland. Coordenador operacional, estrategista e responsável por missões externas. Recrutado em 2011, aos 17 anos."],
+    zh: ["ZERO-HELE · ZERO-HELEC'TALIZING", "Codinome de Helena Friedrick Klaus. Principal especialista científica: engenharia avançada, inteligência artificial, sistemas operacionais experimentais e tecnologias de suporte militar. Reprogramou o C.O.V.E."],
+    cove: ["C.O.V.E.", "Comando Operacional Veicular Experimental. Criado por Isadora para proteger Jade, foi confiscado e reprogramado por Helena sob ordens de Epigmênio. Hoje é plataforma de suporte tático, inteligência e combate, e o principal suporte tecnológico e bélico da Team Zero."]
+  };
+
+  function orgShow(key) {
+    document.querySelectorAll(".org-node").forEach(function (n) {
+      n.classList.toggle("active", n.dataset.org === key);
+    });
+    $("orgDetail").innerHTML = "<b>" + ORG[key][0] + "</b>" + ORG[key][1];
+  }
+
+  document.querySelectorAll(".org-node").forEach(function (n) {
+    n.addEventListener("click", function () { orgShow(n.dataset.org); });
+  });
+
+
+  /* ----- características (chips) ----- */
+
+  var CHIPS = {
+    zr: [
+      ["SUPERDOTADO", "Juan é considerado um indivíduo superdotado."],
+      ["CAPACIDADE ANALÍTICA", "Possui grande capacidade analítica, a base do seu trabalho como coordenador das operações da Team Zero."],
+      ["RACIOCÍNIO ESTRATÉGICO", "Seu raciocínio estratégico é avançado. É o que sustenta sua função de estrategista dentro da célula."],
+      ["OPERAÇÕES DE CAMPO", "Tem facilidade para operações de campo, e por isso é o responsável pelas missões externas."],
+      ["SOCIOPATIA LEVE", "Apresenta um grau leve de sociopatia. A característica influencia sua dificuldade em estabelecer vínculos emocionais profundos e sua postura fria durante missões."]
+    ],
+    zh: [
+      ["INTELIGÊNCIA EXTRAORDINÁRIA", "Helena possui um QI extremamente elevado, frequentemente comparado ao de Isadora Selene Fontes."],
+      ["TALENTO CIENTÍFICO PRECOCE", "O talento científico de Helena levou Epigmênio a incorporá-la aos projetos tecnológicos mais sigilosos do cartel. Ela foi recrutada em 2011, aos 16 anos."],
+      ["ENGENHARIA AVANÇADA", "Uma das áreas sob responsabilidade de Helena, como principal especialista científica da Team Zero."],
+      ["INTELIGÊNCIA ARTIFICIAL", "Área de responsabilidade de Helena. Está ligada à reprogramação do C.O.V.E., convertido em plataforma de suporte tático, inteligência e combate."],
+      ["SISTEMAS EXPERIMENTAIS", "Helena responde pelos sistemas operacionais experimentais da Team Zero."],
+      ["SUPORTE MILITAR", "Helena é responsável por tecnologias de suporte militar, parte do apoio tecnológico e bélico da célula."]
+    ],
+    cove: [
+      ["DEFESA", "O C.O.V.E. desempenha funções de defesa. É a continuidade, em outra escala, do objetivo original de proteger."],
+      ["ANÁLISE DE DADOS", "Atua na análise de dados, parte da função de inteligência da plataforma."],
+      ["VIGILÂNCIA", "Realiza vigilância como parte do suporte tático e de inteligência da Team Zero."],
+      ["COORDENAÇÃO DE OPERAÇÕES", "Participa da coordenação de operações da célula."],
+      ["ASSISTÊNCIA ESTRATÉGICA", "Oferece assistência estratégica em campo, como principal suporte tecnológico e bélico da Team Zero."]
+    ]
+  };
+
+  function chipShow(k, i) {
+    document.querySelectorAll('.chips[data-chips="' + k + '"] .chip').forEach(function (c) {
+      c.classList.toggle("active", Number(c.dataset.i) === i);
+    });
+    var box = $("chipd-" + k);
+    box.style.animation = "none"; void box.offsetWidth; box.style.animation = "";
+    box.innerHTML = "<b>" + CHIPS[k][i][0] + "</b>" + CHIPS[k][i][1];
+  }
+
+  document.querySelectorAll(".chips").forEach(function (g) {
+    var k = g.dataset.chips;
+    g.querySelectorAll(".chip").forEach(function (c) {
+      c.addEventListener("click", function () { chipShow(k, Number(c.dataset.i)); });
+    });
+    chipShow(k, 0);
+  });
+
+  /* ----- C.O.V.E.: versões ----- */
+
+  document.querySelectorAll("[data-cv]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var k = b.dataset.cv;
+      document.querySelectorAll("[data-cv]").forEach(function (x) { x.classList.toggle("on", x === b); });
+      $("cv-orig").hidden = k !== "orig";
+      $("cv-atual").hidden = k !== "atual";
+    });
+  });
+
+  /* ----- cards da visão geral ----- */
+
+  document.querySelectorAll("[data-go]").forEach(function (c) {
+    c.addEventListener("click", function () {
+      showTab(c.dataset.go);
+      $("report").scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" });
+    });
+  });
+
+  /* ----- experimentos e pesquisas ----- */
+
+  var EXP = [
+    { code: "EXP. TZ-001", name: "Projeto Vigília", area: "Pesquisa sobre percepção e privação sensorial", status: "SUSPENSO",
+      o: "Investigar até que ponto a percepção humana poderia ser alterada em ambientes de isolamento e estímulos controlados.",
+      p: "Voluntários e indivíduos sob custódia eram colocados em salas de observação equipadas com câmeras, microfones e sensores fisiológicos. A equipe alterava gradualmente os estímulos sonoros e visuais, registrando as reações e os relatos dos participantes. Alguns testes incluíam gravações de vozes que os sujeitos afirmavam reconhecer, embora não conseguissem identificar sua origem.",
+      r: "Certos participantes relataram ouvir conversas antes de os alto-falantes serem ativados. Os registros, porém, não permitiam determinar se isso era consequência das condições experimentais, de falhas nos equipamentos ou de interferência anômala.",
+      d: "O projeto foi suspenso após uma divergência entre os depoimentos dos participantes e as gravações de segurança. Um relatório interno mencionava que vários indivíduos descreveram a mesma pessoa, apesar de nunca terem se encontrado.",
+      x: null },
+    { code: "EXP. TZ-014", name: "Projeto Limiar", area: "Resposta humana a fenômenos anômalos", status: "SUJEITO TRANSFERIDO",
+      o: "Verificar se determinados indivíduos apresentavam reações incomuns à proximidade de objetos associados a ocorrências inexplicáveis.",
+      p: "Os participantes eram monitorados enquanto permaneciam próximos de objetos recolhidos em operações da Team Zero. A equipe registrava alterações fisiológicas, relatos espontâneos e diferenças entre as respostas de cada pessoa. Os objetos eram identificados por códigos, e os pesquisadores não recebiam informações sobre suas origens.",
+      r: "Um dos participantes apresentou respostas consistentes diante de um objeto específico, mesmo quando ele estava oculto em recipientes diferentes. Os testes não conseguiram estabelecer se a pessoa detectava alguma propriedade física desconhecida ou se havia outro fator envolvido.",
+      d: "O indivíduo foi transferido para uma unidade de observação permanente. O objeto desapareceu durante uma mudança de instalações, e o arquivo da transferência foi encontrado sem a assinatura do responsável.",
+      x: "O último relatório descrevia que o participante começou a reagir ao objeto antes mesmo de ele chegar à sala." },
+    { code: "EXP. TZ-027", name: "Projeto Eco", area: "Memória, identidade e registros contraditórios", status: "COMPROMETIDO",
+      o: "Estudar relatos de lembranças que não correspondiam a nenhum acontecimento documentado na vida dos participantes.",
+      p: "Os pesquisadores comparavam entrevistas, históricos pessoais e registros audiovisuais. Em seguida, solicitavam que os participantes descrevessem lembranças específicas em diferentes sessões, sem acesso às respostas anteriores. O foco era encontrar padrões e inconsistências, não induzir uma memória específica.",
+      r: "Alguns relatos continham nomes, locais e detalhes que pareciam corresponder a arquivos mantidos pela própria organização. A equipe confirmou que parte dessas informações era restrita, mas não conseguiu determinar como os participantes tiveram acesso a elas.",
+      d: "O projeto foi classificado como comprometido. As entrevistas originais desapareceram do arquivo central, restando apenas transcrições parciais e notas escritas por pesquisadores que discordavam entre si.",
+      x: "Uma das transcrições terminava com uma frase que não aparecia no áudio correspondente: “Vocês já fizeram essa pergunta antes.”" },
+    { code: "EXP. TZ-041", name: "Projeto Espelho", area: "Correspondência entre sujeitos e fenômenos anômalos", status: "ENCERRADO",
+      o: "Determinar se pessoas expostas ao mesmo fenômeno anômalo apresentavam padrões de comportamento correlacionados, mesmo quando mantidas em instalações distintas.",
+      p: "Dois grupos eram monitorados separadamente por equipes diferentes. Os pesquisadores comparavam os horários de respostas fisiológicas, os relatos dos participantes e as imagens das câmeras. Nenhum dos grupos recebia informações sobre o outro.",
+      r: "Em uma sequência de sessões, indivíduos de instalações diferentes fizeram desenhos semelhantes de uma estrutura que nenhum deles reconheceu em fotografias de referência. A equipe não conseguiu explicar a correspondência, e os registros disponíveis não excluíam a possibilidade de contaminação dos dados.",
+      d: "A instalação foi fechada, e os participantes foram transferidos sem que o relatório final identificasse seus destinos. O projeto passou a constar como encerrado, embora existam referências posteriores a ele em documentos de outras operações.",
+      x: "No inventário final, havia uma observação manuscrita: “Não sabemos se estamos observando o fenômeno ou se o fenômeno está observando os sujeitos.”" }
+  ];
+
+  var expCur = 0;
+  var expOpen = {};
+
+  function declCount() {
+    var n = 0;
+    Object.keys(expOpen).forEach(function (k) { if (expOpen[k]) n++; });
+    $("declCount").textContent = n;
+  }
+
+  function expList() {
+    $("expList").innerHTML = EXP.map(function (e, i) {
+      return '<button type="button" class="exp-item' + (i === expCur ? " active" : "") + '" data-e="' + i + '">' +
+        '<small>' + e.code + '</small><strong>' + e.name + '</strong><span>' + e.area + '</span></button>';
+    }).join("");
+    document.querySelectorAll(".exp-item").forEach(function (b) {
+      b.addEventListener("click", function () { expShow(Number(b.dataset.e)); });
+    });
+    document.querySelectorAll(".conn .cn").forEach(function (g) {
+      g.classList.toggle("on", Number(g.dataset.n) === expCur);
+    });
+    document.querySelectorAll(".conn .cl path").forEach(function (p) {
+      p.classList.toggle("on", Number(p.dataset.l) === expCur);
+    });
+  }
+
+  function expShow(i) {
+    expCur = i;
+    expList();
+    var e = EXP[i];
+    var h = '<div class="exp-file">' +
+      '<div class="exp-top"><div><div class="exp-code">' + e.code + '</div><div class="exp-name">' + e.name + '</div><div class="exp-area">' + e.area + '</div></div>' +
+      '<div class="exp-stamp">' + e.status + '</div></div>' +
+      '<div class="xsec" style="animation-delay:.05s"><h5>OBJETIVO</h5><p>' + e.o + '</p></div>' +
+      '<div class="xsec" style="animation-delay:.12s"><h5>PROCEDIMENTO</h5><p>' + e.p + '</p></div>' +
+      '<div class="xsec" style="animation-delay:.19s"><h5>RESULTADO</h5><p>' + e.r + '</p></div>' +
+      '<div class="xsec" style="animation-delay:.26s"><h5>DESFECHO</h5><p>' + e.d + '</p></div>';
+    if (e.x) {
+      h += '<div class="xdetail"><h5>DETALHE INQUIETANTE</h5>' +
+        (expOpen[i]
+          ? '<p>' + e.x + '</p>'
+          : '<div class="xbar"></div><button type="button" class="xbtn" data-decl="' + i + '">DECLASSIFICAR</button>') +
+        '</div>';
+    } else {
+      h += '<div class="xdetail"><h5>DETALHE INQUIETANTE</h5><span class="xnone">NENHUM DETALHE ADICIONAL REGISTRADO NESTE ARQUIVO.</span></div>';
+    }
+    h += '</div>';
+    $("expView").innerHTML = h;
+    var b = document.querySelector("[data-decl]");
+    if (b) b.addEventListener("click", function () { expOpen[i] = true; declCount(); expShow(i); });
+  }
+
+  document.querySelectorAll(".conn .cn").forEach(function (g) {
+    g.addEventListener("click", function () {
+      expShow(Number(g.dataset.n));
+      $("expView").scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "center" });
+    });
+  });
+
+  expShow(0);
+
+  orgShow("zero");
+})();
+</script>
+</body>
+</html>
