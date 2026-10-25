@@ -835,6 +835,72 @@ table.data td.hl { color: var(--term); font-family: var(--mono); font-size: 12px
 
 @media (max-width: 860px) { .exp-layout { grid-template-columns: 1fr; } .exp-list { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 760px) { .mcards { grid-template-columns: 1fr; } .mhead { grid-template-columns: 96px minmax(0, 1fr); gap: 14px; } .mono-box b { font-size: 46px; } .exp-list { grid-template-columns: 1fr; } .switch { display: flex; } .switch button { flex: 1; padding: 12px 8px; } }
+
+.hero-zero { position: absolute; right: 36px; bottom: -26px; color: rgba(215, 90, 99, .07); font-family: var(--mono); font-size: 230px; font-weight: bold; line-height: 1; pointer-events: none; user-select: none; }
+.hero-description { position: relative; z-index: 1; }
+.meta-value.red { color: var(--red-light); }
+
+.note { margin: 14px 0 0; padding: 13px 15px; background: var(--black); border: 1px solid #303039; border-left: 3px solid #633238; color: var(--muted); font-size: 12.5px; line-height: 1.85; }
+table.data thead th { width: auto; color: var(--red-light); letter-spacing: 1.2px; }
+table.vs th:first-child { width: 22%; }
+.stats.four { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.mcards { grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); }
+.mcard { display: flex; flex-direction: column; justify-content: flex-start; }
+.bars + .xlink { margin-top: 14px; }
+
+.bars { display: grid; gap: 10px; margin: 6px 0 0; }
+.bar { display: grid; grid-template-columns: 170px minmax(0, 1fr) 46px; align-items: center; gap: 12px; }
+.bar span { color: var(--muted); font-family: var(--mono); font-size: 10px; letter-spacing: .5px; }
+.bar b { color: #d7d9df; font-family: var(--mono); font-size: 11px; font-weight: normal; text-align: right; }
+.track { height: 8px; overflow: hidden; background: #0c0d11; border: 1px solid #262a33; }
+.track i { display: block; width: 0; height: 100%; background: linear-gradient(90deg, #6d2229, var(--red-light)); transition: width .9s cubic-bezier(.2,.8,.2,1); }
+.track i.low { background: linear-gradient(90deg, #2b3a30, var(--green)); }
+
+.letters { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin: 8px 0 0; }
+.letter { padding: 16px 10px 14px; background: var(--panel-dark); border: 1px solid var(--border); cursor: pointer; text-align: center; transition: border-color .2s ease, background .2s ease, transform .2s ease; }
+.letter:hover { transform: translateY(-2px); border-color: #634047; }
+.letter.active { border-color: var(--red); background: #1d171b; }
+.letter b { display: block; color: var(--red-light); font-family: var(--mono); font-size: 36px; font-weight: bold; line-height: 1.1; }
+.letter span { display: block; margin-top: 6px; color: var(--muted); font-family: var(--mono); font-size: 9px; letter-spacing: 1.2px; }
+
+.acc { display: grid; gap: 8px; margin: 12px 0; }
+details.item { background: var(--panel); border: 1px solid var(--border); transition: border-color .2s ease; }
+details.item[open] { border-color: #5b3a40; }
+details.item summary { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 15px 18px; cursor: pointer; list-style: none; transition: background .2s ease; }
+details.item summary::-webkit-details-marker { display: none; }
+details.item summary:hover { background: #1d2028; }
+details.item summary::after { content: "+"; color: var(--red-light); font-family: var(--mono); font-size: 18px; }
+details.item[open] summary::after { content: "−"; }
+details.item[open] summary { border-bottom: 1px solid var(--border); }
+details.item summary:focus-visible { outline: 2px solid var(--red-light); outline-offset: 3px; }
+.it-code { display: block; color: var(--subtle); font-family: var(--mono); font-size: 9px; letter-spacing: 1px; }
+.it-name { font-size: 14px; font-weight: 600; }
+.it-body { padding: 16px 18px; }
+.it-body p { margin: 0 0 10px; }
+
+.fchips { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 10px; }
+.fchip { padding: 8px 13px; background: transparent; border: 1px solid var(--border); color: var(--muted); cursor: pointer; font-family: var(--mono); font-size: 10px; letter-spacing: 1px; transition: .2s ease; }
+.fchip:hover { border-color: #634047; color: #fff; }
+.fchip.active { background: var(--red-bg); border-color: #8d4147; color: #fff; }
+.tl-type { margin-left: 8px; color: var(--subtle); font-size: 9px; letter-spacing: 1px; }
+.timeline li.t-pessoa::before { border-color: #6aa7d8; }
+.timeline li.t-sistema::before { border-color: var(--green); }
+.timeline li.t-evento::before { border-color: var(--red-light); }
+.timeline li.hot::before { background: var(--red-light); border-color: var(--red-light); }
+.timeline li[hidden] { display: none; }
+
+@media (max-width: 860px) {
+  .stats.four { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 760px) {
+  .stats.four { grid-template-columns: 1fr; }
+  .hero-zero { font-size: 150px; right: 14px; }
+  .bar { grid-template-columns: 1fr 44px; gap: 6px 10px; }
+  .bar span { grid-column: 1 / -1; }
+  .bar .track { grid-column: 1; }
+  .letters { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
 </style>
 </head>
 
@@ -883,6 +949,7 @@ table.data td.hl { color: var(--term); font-family: var(--mono); font-size: 12px
     <div class="content">
 
       <section class="hero">
+        <div class="hero-zero" aria-hidden="true">0</div>
         <div class="stamp">NÍVEL 4</div>
         <div class="hero-topline"><span>■</span>ARQUIVO DE ENTIDADE // CÉLULA CLANDESTINA</div>
         <h1>Team Zero</h1>
@@ -897,6 +964,7 @@ table.data td.hl { color: var(--term); font-family: var(--mono); font-size: 12px
           <div class="meta-item"><span class="meta-label">CLASSIFICAÇÃO</span><span class="meta-value">NÍVEL 4</span></div>
           <div class="meta-item"><span class="meta-label">VÍNCULO</span><span class="meta-value">CARTEL SKY SELENE</span></div>
           <div class="meta-item"><span class="meta-label">DADOS</span><span class="meta-value" id="metaData">CRIPTOGRAFADOS</span></div>
+          <div class="meta-item"><span class="meta-label">AMEAÇA</span><span class="meta-value red">CRÍTICA</span></div>
         </div>
       </section>
 
@@ -1000,10 +1068,11 @@ table.data td.hl { color: var(--term); font-family: var(--mono); font-size: 12px
             <button class="tab" type="button" role="tab" data-tab="estr" aria-selected="false">2 · ESTRUTURA</button>
             <button class="tab" type="button" role="tab" data-tab="zr" aria-selected="false">3 · ZERO-R</button>
             <button class="tab" type="button" role="tab" data-tab="zh" aria-selected="false">4 · ZERO-HELE</button>
-            <button class="tab" type="button" role="tab" data-tab="cove" aria-selected="false">5 · C.O.V.E.</button>
-            <button class="tab" type="button" role="tab" data-tab="exp" aria-selected="false">6 · EXPERIMENTOS E PESQUISAS</button>
-            <button class="tab" type="button" role="tab" data-tab="atua" aria-selected="false">7 · ATUAÇÃO</button>
-            <button class="tab" type="button" role="tab" data-tab="vinc" aria-selected="false">8 · VÍNCULOS</button>
+            <button class="tab" type="button" role="tab" data-tab="epig" aria-selected="false">5 · EPIGMÊNIO</button>
+            <button class="tab" type="button" role="tab" data-tab="cove" aria-selected="false">6 · C.O.V.E.</button>
+            <button class="tab" type="button" role="tab" data-tab="exp" aria-selected="false">7 · EXPERIMENTOS E PESQUISAS</button>
+            <button class="tab" type="button" role="tab" data-tab="atua" aria-selected="false">8 · ATUAÇÃO</button>
+            <button class="tab" type="button" role="tab" data-tab="vinc" aria-selected="false">9 · VÍNCULOS</button>
             <button class="tab" type="button" role="tab" data-tab="cron" aria-selected="false">CRONOLOGIA</button>
             <button class="tab" type="button" role="tab" data-tab="lac" aria-selected="false">LACUNAS</button>
           </div>
@@ -1014,10 +1083,11 @@ table.data td.hl { color: var(--term); font-family: var(--mono); font-size: 12px
               <h3>1. Team Zero</h3>
               <div class="sub">CÉLULA CLANDESTINA LIGADA AO CARTEL SKY SELENE</div>
 
-              <div class="stats">
+              <div class="stats four">
                 <div class="stat"><b data-count="2">0</b><span>MEMBROS HUMANOS<br>DOCUMENTADOS</span></div>
                 <div class="stat"><b data-count="1">0</b><span>PLATAFORMA TÁTICA E BÉLICA<br>C.O.V.E.</span></div>
                 <div class="stat"><b data-count="15" data-suffix=" anos">0</b><span>DESDE OS RECRUTAMENTOS<br>DOCUMENTADOS (2011)</span></div>
+                <div class="stat"><b data-count="4">0</b><span>ÁREAS DE ATUAÇÃO<br>CONHECIDAS</span></div>
               </div>
 
               <div class="hint">CLIQUE EM UM CARD PARA ABRIR O DOSSIÊ</div>
@@ -1030,6 +1100,10 @@ table.data td.hl { color: var(--term); font-family: var(--mono); font-size: 12px
                   <div class="mglyph">H</div>
                   <div class="mbody"><small>ZERO-HELE</small><strong>Zero-Helec'talizing</strong><span>Helena Friedrick Klaus · principal especialista científica da Team Zero.</span><em>ABRIR DOSSIÊ ↗</em></div>
                 </button>
+                <button class="mcard" type="button" data-go="epig">
+                  <div class="mglyph">E</div>
+                  <div class="mbody"><small>COMANDO ORIGINAL</small><strong>Epigmênio Selene Escadria</strong><span>Autoridade original sobre a Team Zero · alta administração do Cartel Sky Selene.</span><em>ABRIR DOSSIÊ ↗</em></div>
+                </button>
                 <button class="mcard" type="button" data-go="cove">
                   <div class="mglyph">C</div>
                   <div class="mbody"><small>SISTEMA</small><strong>C.O.V.E.</strong><span>Comando Operacional Veicular Experimental · plataforma de suporte tático, inteligência e combate.</span><em>ABRIR DOSSIÊ ↗</em></div>
@@ -1039,6 +1113,7 @@ table.data td.hl { color: var(--term); font-family: var(--mono); font-size: 12px
               <p>A Team Zero surgiu a partir de uma célula clandestina ligada ao Cartel Sky Selene. Diferentemente da Selene Foundation, sua existência sempre foi secreta. O grupo foi criado para operações especiais, coleta de informações, pesquisa de fenômenos anômalos e desenvolvimento de tecnologia experimental.</p>
               <p>Com o tempo, a Team Zero adquiriu autonomia operacional e passou a agir de forma parcialmente independente do cartel, tornando-se uma das estruturas mais perigosas associadas ao legado de Epigmênio Selene.</p>
               <p>No desenho do império Selene, a Fundação e a Team Zero representam os dois lados da mesma estrutura: o público e o clandestino. A Fundação atraía pesquisadores, médicos, engenheiros e cientistas; a Team Zero reunia o trabalho que não podia aparecer.</p>
+              <p>Os dois integrantes humanos documentados foram recrutados em 2011, aos 16 e aos 17 anos, e ambos eram órfãos. O setor considera esse perfil, jovens superdotados em ruptura familiar, o padrão de recrutamento do grupo.</p>
 
               <h4>FICHA RESUMIDA</h4>
               <table class="data">
@@ -1090,6 +1165,10 @@ table.data td.hl { color: var(--term); font-family: var(--mono); font-size: 12px
                     <strong>C.O.V.E.</strong><small>Plataforma tática e bélica</small>
                   </button>
                 </div>
+                <div class="org-link"></div>
+                <button class="org-node dashed" type="button" data-org="sup">
+                  <strong>CÉLULAS DE APOIO</strong><small>Composição desconhecida</small>
+                </button>
               </div>
 
               <div class="org-detail" id="orgDetail" aria-live="polite"></div>
@@ -1105,6 +1184,17 @@ table.data td.hl { color: var(--term); font-family: var(--mono); font-size: 12px
               <h4>RELAÇÃO COM O CARTEL E COM A FUNDAÇÃO</h4>
               <p>A Selene Foundation e a Team Zero formam os braços influentes do império Selene. A Fundação, criada em 1999 por Isadora Selene Fontes com o financiamento de Epigmênio, tinha parte de sua estrutura usada para ocultar recursos e financiar pesquisas sigilosas. A Team Zero é o lado em que esse trabalho sigiloso acontece de fato, sem exposição pública.</p>
               <p>Com a autonomia operacional adquirida ao longo dos anos, a célula deixou de ser apenas uma extensão do cartel e passou a funcionar com liberdade própria em parte de suas operações.</p>
+
+              <h4>FUNDAÇÃO × TEAM ZERO</h4>
+              <table class="data vs">
+                <thead><tr><th></th><th>SELENE FOUNDATION</th><th>TEAM ZERO</th></tr></thead>
+                <tr><th>Criação</th><td>1999, por Isadora Selene Fontes, com financiamento de Epigmênio</td><td>A partir de uma célula clandestina do cartel; data desconhecida</td></tr>
+                <tr><th>Existência</th><td>Pública e respeitada em círculos acadêmicos</td><td>Sempre secreta</td></tr>
+                <tr><th>Imagem</th><td>Ciências humanitárias, pesquisa científica e tecnologia, sem recursos públicos</td><td>Nenhuma imagem pública</td></tr>
+                <tr><th>Função real</th><td>Parte da estrutura usada para ocultar recursos e financiar pesquisas sigilosas</td><td>Operações especiais, informações, fenômenos anômalos e tecnologia experimental</td></tr>
+                <tr><th>Pessoal</th><td>Pesquisadores, médicos, engenheiros e cientistas</td><td>Integrantes recrutados jovens e órfãos</td></tr>
+                <tr><th>Controle</th><td>Administração ligada a Epigmênio</td><td>Autonomia operacional parcial</td></tr>
+              </table>
 
               <div class="status-line">STATUS ATUAL: CÉLULA ATIVA, COM AUTONOMIA PARCIAL EM RELAÇÃO AO CARTEL.</div>
             </div>
@@ -1129,6 +1219,9 @@ table.data td.hl { color: var(--term); font-family: var(--mono); font-size: 12px
               <p>Juan é considerado um indivíduo superdotado, possuindo grande capacidade analítica, raciocínio estratégico avançado e facilidade para operações de campo. Apresenta também um grau leve de sociopatia, característica que influencia sua dificuldade em estabelecer vínculos emocionais profundos e sua postura fria durante missões.</p>
               <p>Dentro da Team Zero, Zero-R atua principalmente como coordenador operacional, estrategista e responsável por missões externas.</p>
 
+              <h4>ESTILO OPERACIONAL (AVALIAÇÃO DO SETOR)</h4>
+              <p>Metódico e frio durante as missões, prefere planos verificáveis e resultados mensuráveis. A dificuldade em criar vínculos o torna pouco suscetível a pressão emocional e difícil de persuadir ou comprar.</p>
+
               <h4>CARACTERÍSTICAS</h4>
               <div class="hint">CLIQUE EM UMA CARACTERÍSTICA</div>
               <div class="chips" data-chips="zr">
@@ -1149,10 +1242,15 @@ table.data td.hl { color: var(--term); font-family: var(--mono); font-size: 12px
                 <tr><th>Idade ao ser recrutado</th><td>17 anos</td></tr>
                 <tr><th>Situação familiar</th><td>Acabara de perder os pais</td></tr>
                 <tr><th>Função</th><td>Coordenador operacional, estrategista e responsável por missões externas</td></tr>
+                <tr><th>Nascimento</th><td>1994</td></tr>
                 <tr><th>Idade estimada em 2026</th><td>Cerca de 32 anos (estimativa a partir do recrutamento)</td></tr>
                 <tr><th>Aparência</th><td>Não documentada</td></tr>
                 <tr><th>Paradeiro</th><td>Não documentado</td></tr>
+                <tr><th>Situação</th><td>Em atividade</td></tr>
               </table>
+
+              <h4>AVALIAÇÃO DO SETOR</h4>
+              <div class="bars" data-bars="zr"></div>
               <a class="xlink" href="individuos.html#ind-004-b">ABRIR REGISTRO DE EPIGMÊNIO ↗</a>
             </div>
           </div>
@@ -1175,6 +1273,9 @@ table.data td.hl { color: var(--term); font-family: var(--mono); font-size: 12px
               <p>Zero-Helec'talizing, conhecida como Zero-Hele, é o codinome de Helena Friedrick Klaus. Ela foi recrutada por Epigmênio Selene em 2011, aos 16 anos de idade.</p>
               <p>Assim como Juan, Helena também é órfã. Dotada de inteligência extraordinária, possui um QI extremamente elevado, frequentemente comparado ao de Isadora Selene Fontes. Seu talento científico precoce levou Epigmênio a incorporá-la aos projetos tecnológicos mais sigilosos do cartel.</p>
               <p>Helena tornou-se a principal especialista científica da Team Zero, responsável por engenharia avançada, inteligência artificial, sistemas operacionais experimentais e tecnologias de suporte militar.</p>
+
+              <h4>O LEGADO DE ISADORA</h4>
+              <p>Ao reprogramar o C.O.V.E., Helena assumiu na prática a herança técnica de Isadora, comparável a ela em capacidade intelectual. O setor considera esse ponto central para entender a Team Zero: o grupo se apoia em uma criação cuja autora foi morta pelo próprio comando.</p>
 
               <h4>CARACTERÍSTICAS</h4>
               <div class="hint">CLIQUE EM UMA CARACTERÍSTICA</div>
@@ -1199,18 +1300,63 @@ table.data td.hl { color: var(--term); font-family: var(--mono); font-size: 12px
                 <tr><th>Função</th><td>Principal especialista científica da Team Zero</td></tr>
                 <tr><th>Responsabilidades</th><td>Engenharia avançada, inteligência artificial, sistemas operacionais experimentais e tecnologias de suporte militar</td></tr>
                 <tr><th>Obra registrada</th><td>Reprogramação do C.O.V.E.</td></tr>
+                <tr><th>Nascimento</th><td>1995</td></tr>
                 <tr><th>Idade estimada em 2026</th><td>Cerca de 31 anos (estimativa a partir do recrutamento)</td></tr>
                 <tr><th>Aparência</th><td>Não documentada</td></tr>
                 <tr><th>Paradeiro</th><td>Não documentado</td></tr>
+                <tr><th>Situação</th><td>Em atividade</td></tr>
               </table>
+
+              <h4>AVALIAÇÃO DO SETOR</h4>
+              <div class="bars" data-bars="zh"></div>
               <a class="xlink" href="individuos.html#ind-004-a">ABRIR REGISTRO DE ISADORA ↗</a>
             </div>
           </div>
 
-          <!-- 5 · C.O.V.E. -->
+          <!-- 5 · EPIGMÊNIO -->
+          <div class="tab-panel" id="tab-epig" role="tabpanel" hidden>
+            <div class="block">
+              <h3>5. Epigmênio Selene Escadria</h3>
+              <div class="sub">COMANDO ORIGINAL · CARTEL SKY SELENE</div>
+
+              <div class="mhead">
+                <div class="mono-box"><b>E</b></div>
+                <div>
+                  <div class="mcode">COMANDO ORIGINAL · IND-004-B</div>
+                  <div class="mname">Epigmênio Selene Escadria</div>
+                  <div class="mreal">IDENTIDADE ALTERNATIVA: EMÍLIO P. NEGREÊS</div>
+                </div>
+              </div>
+
+              <h4>PERFIL</h4>
+              <p>Associado à alta administração do Cartel Sky Selene, é conhecido por sua atuação discreta, capacidade estratégica e interesse por pesquisas tecnológicas de caráter experimental. Utiliza a identidade de <span class="redacted" tabindex="0">Emílio P. Negreês</span> em determinadas operações, mantendo registros e contatos separados.</p>
+
+              <h4>PAPEL NA TEAM ZERO</h4>
+              <p>De personalidade calculista e reservada, delega tarefas a intermediários e mantém contato apenas com pessoas consideradas úteis. Trata relações profissionais como vínculos estratégicos e informações pessoais como recursos sob controle. A Team Zero reproduz esse modo de operar: compartimentada, discreta e orientada a resultados mensuráveis.</p>
+
+              <h4>REGISTRO</h4>
+              <table class="data">
+                <tr><th>Nome completo</th><td>Epigmênio Selene Escadria</td></tr>
+                <tr><th>Identidade alternativa</th><td>Emílio P. Negreês</td></tr>
+                <tr><th>Nacionalidade</th><td>Mexicana</td></tr>
+                <tr><th>Posição</th><td>Alta administração do Cartel Sky Selene</td></tr>
+                <tr><th>Situação legal</th><td><span class="redacted" tabindex="0">Procurado pela CIA e pelo FBI desde 2008</span></td></tr>
+                <tr><th>Relação com a Team Zero</th><td>Comando original; recrutou Zero-Hele em 2011</td></tr>
+                <tr><th>Relação com a Fundação</th><td>Financiou a criação da Selene Foundation, em 1999</td></tr>
+                <tr><th>Familiares</th><td>Isadora Selene Fontes (esposa, falecida em 2023) e Jade Selene Escadria (filha)</td></tr>
+                <tr><th>Paradeiro</th><td>Desconhecido</td></tr>
+              </table>
+
+              <h4>AVALIAÇÃO DO SETOR</h4>
+              <div class="bars" data-bars="epig"></div>
+              <a class="xlink" href="individuos.html#ind-004-b">ABRIR REGISTRO CIVIL E ANTECEDENTES ↗</a>
+            </div>
+          </div>
+
+          <!-- 6 · C.O.V.E. -->
           <div class="tab-panel" id="tab-cove" role="tabpanel" hidden>
             <div class="block">
-              <h3>5. C.O.V.E.</h3>
+              <h3>6. C.O.V.E.</h3>
               <div class="sub">COMANDO OPERACIONAL VEICULAR EXPERIMENTAL</div>
 
               <div class="mhead">
@@ -1224,6 +1370,10 @@ table.data td.hl { color: var(--term); font-family: var(--mono); font-size: 12px
 
               <p>C.O.V.E. é a sigla para Comando Operacional Veicular Experimental. Trata-se de um sistema operacional versátil criado originalmente por Isadora Selene Fontes em sua primeira versão.</p>
 
+              <div class="hint">CLIQUE EM UMA LETRA PARA VER O SIGNIFICADO</div>
+              <div class="letters" id="letters"></div>
+              <div class="org-detail" id="letterDetail" aria-live="polite"></div>
+
               <h4>DUAS VERSÕES</h4>
               <div class="hint">ALTERNE ENTRE AS VERSÕES</div>
               <div class="switch" role="tablist" aria-label="Versões do C.O.V.E.">
@@ -1232,12 +1382,15 @@ table.data td.hl { color: var(--term); font-family: var(--mono); font-size: 12px
               </div>
 
               <div class="cv-panel" id="cv-orig">
-                <p>O projeto foi concebido como um robô de proteção pessoal destinado a defender sua filha, Jade Selene, funcionando inicialmente como um sistema de assistência e segurança.</p>
+                <p>O projeto foi concebido como um robô de proteção pessoal destinado a defender sua filha, Jade Selene, funcionando inicialmente como um sistema de assistência e segurança. Era um projeto íntimo de Isadora, desenvolvido à parte dos interesses do marido.</p>
                 <table class="data">
                   <tr><th>Criadora</th><td>Isadora Selene Fontes</td></tr>
                   <tr><th>Finalidade</th><td>Proteger Jade Selene</td></tr>
                   <tr><th>Função</th><td>Sistema de assistência e segurança</td></tr>
+                  <tr><th>Responde a</th><td>Isadora e Jade</td></tr>
                 </table>
+                <h4>NÍVEIS ESTIMADOS</h4>
+                <div class="bars" data-bars="v1"></div>
               </div>
 
               <div class="cv-panel" id="cv-atual" hidden>
@@ -1257,17 +1410,21 @@ table.data td.hl { color: var(--term); font-family: var(--mono); font-size: 12px
                   <tr><th>Controle atual</th><td>Cartel Sky Selene, por meio da Team Zero</td></tr>
                   <tr><th>Classificação</th><td>Plataforma operacional de suporte tático, inteligência e combate</td></tr>
                 </table>
+                <h4>NÍVEIS ESTIMADOS</h4>
+                <div class="bars" data-bars="v2"></div>
               </div>
 
-              <div class="status-line">A TRANSFORMAÇÃO DO C.O.V.E. SIMBOLIZA A CORRUPÇÃO DO LEGADO CIENTÍFICO DE ISADORA: UMA CRIAÇÃO CONCEBIDA PARA PROTEGER JADE ACABOU CONVERTIDA EM INSTRUMENTO DE PODER DO PRÓPRIO IMPÉRIO QUE DESTRUIU SUA FAMÍLIA.</div>
+              <div class="note">Os níveis acima são estimativas do setor K.A-114 a partir de relatórios e não medições diretas.</div>
+
+              <div class="status-line">NOTA DO SETOR: SISTEMA ORIGINALMENTE DESTINADO À PROTEÇÃO PESSOAL DE JADE. CONFISCADO EM 2023 E REPROGRAMADO PARA USO OPERACIONAL DA TEAM ZERO. DEVE SER TRATADO COMO ATIVO DA CÉLULA, E NÃO MAIS COMO SISTEMA DE PROTEÇÃO. CONFIGURAÇÃO FÍSICA, ARMAMENTO E LOCALIZAÇÃO ATUAL NÃO CONFIRMADOS.</div>
               <a class="xlink" href="individuos.html#ind-004">ABRIR REGISTRO DE JADE ↗</a>
             </div>
           </div>
 
-          <!-- 6 · EXPERIMENTOS E PESQUISAS -->
+          <!-- 7 · EXPERIMENTOS E PESQUISAS -->
           <div class="tab-panel" id="tab-exp" role="tabpanel" hidden>
             <div class="block">
-              <h3>6. Experimentos e Pesquisas</h3>
+              <h3>7. Experimentos e Pesquisas</h3>
               <div class="sub">ARQUIVO K.A-114 — EXPERIMENTOS HUMANOS</div>
 
               <p>A Team Zero não era só uma equipe de operações especiais: ela também lidava com pesquisas anômalas, tecnologia experimental e experimentos humanos. Os quatro projetos abaixo constam nos arquivos da célula, cada um com objetivo, procedimento, resultado e desfecho.</p>
@@ -1313,17 +1470,25 @@ table.data td.hl { color: var(--term); font-family: var(--mono); font-size: 12px
             </div>
           </div>
 
-          <!-- 6 · ATUAÇÃO -->
+          <!-- 8 · ATUAÇÃO -->
           <div class="tab-panel" id="tab-atua" role="tabpanel" hidden>
             <div class="block">
-              <h3>7. Atuação e capacidades</h3>
+              <h3>8. Atuação e capacidades</h3>
               <div class="sub">O QUE A TEAM ZERO FAZ, SEGUNDO OS REGISTROS</div>
 
+              <div class="hint">QUATRO FRENTES CONHECIDAS · CLIQUE PARA ABRIR</div>
+              <div class="acc">
+                <details class="item"><summary><span><span class="it-code">FRENTE 01</span><span class="it-name">Operações especiais</span></span></summary>
+                  <div class="it-body"><p>Missões de alta sensibilidade executadas fora da estrutura pública do cartel. O planejamento e a coordenação ficam a cargo de Zero-R; o apoio tecnológico, do C.O.V.E.</p><ul><li>Planejamento e coordenação conduzidos por Zero-R, que também responde pelas missões externas.</li><li>Separação rígida entre os canais da Team Zero e os da Selene Foundation.</li><li>Uso recorrente do C.O.V.E. para vigilância, análise de dados e assistência em campo.</li><li>A necessidade de pessoal além dos integrantes conhecidos indica a existência de células de apoio.</li></ul></div></details>
+                <details class="item"><summary><span><span class="it-code">FRENTE 02</span><span class="it-name">Coleta de informações</span></span></summary>
+                  <div class="it-body"><p>Aquisição de informações sigilosas e manutenção de arquivos privados, uma herança do estilo de Epigmênio, que mantém dossiês sobre indivíduos e organizações de interesse.</p><ul><li>Coleta e análise comportamental sobre pessoas e organizações consideradas úteis ou ameaçadoras.</li><li>Métodos de vigilância e controle operacional desenvolvidos sob o comando de Epigmênio.</li><li>Compartimentação: cada informação é acessada apenas por quem precisa dela.</li><li>O C.O.V.E. cruza dados e organiza o material produzido em campo.</li></ul></div></details>
+                <details class="item"><summary><span><span class="it-code">FRENTE 03</span><span class="it-name">Pesquisa de fenômenos anômalos</span></span></summary>
+                  <div class="it-body"><p>Estudo de eventos que escapam à explicação científica convencional, um dos motivos de a Team Zero ser considerada diferente de um braço criminoso comum.</p><ul><li>O setor K.A-114 não descarta interesse da Team Zero em fenômenos documentados pela BASE-51, como a ESTRELA-06 e o K.A 114. Não há comprovação.</li><li>Epigmênio demonstra interesse antigo por pesquisas tecnológicas de caráter experimental.</li><li>Os resultados dessa frente não são conhecidos.</li></ul></div></details>
+                <details class="item"><summary><span><span class="it-code">FRENTE 04</span><span class="it-name">Tecnologia experimental</span></span></summary>
+                  <div class="it-body"><p>Engenharia avançada, inteligência artificial, sistemas operacionais experimentais e tecnologias de suporte militar, sob responsabilidade de Zero-Hele.</p><ul><li>Zero-Hele é a principal especialista científica do grupo.</li><li>O C.O.V.E. é o principal produto conhecido dessa frente.</li><li>Parte do trabalho reaproveita projetos confiscados da Selene Foundation, como o próprio C.O.V.E.</li><li>Não há registro público de laboratórios ou instalações.</li></ul></div></details>
+              </div>
+
               <ul>
-                <li><strong>Operações especiais:</strong> missões conduzidas por Zero-R, fora da estrutura da célula.</li>
-                <li><strong>Coleta de informações:</strong> reunião de dados sobre pessoas, organizações e eventos de interesse.</li>
-                <li><strong>Pesquisa de fenômenos anômalos:</strong> estudo de ocorrências que escapam à explicação convencional.</li>
-                <li><strong>Tecnologia experimental:</strong> engenharia avançada, inteligência artificial e sistemas operacionais experimentais, sob Zero-Hele.</li>
                 <li><strong>Atentados e desenvolvimento bélico:</strong> a Team Zero é apontada como braço responsável por atentados e pelo desenvolvimento bélico do cartel na América Latina.</li>
               </ul>
 
@@ -1346,19 +1511,22 @@ table.data td.hl { color: var(--term); font-family: var(--mono); font-size: 12px
             </div>
           </div>
 
-          <!-- 7 · VÍNCULOS -->
+          <!-- 9 · VÍNCULOS -->
           <div class="tab-panel" id="tab-vinc" role="tabpanel" hidden>
             <div class="block">
-              <h3>8. Vínculos</h3>
+              <h3>9. Vínculos</h3>
               <div class="sub">PESSOAS E ESTRUTURAS LIGADAS À TEAM ZERO</div>
 
               <ul>
+                <li><strong>Cartel Sky Selene:</strong> estrutura maior à qual a Team Zero está ligada, junto da Selene Foundation. <a href="individuos.html#fam-cartel">Abrir estrutura ↗</a></li>
                 <li><strong>Epigmênio Selene Escadria:</strong> líder supremo do Cartel Sky Selene e recrutador de Helena e Juan, em 2011. Também ordenou a reprogramação do C.O.V.E. <a href="individuos.html#ind-004-b">Abrir registro ↗</a></li>
                 <li><strong>Isadora Selene Fontes:</strong> criadora da primeira versão do C.O.V.E. e fundadora da Selene Foundation. Executada por Epigmênio em 2023. <a href="individuos.html#ind-004-a">Abrir registro ↗</a></li>
-                <li><strong>Jade Selene Escadria:</strong> filha de Epigmênio e Isadora, e destinatária original da proteção do C.O.V.E. Circula entre o cotidiano comum, o cartel e a tecnologia secreta da Team Zero. <a href="individuos.html#ind-004">Abrir registro ↗</a></li>
+                <li><strong>Jade Selene Escadria:</strong> filha de Epigmênio e Isadora, e destinatária original da proteção do C.O.V.E. Circula entre o cotidiano comum, o cartel e a tecnologia secreta da Team Zero. Após o assassinato da mãe, viveu sob a influência direta de Epigmênio, que a preparava para herdar parte da estrutura de poder da família. <a href="individuos.html#ind-004">Abrir registro ↗</a></li>
                 <li><strong>Selene Foundation:</strong> o lado público do império Selene, criada em 1999. <a href="individuos.html#fam-esc">Abrir quadro familiar ↗</a></li>
                 <li><strong>Tríade Estrela:</strong> o grupo de Daniiyel, Kin e João. Jade atua ao lado dele, sem integrá-lo. <a href="individuos.html#org-tri">Abrir registro ↗</a></li>
-                <li><strong>João Carlos Moderno Borges:</strong> persegue Epigmênio, o recrutador e a origem da cadeia da Team Zero. <a href="individuos.html#ind-003">Abrir registro ↗</a></li>
+                <li><strong>Daniiyel Starmorning Lindóia:</strong> portador da ESTRELA-06, monitorada pela BASE-51. Possível interesse da Team Zero, sem comprovação. <a href="individuos.html#ind-001">Abrir registro ↗</a></li>
+                <li><strong>Kin Atlas:</strong> designação K.A-114. Possível interesse da Team Zero em fenômenos anômalos, sem comprovação. <a href="individuos.html#ind-002">Abrir registro ↗</a></li>
+                <li><strong>João Carlos Moderno Borges:</strong> persegue Epigmênio, o recrutador e a origem da cadeia da Team Zero. Por isso, torna-se alvo potencial da célula. <a href="individuos.html#ind-003">Abrir registro ↗</a></li>
               </ul>
 
               <h4>PONTOS DE CONTATO</h4>
@@ -1376,16 +1544,27 @@ table.data td.hl { color: var(--term); font-family: var(--mono); font-size: 12px
             <div class="block">
               <h3>Cronologia reconstituída</h3>
               <div class="sub">DATAS ESTABELECIDAS PELO RELATÓRIO</div>
+
+              <div class="fchips" role="group" aria-label="Filtrar eventos">
+                <button class="fchip active" type="button" data-f="all">TODOS</button>
+                <button class="fchip" type="button" data-f="pessoa">PESSOAS</button>
+                <button class="fchip" type="button" data-f="sistema">SISTEMAS</button>
+                <button class="fchip" type="button" data-f="evento">EVENTOS</button>
+              </div>
+              <div class="hint" id="tlCount"></div>
+
               <ul class="timeline">
-                <li><div class="tl-date">1999</div><div class="tl-text">Isadora Selene Fontes cria a Selene Foundation, com o financiamento de Epigmênio. Publicamente, a fundação se dedica a ciências humanitárias.</div></li>
-                <li><div class="tl-date">2001</div><div class="tl-text">Início da atuação ativa do Cartel Sky Selene. Parte da estrutura da fundação passa a ocultar recursos e financiar pesquisas sigilosas.</div></li>
-                <li><div class="tl-date">SEM DATA</div><div class="tl-text">Surgimento da Team Zero, a partir de uma célula clandestina ligada ao cartel. A data de fundação não foi estabelecida, mas é anterior a 2011.</div></li>
-                <li class="hot"><div class="tl-date">2008</div><div class="tl-text">Agentes americanos são assassinados no México durante operações do cartel. Epigmênio passa a ser procurado pela CIA e pelo FBI.</div></li>
-                <li class="hot"><div class="tl-date">2011</div><div class="tl-text">Epigmênio recruta Helena Friedrick Klaus, aos 16 anos, e Juan Regland, aos 17, para a Team Zero.</div></li>
-                <li><div class="tl-date">SEM DATA</div><div class="tl-text">A Team Zero adquire autonomia operacional e passa a agir de forma parcialmente independente do cartel.</div></li>
-                <li class="hot"><div class="tl-date">2023</div><div class="tl-text">Isadora descobre a natureza do cartel, encerra seus projetos e planeja asilo em São Paulo com Jade. É executada por Epigmênio. O C.O.V.E. é confiscado pelo cartel.</div></li>
-                <li><div class="tl-date">SEM DATA</div><div class="tl-text">Helena reprograma o C.O.V.E. sob ordens de Epigmênio. O sistema passa a ser o principal suporte tecnológico e bélico da Team Zero.</div></li>
-                <li class="hot"><div class="tl-date">08/09/2026</div><div class="tl-text">Última aparição de Jade registrada, no setor portuário de Veracruz, México. <a href="tempo.html">Ver detalhes ↗</a></div></li>
+                <li class="t-evento" data-type="evento"><div class="tl-date">1999<span class="tl-type">EVENTO</span></div><div class="tl-text">Isadora Selene Fontes cria a Selene Foundation, com o financiamento de Epigmênio. Publicamente, a fundação se dedica a ciências humanitárias.</div></li>
+                <li class="t-evento" data-type="evento"><div class="tl-date">2001<span class="tl-type">EVENTO</span></div><div class="tl-text">Início da atuação ativa do Cartel Sky Selene. Parte da estrutura da fundação passa a ocultar recursos e financiar pesquisas sigilosas.</div></li>
+                <li class="t-sistema" data-type="sistema"><div class="tl-date">SEM DATA<span class="tl-type">SISTEMA</span></div><div class="tl-text">Isadora cria a primeira versão do C.O.V.E., um robô de proteção pessoal para defender a filha.</div></li>
+                <li class="t-evento" data-type="evento"><div class="tl-date">SEM DATA<span class="tl-type">EVENTO</span></div><div class="tl-text">Surgimento da Team Zero, a partir de uma célula clandestina ligada ao cartel. A data de fundação não foi estabelecida, mas é anterior a 2011.</div></li>
+                <li class="t-evento hot" data-type="evento"><div class="tl-date">2008<span class="tl-type">EVENTO</span></div><div class="tl-text">Agentes americanos são assassinados no México durante operações do cartel. Epigmênio passa a ser procurado pela CIA e pelo FBI.</div></li>
+                <li class="t-pessoa hot" data-type="pessoa"><div class="tl-date">2011<span class="tl-type">PESSOA</span></div><div class="tl-text">Epigmênio recruta Helena Friedrick Klaus, aos 16 anos, e Juan Regland, aos 17, para a Team Zero.</div></li>
+                <li class="t-evento" data-type="evento"><div class="tl-date">SEM DATA<span class="tl-type">EVENTO</span></div><div class="tl-text">A Team Zero adquire autonomia operacional e passa a agir de forma parcialmente independente do cartel.</div></li>
+                <li class="t-evento hot" data-type="evento"><div class="tl-date">2023<span class="tl-type">EVENTO</span></div><div class="tl-text">Isadora descobre a natureza do cartel, encerra seus projetos e planeja asilo em São Paulo com Jade. É executada por Epigmênio. O C.O.V.E. é confiscado pelo cartel.</div></li>
+                <li class="t-sistema" data-type="sistema"><div class="tl-date">SEM DATA<span class="tl-type">SISTEMA</span></div><div class="tl-text">Helena reprograma o C.O.V.E. sob ordens de Epigmênio. O sistema passa a ser o principal suporte tecnológico e bélico da Team Zero.</div></li>
+                <li class="t-evento" data-type="evento"><div class="tl-date">SEM DATA<span class="tl-type">EVENTO</span></div><div class="tl-text">Jade, longe do controle direto do pai, encontra Danii, Kin e João no Pará.</div></li>
+                <li class="t-pessoa hot" data-type="pessoa"><div class="tl-date">08/09/2026<span class="tl-type">PESSOA</span></div><div class="tl-text">Última aparição de Jade registrada, no setor portuário de Veracruz, México. <a href="tempo.html">Ver detalhes ↗</a></div></li>
               </ul>
             </div>
           </div>
@@ -1398,14 +1577,15 @@ table.data td.hl { color: var(--term); font-family: var(--mono); font-size: 12px
 
               <ul>
                 <li><strong>Fundação:</strong> a data de criação da Team Zero e o nome de quem a idealizou.</li>
-                <li><strong>Efetivo:</strong> se existem outros integrantes além de Zero-R e Zero-Hele.</li>
-                <li><strong>Base:</strong> o local onde a célula opera, pesquisa e abriga o C.O.V.E.</li>
-                <li><strong>Financiamento:</strong> qual parte dos recursos ocultos pela Fundação chegava à Team Zero.</li>
+                <li><strong>Efetivo:</strong> se existem outros integrantes além de Zero-R e Zero-Hele. A realização de missões externas sugere células de apoio, mas número e composição são desconhecidos.</li>
+                <li><strong>Base:</strong> o local onde a célula opera, pesquisa e abriga o C.O.V.E. Relatórios apenas sugerem estruturas separadas das da Selene Foundation.</li>
+                <li><strong>Financiamento:</strong> qual parte dos recursos ocultos pela Fundação chegava à Team Zero. Supõe-se que Epigmênio financie diretamente a organização, mas não há comprovação oficial.</li>
                 <li><strong>Operações:</strong> a lista de atentados e missões atribuídos à célula.</li>
                 <li><strong>Pesquisa de fenômenos anômalos:</strong> quais fenômenos foram estudados e com que resultado.</li>
-                <li><strong>C.O.V.E.:</strong> forma física, armamento e data exata da reprogramação.</li>
+                <li><strong>C.O.V.E.:</strong> forma física, armamento e data exata da reprogramação. Sabe-se apenas que atua em campo e em operações de inteligência.</li>
                 <li><strong>Membros:</strong> paradeiro atual de Juan e de Helena, e as circunstâncias da orfandade de ambos.</li>
                 <li><strong>Autonomia:</strong> até que ponto a célula ainda responde a Epigmênio.</li>
+                <li><strong>Futuro dos membros:</strong> o comportamento de Juan e de Helena caso o cartel enfraqueça. Ambos foram recrutados órfãos e jovens, e não há informação sobre vínculos fora do grupo.</li>
               </ul>
 
               <div class="status-line">DADOS PENDENTES DE VERIFICAÇÃO. ATUALIZAÇÃO CONFORME NOVOS MATERIAIS FOREM RECUPERADOS.</div>
@@ -1469,7 +1649,7 @@ table.data td.hl { color: var(--term); font-family: var(--mono); font-size: 12px
 
   /* ----- endereço: #zero-r, #zero-hele, #cove ----- */
 
-  var ROUTES = { "zero-r": "zr", "zero-hele": "zh", "cove": "cove", "estrutura": "estr", "cronologia": "cron", "experimentos": "exp", "pesquisas": "exp" };
+  var ROUTES = { "zero-r": "zr", "zero-hele": "zh", "cove": "cove", "estrutura": "estr", "cronologia": "cron", "experimentos": "exp", "pesquisas": "exp", "epigmenio": "epig", "origem": "visao", "integrantes": "zr", "relacoes": "vinc", "abertos": "lac" };
   var pending = null;
 
   function readHash() {
@@ -1654,6 +1834,7 @@ table.data td.hl { color: var(--term); font-family: var(--mono); font-size: 12px
     });
     if (key === "visao" || key === "exp") animateCounters();
     if (key === "estr") orgShow("zero");
+    if (key === "zr" || key === "zh" || key === "epig" || key === "cove") growBars($("tab-" + key));
   }
 
   tabs.forEach(function (t) {
@@ -1681,12 +1862,13 @@ table.data td.hl { color: var(--term); font-family: var(--mono); font-size: 12px
   /* ----- organograma ----- */
 
   var ORG = {
-    cartel: ["CARTEL SKY SELENE", "Organização internacional mexicana de narcotráfico e terrorismo, ativa desde 2001, associada a Epigmênio Selene Escadria. Expandiu-se pela América Espanhola e pela América Latina, formando uma rede de influência política, econômica e clandestina."],
+    cartel: ["CARTEL SKY SELENE", "Organização internacional mexicana de narcotráfico e terrorismo, ativa desde 2001, associada a Epigmênio Selene Escadria. Expandiu-se pela América Espanhola e pela América Latina, formando uma rede de influência política, econômica e clandestina. Epigmênio é a autoridade original sobre a Team Zero. Sua atuação é discreta: delega tarefas a intermediários e evita exposição."],
     fund: ["SELENE FOUNDATION", "Lado público do império Selene. Criada em 1999 por Isadora, com o financiamento de Epigmênio, apresentava-se como instituição de ciências humanitárias. Parte de sua estrutura passou a ocultar recursos e financiar pesquisas sigilosas."],
     zero: ["TEAM ZERO", "Lado clandestino do império Selene. Célula de existência sempre secreta, voltada a operações especiais, coleta de informações, pesquisa de fenômenos anômalos e tecnologia experimental. Age com autonomia parcial em relação ao cartel."],
-    zr: ["ZERO-R · ZERO-REG'OCANED", "Codinome de Juan Regland. Coordenador operacional, estrategista e responsável por missões externas. Recrutado em 2011, aos 17 anos."],
+    zr: ["ZERO-R · ZERO-REG'OCANED", "Codinome de Juan Regland. Coordenador operacional, estrategista e responsável por missões externas. É a ponta do grupo que entra em contato com o mundo exterior. Recrutado em 2011, aos 17 anos."],
     zh: ["ZERO-HELE · ZERO-HELEC'TALIZING", "Codinome de Helena Friedrick Klaus. Principal especialista científica: engenharia avançada, inteligência artificial, sistemas operacionais experimentais e tecnologias de suporte militar. Reprogramou o C.O.V.E."],
-    cove: ["C.O.V.E.", "Comando Operacional Veicular Experimental. Criado por Isadora para proteger Jade, foi confiscado e reprogramado por Helena sob ordens de Epigmênio. Hoje é plataforma de suporte tático, inteligência e combate, e o principal suporte tecnológico e bélico da Team Zero."]
+    cove: ["C.O.V.E.", "Comando Operacional Veicular Experimental. Criado por Isadora para proteger Jade, foi confiscado e reprogramado por Helena sob ordens de Epigmênio. Hoje é plataforma de suporte tático, inteligência e combate, e o principal suporte tecnológico e bélico da Team Zero."],
+    sup: ["CÉLULAS DE APOIO", "A existência de equipes de apoio é inferida a partir de missões que exigem mais pessoal do que os integrantes conhecidos. Número, composição e identidade são desconhecidos."]
   };
 
   function orgShow(key) {
@@ -1745,6 +1927,79 @@ table.data td.hl { color: var(--term); font-family: var(--mono); font-size: 12px
     chipShow(k, 0);
   });
 
+  /* ----- barras de avaliação ----- */
+
+  var BARS = {
+    zr: [["Capacidade analítica", 9], ["Raciocínio estratégico", 9], ["Operações de campo", 9], ["Vínculos emocionais", 2, true], ["Risco operacional", 8]],
+    zh: [["Inteligência", 10], ["Engenharia avançada", 10], ["Inteligência artificial", 9], ["Operações de campo", 3, true], ["Risco tecnológico", 9]],
+    epig: [["Capacidade estratégica", 9], ["Sigilo", 10], ["Controle sobre o grupo", 6], ["Exposição pública", 1, true]],
+    v1: [["Defesa", 55], ["Análise de dados", 25, true], ["Vigilância", 20, true], ["Coordenação de operações", 5, true], ["Assistência estratégica", 65]],
+    v2: [["Defesa", 95], ["Análise de dados", 90], ["Vigilância", 90], ["Coordenação de operações", 85], ["Assistência estratégica", 80]]
+  };
+
+  document.querySelectorAll("[data-bars]").forEach(function (box) {
+    var k = box.dataset.bars;
+    var pct = (k === "v1" || k === "v2");
+    box.innerHTML = BARS[k].map(function (b) {
+      return '<div class="bar"><span>' + b[0] + '</span><div class="track"><i data-w="' + (pct ? b[1] : b[1] * 10) + '"' + (b[2] ? ' class="low"' : "") + '></i></div><b>' + b[1] + (pct ? "%" : "/10") + '</b></div>';
+    }).join("");
+  });
+
+  function growBars(root) {
+    if (!root) return;
+    var els = root.querySelectorAll(".track i");
+    els.forEach(function (i) { i.style.width = "0"; });
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        els.forEach(function (i) { i.style.width = i.dataset.w + "%"; });
+      });
+    });
+  }
+
+  /* ----- C.O.V.E.: significado das letras ----- */
+
+  var LETTERS = [
+    ["C", "COMANDO", "O sistema recebe, interpreta e distribui ordens. Na versão original, respondia a Isadora e a Jade. Na versão atual, responde à cadeia de comando da Team Zero."],
+    ["O", "OPERACIONAL", "Capaz de executar tarefas de forma autônoma. É o que permite ao sistema atuar como coordenador de operações e não apenas como ferramenta."],
+    ["V", "VEICULAR", "O termo indica a capacidade de operar sobre plataformas móveis. A configuração física do sistema não é conhecida em detalhe."],
+    ["E", "EXPERIMENTAL", "O sistema nunca passou por validação formal: cada versão é um protótipo, e a de Helena foi construída sobre a de Isadora."]
+  ];
+
+  $("letters").innerHTML = LETTERS.map(function (l, i) {
+    return '<button type="button" class="letter" data-letter="' + i + '"><b>' + l[0] + '</b><span>' + l[1] + '</span></button>';
+  }).join("");
+
+  function letterShow(i) {
+    document.querySelectorAll(".letter").forEach(function (b) { b.classList.toggle("active", b.dataset.letter === String(i)); });
+    $("letterDetail").innerHTML = "<b>" + LETTERS[i][0] + " · " + LETTERS[i][1] + "</b>" + LETTERS[i][2];
+  }
+
+  document.querySelectorAll(".letter").forEach(function (b) {
+    b.addEventListener("click", function () { letterShow(Number(b.dataset.letter)); });
+  });
+
+  letterShow(0);
+
+  /* ----- cronologia: filtro por tipo ----- */
+
+  function filterTimeline(f) {
+    var shown = 0;
+    document.querySelectorAll(".timeline li[data-type]").forEach(function (li) {
+      var ok = f === "all" || li.dataset.type === f;
+      li.hidden = !ok;
+      if (ok) shown++;
+    });
+    document.querySelectorAll(".fchip").forEach(function (c) { c.classList.toggle("active", c.dataset.f === f); });
+    $("tlCount").textContent = pad(shown) + " REGISTROS";
+  }
+
+  document.querySelectorAll(".fchip").forEach(function (c) {
+    c.addEventListener("click", function () { filterTimeline(c.dataset.f); });
+  });
+
+  filterTimeline("all");
+
+
   /* ----- C.O.V.E.: versões ----- */
 
   document.querySelectorAll("[data-cv]").forEach(function (b) {
@@ -1753,6 +2008,7 @@ table.data td.hl { color: var(--term); font-family: var(--mono); font-size: 12px
       document.querySelectorAll("[data-cv]").forEach(function (x) { x.classList.toggle("on", x === b); });
       $("cv-orig").hidden = k !== "orig";
       $("cv-atual").hidden = k !== "atual";
+      growBars($(k === "orig" ? "cv-orig" : "cv-atual"));
     });
   });
 
