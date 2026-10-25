@@ -1624,11 +1624,12 @@ details.item summary:focus-visible { outline: 2px solid var(--red-light); outlin
   </div>
 </div>
 
+<script src="identidade.js"></script>
 <script>
 (function () {
   "use strict";
 
-  var PASS = "0982";
+  var PASS = (typeof obterCodigoJogador === "function") ? obterCodigoJogador() : null;
 
   var $ = function (id) { return document.getElementById(id); };
   var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -1706,7 +1707,7 @@ details.item summary:focus-visible { outline: 2px solid var(--red-light); outlin
     msg.textContent = "";
 
     runDecrypt(function () {
-      if (pass === PASS) unlock(); else panic();
+      if (PASS && pass.trim() === PASS) unlock(); else panic();
     });
   }
 

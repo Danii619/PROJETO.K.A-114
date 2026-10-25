@@ -736,6 +736,7 @@
 
     </main>
 
+    <script src="identidade.js"></script>
     <script>
         const form = document.getElementById("accessForm");
         const input = document.getElementById("senha");
@@ -744,7 +745,9 @@
         form.addEventListener("submit", function(event) {
             event.preventDefault();
 
-            if (input.value === "0982") {
+            const codigoEsperado = (typeof obterCodigoJogador === "function") ? obterCodigoJogador() : null;
+
+            if (codigoEsperado && input.value.trim() === codigoEsperado) {
                 mensagem.style.color = "#a5d7b1";
                 mensagem.textContent = "CREDENCIAL ACEITA. REDIRECIONANDO...";
 
