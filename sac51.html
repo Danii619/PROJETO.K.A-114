@@ -372,6 +372,7 @@
     <video id="vidKA" src="explicativoKA.mp4" playsinline></video>
   </div>
 
+  <audio id="audioChamando" src="chamando.mp3"></audio>
   <audio id="audioDDD" src="DDD.mp3"></audio>
   <audio id="audioDC" src="DC.mp3"></audio>
   <audio id="audioAtendimento" src="atendimento.mp3"></audio>
@@ -393,6 +394,7 @@
     const videoPlayer = document.getElementById("vidKA");
 
     const audios = {
+      chamando: document.getElementById("audioChamando"),
       DDD: document.getElementById("audioDDD"),
       DC: document.getElementById("audioDC"),
       atendimento: document.getElementById("audioAtendimento"),
@@ -471,13 +473,18 @@
         else playAudio("DC");
       } else {
         etapa = 1;
-        playAudio("atendimento");
+        stopAll();
+        audios["chamando"].play();
+        
+        audios["chamando"].onended = function() {
+          playAudio("atendimento");
+          audios["chamando"].onended = null;
+        };
       }
       numero = "";
       display.textContent = "_";
     }
 
-    // Função que abre o arquivo BASE.html
     function voltar() { 
       window.location.href = "BASE.html"; 
     }
@@ -486,16 +493,12 @@
       audio.addEventListener("ended", () => { msg.textContent = ""; });
     });
 
-    /* ---- EXTRAS DE USO (não alteram a lógica acima) ---- */
-
-    // Vibração leve ao tocar nas teclas (celular)
     document.querySelectorAll(".teclado button").forEach(btn => {
       btn.addEventListener("pointerdown", () => {
         if (navigator.vibrate) navigator.vibrate(10);
       });
     });
 
-    // Teclado físico: números, Enter = ligar, Backspace/Esc = limpar
     document.addEventListener("keydown", (e) => {
       if (e.ctrlKey || e.metaKey || e.altKey) return;
 
