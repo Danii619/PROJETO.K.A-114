@@ -963,6 +963,171 @@
             outline-offset: 4px;
         }
 
+        /* AVISO ANTES DO DOWNLOAD */
+
+        .aviso-dl {
+            position: fixed;
+            inset: 0;
+            z-index: 260;
+            display: grid;
+            padding: 16px;
+            place-items: center;
+            overflow-y: auto;
+            background:
+                radial-gradient(ellipse at 50% 0%, rgba(165, 42, 50, 0.22), transparent 60%),
+                rgba(7, 8, 11, 0.97);
+            animation: fadeIn .25s ease;
+        }
+
+        .aviso-dl[hidden] {
+            display: none;
+        }
+
+        .aviso-dl-box {
+            position: relative;
+            width: 100%;
+            max-width: 560px;
+            border: 1px solid var(--border);
+            border-top: 4px solid var(--red);
+            background: var(--panel);
+            box-shadow: 0 24px 80px rgba(0, 0, 0, 0.6);
+        }
+
+        .aviso-dl-stripes {
+            height: 8px;
+            background: repeating-linear-gradient(
+                -45deg,
+                var(--red) 0 10px,
+                #111318 10px 20px
+            );
+            opacity: .75;
+        }
+
+        .aviso-dl-head {
+            padding: 22px 22px 16px;
+            border-bottom: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .aviso-dl-tag {
+            margin: 0 0 10px;
+            color: var(--subtle);
+            font-family: var(--mono);
+            font-size: 11px;
+            letter-spacing: 3px;
+        }
+
+        .aviso-dl-title {
+            margin: 0;
+            color: var(--red-light);
+            font-family: var(--mono);
+            font-size: clamp(26px, 8vw, 40px);
+            font-weight: bold;
+            letter-spacing: 4px;
+            line-height: 1.1;
+        }
+
+        .aviso-dl-sub {
+            margin: 10px 0 0;
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .aviso-dl-list {
+            margin: 0;
+            padding: 8px 22px;
+            list-style: none;
+        }
+
+        .aviso-dl-list li {
+            display: grid;
+            grid-template-columns: 34px 1fr;
+            gap: 10px;
+            padding: 13px 0;
+            border-bottom: 1px dashed var(--border);
+        }
+
+        .aviso-dl-list li:last-child {
+            border-bottom: 0;
+        }
+
+        .aviso-dl-num {
+            color: var(--red-light);
+            font-family: var(--mono);
+            font-size: 13px;
+            font-weight: bold;
+            padding-top: 2px;
+        }
+
+        .aviso-dl-item-title {
+            display: block;
+            margin-bottom: 3px;
+            color: #fff;
+            font-family: var(--mono);
+            font-size: 12px;
+            letter-spacing: 1.5px;
+        }
+
+        .aviso-dl-item-text {
+            display: block;
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.55;
+        }
+
+        .aviso-dl-foot {
+            padding: 18px 22px 22px;
+            border-top: 1px solid var(--border);
+            background: rgba(0, 0, 0, 0.18);
+            text-align: center;
+        }
+
+        .aviso-dl-question {
+            margin: 0 0 16px;
+            color: #fff;
+            font-family: var(--mono);
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .aviso-dl-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .aviso-dl-btn {
+            flex: 1;
+            padding: 14px 12px;
+            border: 1px solid #75404a;
+            background: #59262e;
+            color: #fff;
+            cursor: pointer;
+            font-family: var(--mono);
+            font-size: 12px;
+            letter-spacing: 1.5px;
+            transition: .2s ease;
+        }
+
+        .aviso-dl-btn:hover {
+            background: #71313a;
+        }
+
+        .aviso-dl-btn.sec {
+            border-color: var(--border);
+            background: transparent;
+            color: var(--muted);
+        }
+
+        .aviso-dl-btn.sec:hover {
+            background: var(--panel-hover);
+            color: #fff;
+        }
+
+        .aviso-dl-btn:focus-visible {
+            outline: 2px solid var(--red-light);
+            outline-offset: 2px;
+        }
+
         /* AVISO (EASTER EGG) */
 
         .toast {
@@ -1281,6 +1446,62 @@
         <div class="boot-lines" id="bootLines"></div>
         <div class="boot-bar"><i id="bootFill"></i></div>
         <div class="boot-skip">CLIQUE OU PRESSIONE QUALQUER TECLA PARA PULAR</div>
+    </div>
+</div>
+
+<!-- AVISO ANTES DO DOWNLOAD -->
+<div class="aviso-dl" id="avisoDownload" role="alertdialog" aria-modal="true" aria-labelledby="avisoDlTitle" aria-describedby="avisoDlText" hidden>
+    <div class="aviso-dl-box">
+        <div class="aviso-dl-stripes"></div>
+        <div class="aviso-dl-head">
+            <p class="aviso-dl-tag">PROJECT114 // AVISO DE CONTEÚDO</p>
+            <h2 class="aviso-dl-title" id="avisoDlTitle">AVISO JUDICIÁRIO</h2>
+            <p class="aviso-dl-sub">Leia com atenção antes de continuar.</p>
+        </div>
+        <ol class="aviso-dl-list" id="avisoDlText">
+            <li>
+                <span class="aviso-dl-num">01</span>
+                <span>
+                    <span class="aviso-dl-item-title">OBRA DE FICÇÃO</span>
+                    <span class="aviso-dl-item-text">Todos os documentos a seguir são fictícios e fazem parte da história de Tríade Estrela.</span>
+                </span>
+            </li>
+            <li>
+                <span class="aviso-dl-num">02</span>
+                <span>
+                    <span class="aviso-dl-item-title">CONTEÚDO SENSÍVEL</span>
+                    <span class="aviso-dl-item-text">Alguns arquivos abordam temas fortes e podem causar desconforto ou repulsa.</span>
+                </span>
+            </li>
+            <li>
+                <span class="aviso-dl-num">03</span>
+                <span>
+                    <span class="aviso-dl-item-title">ÓRGÃOS E INSTITUIÇÕES</span>
+                    <span class="aviso-dl-item-text">Órgãos federais aparecem apenas como cenário da narrativa. Nenhum documento é oficial, e nenhum pretende falsificar um registro verdadeiro.</span>
+                </span>
+            </li>
+            <li>
+                <span class="aviso-dl-num">04</span>
+                <span>
+                    <span class="aviso-dl-item-title">PESSOAS</span>
+                    <span class="aviso-dl-item-text">Nenhuma pessoa mencionada é real. Qualquer semelhança é mera coincidência.</span>
+                </span>
+            </li>
+            <li>
+                <span class="aviso-dl-num">05</span>
+                <span>
+                    <span class="aviso-dl-item-title">MARCA D'ÁGUA</span>
+                    <span class="aviso-dl-item-text">Cada imagem traz a marca “FICCIONAL”. Não a remova nem compartilhe os arquivos sem ela.</span>
+                </span>
+            </li>
+        </ol>
+        <div class="aviso-dl-foot">
+            <p class="aviso-dl-question">Deseja baixar os arquivos?</p>
+            <div class="aviso-dl-actions">
+                <button class="aviso-dl-btn sec" id="avisoDlNao" type="button">VOLTAR</button>
+                <button class="aviso-dl-btn" id="avisoDlSim" type="button">SIM, BAIXAR</button>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -1728,7 +1949,7 @@
                         <div class="eyebrow">Repositório / 03</div>
                         <h2>Materiais recuperados</h2>
                     </div>
-                    <span class="section-count">15 ARQUIVOS</span>
+                    <span class="section-count">12 ARQUIVOS</span>
                 </div>
 
                 <div class="recovered">
@@ -1749,7 +1970,7 @@
                         class="download-btn"
                         id="downloadButton"
                         type="button"
-                        onclick="baixarArquivosRecuperados()"
+                        onclick="abrirAvisoDownload()"
                     >
                         <span id="downloadIcon">↓</span>
                         <span id="downloadLabel">Baixar arquivos</span>
@@ -1795,6 +2016,40 @@
 </div>
 
 <script>
+    /* AVISO ANTES DO DOWNLOAD */
+    function abrirAvisoDownload() {
+        const botao = document.getElementById("downloadButton");
+        if (botao.disabled) return;
+
+        const painel = document.getElementById("avisoDownload");
+        const sim = document.getElementById("avisoDlSim");
+        const nao = document.getElementById("avisoDlNao");
+
+        function fechar() {
+            painel.hidden = true;
+            document.removeEventListener("keydown", aoTeclar);
+            sim.removeEventListener("click", confirmar);
+            nao.removeEventListener("click", fechar);
+            botao.focus();
+        }
+
+        function confirmar() {
+            fechar();
+            baixarArquivosRecuperados();
+        }
+
+        function aoTeclar(e) {
+            if (e.key === "Escape") fechar();
+        }
+
+        sim.addEventListener("click", confirmar);
+        nao.addEventListener("click", fechar);
+        document.addEventListener("keydown", aoTeclar);
+
+        painel.hidden = false;
+        nao.focus();
+    }
+
     function baixarArquivosRecuperados() {
         const arquivos = [
             "boletim_escolar_escaneado_PB.png",
@@ -1808,9 +2063,6 @@
             "laudo_2026_conclusivo_escaneado-3_PB.png",
             "laudo_exame_daniiyel_PB.png",
             "portaria_afastamento_joao_moderno-1_PB.png",
-            "registro_armamento_joao_moderno-1_PB.png",
-            "registro_armamento_joao_moderno-2_PB.png",
-            "registro_armamento_joao_moderno-3_PB.png",
             "termo_sigilo_pais_2014_escaneado-1_PB.png"
         ];
 
