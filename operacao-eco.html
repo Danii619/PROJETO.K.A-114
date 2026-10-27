@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0b1020">
+<title>Operação Eco | PROJECT114</title>
+<style>
+:root{--bg:#0b1020;--panel:#11182e;--navy:#1b2a55;--border:#25305a;--text:#dfe3f2;--muted:#8d96b8;--pink:#e8799f;--pink2:#f4a3c0}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:"Courier New",monospace;min-height:100vh}
+button,input{font:inherit}button{cursor:pointer;-webkit-tap-highlight-color:transparent}
+a{color:var(--pink2)}
+.wrap{width:min(760px,100%);margin:auto;padding:18px 16px 40px}
+.top{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;padding-bottom:12px;border-bottom:1px solid var(--border);font-size:11px;letter-spacing:2px}
+.cls{color:var(--pink2);border:1px solid #5a3350;padding:4px 8px;font-size:9px}
+h1{margin:22px 0 6px;font-size:clamp(22px,6vw,30px);font-weight:normal;letter-spacing:2px}
+.sub{color:var(--muted);font-family:Arial,sans-serif;font-size:13px;line-height:1.7;margin:0 0 18px}
+.box{background:var(--panel);border:1px solid var(--border);border-left:3px solid var(--pink);padding:16px;margin-bottom:12px}
+.lbl{font-size:10px;letter-spacing:2px;color:var(--pink2);margin-bottom:8px}
+.btn{padding:13px 16px;border:1px solid #7a3d5c;background:#4a2142;color:#fff;font-size:12px;letter-spacing:1.5px}
+.btn:hover{background:#612b57}.btn.sec{background:transparent;border-color:var(--border);color:var(--muted)}
+.btn.sec:hover{color:#fff;background:var(--navy)}.btn:disabled{opacity:.4}
+input{width:100%;padding:12px;background:#0a0f1f;border:1px solid var(--border);color:var(--text);letter-spacing:2px;margin-bottom:10px}
+input:focus{outline:1px solid var(--pink)}
+.row{display:flex;gap:10px;flex-wrap:wrap}.row>*{flex:1}
+.msg{color:var(--pink2);font-size:12px;margin:10px 0;min-height:16px}
+.code{font-size:34px;letter-spacing:8px;color:#fff;margin:6px 0}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#3a4268;margin-right:8px}
+.dot.on{background:var(--pink);box-shadow:0 0 8px var(--pink)}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0}
+.chip{border:1px solid var(--border);padding:5px 8px;font-size:10px;letter-spacing:1px;color:var(--muted)}
+.chip.ok{border-color:var(--pink);color:var(--pink2)}
+.tabs{display:flex;gap:6px;margin:12px 0}.tabs button{flex:1;padding:10px 4px;border:1px solid var(--border);background:transparent;color:var(--muted);font-size:10px;letter-spacing:1px}
+.tabs button.on{background:var(--navy);color:#fff;border-color:var(--pink)}
+.ln{padding:9px 10px;border-bottom:1px dashed var(--border);font-size:13px;line-height:1.5}
+.ln[data-r]{cursor:pointer}.ln .h{color:var(--muted);margin-right:8px}.ln .s{color:var(--pink2);margin-right:8px}
+.rev{margin-top:10px;padding:10px;border:1px solid #5a3350;background:#160f26;font-family:Arial,sans-serif;font-size:13px;line-height:1.6}
+.shout{margin:14px 0 0;padding:12px;border:1px solid var(--pink);text-align:center;letter-spacing:2px;font-size:13px;color:#fff}
+.chat div{padding:7px 0;border-bottom:1px dashed var(--border);font-family:Arial,sans-serif;font-size:13px}
+.chat b{font-family:"Courier New",monospace;color:var(--pink2);font-size:10px;letter-spacing:1px;margin-right:8px}
+svg text{font-family:"Courier New",monospace}
+#qr svg{width:130px;height:130px;background:#e8e0ea;padding:6px}
+.eco .bl{margin:0 0 14px;padding-bottom:12px;border-bottom:1px solid var(--border)}
+.eco .bl p{margin:0;font-family:Arial,sans-serif;font-size:14px;line-height:1.7}
+.back{display:inline-block;margin-top:18px;font-size:11px;letter-spacing:1px;color:var(--muted);text-decoration:none}
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+</head>
+<body>
+<main class="wrap">
+  <div class="top"><span>PROJECT114</span><span class="cls">OPERAÇÃO ECO // ACESSO RESTRITO</span></div>
+  <div id="view"></div>
+  <a class="back" href="BASE.html">← VOLTAR AO TERMINAL</a>
+</main>
+<script>
+(function () {
+  /* CONFIGURAÇÃO: cole aqui a Project URL e a chave "anon public" do Supabase.
+     A chave anon é pública por natureza; a segurança está nas funções do banco. */
+  var CFG = { url: "https://lsqpyofftwjbasqxdzti.supabase.co", key: "sb_publishable_wlIRTpYRT90obG1l_ZGS_Q_3kX8_Zpy" };
+
+  var ECO_CSS = "\n        @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap');\n\n        :root {\n            --bg: #0b0c0f;\n            --surface: #111318;\n            --surface2: #171a20;\n            --border: #292d35;\n            --text: #dfe1e6;\n            --muted: #858b96;\n            --red: #c84b52;\n            --red-bg: #28171a;\n            --mono: 'IBM Plex Mono', monospace;\n            --sans: 'Inter', sans-serif;\n        }\n\n        * {\n            box-sizing: border-box;\n            margin: 0;\n            padding: 0;\n        }\n\n        body {\n            min-height: 100vh;\n            padding: 0 20px 55px;\n            color: var(--text);\n            background:\n                radial-gradient(ellipse at 50% 0%, #1b1e25 0%, transparent 60%),\n                var(--bg);\n            font-family: var(--sans);\n            font-size: 13px;\n            line-height: 1.7;\n        }\n\n        a {\n            color: inherit;\n            text-decoration: none;\n        }\n\n        button, input {\n            font: inherit;\n        }\n\n        .container {\n            width: 100%;\n            max-width: 900px;\n            margin: 0 auto;\n        }\n\n        /* CABEÇALHO DO SISTEMA */\n\n        .topbar {\n            display: flex;\n            justify-content: space-between;\n            align-items: center;\n            gap: 15px;\n            min-height: 68px;\n            border-bottom: 1px solid var(--border);\n        }\n\n        .system-brand {\n            display: flex;\n            align-items: center;\n            gap: 12px;\n            font-family: var(--mono);\n            font-size: 11px;\n            font-weight: 600;\n            letter-spacing: 1.5px;\n        }\n\n        .brand-icon {\n            display: grid;\n            place-items: center;\n            width: 32px;\n            height: 32px;\n            border: 1px solid #505560;\n            color: #f0f1f3;\n            font-size: 11px;\n        }\n\n        .system-status {\n            display: flex;\n            align-items: center;\n            gap: 8px;\n            color: var(--muted);\n            font-family: var(--mono);\n            font-size: 9px;\n            letter-spacing: 1px;\n        }\n\n        .status-dot {\n            width: 7px;\n            height: 7px;\n            border-radius: 50%;\n            background: var(--red);\n            box-shadow: 0 0 8px #c84b5244;\n        }\n\n        /* NAVEGAÇÃO */\n\n        .breadcrumb {\n            display: flex;\n            flex-wrap: wrap;\n            gap: 9px;\n            align-items: center;\n            margin: 27px 0 30px;\n            color: var(--muted);\n            font-family: var(--mono);\n            font-size: 10px;\n        }\n\n        .breadcrumb a:hover {\n            color: white;\n        }\n\n        .separator {\n            color: #4e535e;\n        }\n\n        .breadcrumb .current {\n            color: #d3d5db;\n        }\n\n        /* TÍTULO */\n\n        .document-heading {\n            margin-bottom: 25px;\n        }\n\n        .eyebrow {\n            display: flex;\n            align-items: center;\n            gap: 9px;\n            color: #a4a9b3;\n            font-family: var(--mono);\n            font-size: 10px;\n            letter-spacing: 1.8px;\n        }\n\n        .eyebrow-line {\n            width: 22px;\n            height: 1px;\n            background: var(--red);\n        }\n\n        h1 {\n            margin-top: 13px;\n            font-size: clamp(27px, 5vw, 39px);\n            font-weight: 600;\n            letter-spacing: -1.4px;\n            line-height: 1.15;\n        }\n\n        h1 span {\n            color: #a7abb4;\n            font-weight: 400;\n        }\n\n        .heading-description {\n            max-width: 570px;\n            margin-top: 12px;\n            color: var(--muted);\n            font-size: 12px;\n            line-height: 1.9;\n        }\n\n        /* CLASSIFICAÇÃO */\n\n        .classification {\n            display: flex;\n            justify-content: space-between;\n            align-items: center;\n            flex-wrap: wrap;\n            gap: 12px;\n            padding: 13px 16px;\n            border: 1px solid #633137;\n            background: linear-gradient(90deg, #28171a, #171317);\n        }\n\n        .classification-label {\n            display: flex;\n            align-items: center;\n            gap: 10px;\n            color: #e18c91;\n            font-family: var(--mono);\n            font-size: 10px;\n            font-weight: 600;\n            letter-spacing: 1.1px;\n        }\n\n        .warning-icon {\n            display: grid;\n            place-items: center;\n            width: 23px;\n            height: 23px;\n            border: 1px solid #85434a;\n            font-size: 12px;\n        }\n\n        .classification-code {\n            color: #a76b70;\n            font-family: var(--mono);\n            font-size: 9px;\n        }\n\n        /* PAINEL PRINCIPAL */\n\n        .panel {\n            margin-top: 22px;\n            border: 1px solid var(--border);\n            background: var(--surface);\n        }\n\n        .panel-header {\n            display: flex;\n            justify-content: space-between;\n            align-items: center;\n            gap: 12px;\n            padding: 16px 19px;\n            border-bottom: 1px solid var(--border);\n            background: #ffffff03;\n        }\n\n        .panel-title {\n            color: #e1e3e8;\n            font-size: 11px;\n            font-weight: 600;\n            letter-spacing: 1px;\n        }\n\n        .panel-code {\n            color: var(--muted);\n            font-family: var(--mono);\n            font-size: 9px;\n        }\n\n        .panel-content {\n            padding: 21px 19px;\n        }\n\n        /* IDENTIFICAÇÃO */\n\n        .identity-grid {\n            display: grid;\n            grid-template-columns: 1fr 1fr;\n            gap: 0 24px;\n        }\n\n        .field {\n            padding: 13px 0;\n            border-bottom: 1px solid #ffffff0c;\n        }\n\n        .field-label {\n            margin-bottom: 5px;\n            color: var(--muted);\n            font-family: var(--mono);\n            font-size: 9px;\n            letter-spacing: 1px;\n            text-transform: uppercase;\n        }\n\n        .field-value {\n            color: #e0e2e7;\n            font-size: 12px;\n            font-weight: 500;\n        }\n\n        .field-value.red {\n            color: #e17b81;\n        }\n\n        .field-value.mono {\n            font-family: var(--mono);\n            font-size: 11px;\n        }\n\n        /* OBSERVAÇÕES */\n\n        .section-heading {\n            margin: 26px 0 13px;\n            color: #c5c8d0;\n            font-size: 10px;\n            font-weight: 600;\n            letter-spacing: 1.5px;\n            text-transform: uppercase;\n        }\n\n        .observations {\n            display: flex;\n            flex-direction: column;\n            gap: 0;\n            border: 1px solid var(--border);\n            background: #0d0f13;\n        }\n\n        .observation {\n            display: grid;\n            grid-template-columns: 23px 1fr;\n            gap: 10px;\n            padding: 13px 14px;\n            border-bottom: 1px solid #ffffff0b;\n            color: #b8bcc5;\n            font-size: 11px;\n            line-height: 1.8;\n        }\n\n        .observation:last-child {\n            border-bottom: none;\n        }\n\n        .observation-index {\n            color: #8d5157;\n            font-family: var(--mono);\n            font-size: 10px;\n        }\n\n        /* REGISTRO DE DECLARAÇÃO */\n\n        .statement {\n            margin-top: 22px;\n            padding: 19px;\n            border-left: 2px solid #8f454c;\n            background: #151216;\n        }\n\n        .statement-label {\n            color: #b96b71;\n            font-family: var(--mono);\n            font-size: 9px;\n            letter-spacing: 1.3px;\n        }\n\n        blockquote {\n            margin-top: 12px;\n            color: #e0dce0;\n            font-size: 13px;\n            font-style: italic;\n            line-height: 1.9;\n        }\n\n        .statement-source {\n            margin-top: 12px;\n            color: #77727c;\n            font-family: var(--mono);\n            font-size: 9px;\n        }\n\n        /* PROTOCOLO RESTRITO */\n\n        .restricted {\n            margin-top: 25px;\n            border: 1px solid #633137;\n            background: #111014;\n        }\n\n        .restricted-header {\n            display: flex;\n            align-items: center;\n            gap: 11px;\n            padding: 17px 19px;\n            border-bottom: 1px solid #49262b;\n            background: #251619;\n        }\n\n        .lock-icon {\n            display: grid;\n            place-items: center;\n            width: 31px;\n            height: 31px;\n            border: 1px solid #754047;\n            color: #e58b91;\n            font-size: 14px;\n        }\n\n        .restricted-title {\n            color: #edc2c4;\n            font-size: 12px;\n            font-weight: 600;\n            letter-spacing: 1px;\n        }\n\n        .restricted-subtitle {\n            margin-top: 3px;\n            color: #a7777c;\n            font-family: var(--mono);\n            font-size: 9px;\n        }\n\n        .restricted-content {\n            padding: 20px;\n        }\n\n        .restricted-content > p {\n            color: #9da2ad;\n            font-size: 11px;\n            line-height: 1.9;\n        }\n\n        .restricted-content > p strong {\n            color: #d8a0a4;\n            font-weight: 500;\n        }\n\n        .password-form {\n            display: flex;\n            gap: 9px;\n            margin-top: 17px;\n        }\n\n        .password-input {\n            min-width: 0;\n            flex: 1;\n            padding: 12px 13px;\n            border: 1px solid #39343c;\n            border-radius: 3px;\n            outline: none;\n            color: #f1edf1;\n            background: #0b0c10;\n            font-family: var(--mono);\n            font-size: 12px;\n            letter-spacing: 2px;\n            transition: border-color .2s;\n        }\n\n        .password-input:focus {\n            border-color: #a3545c;\n        }\n\n        .password-input::placeholder {\n            color: #56545c;\n            letter-spacing: 1px;\n        }\n\n        .access-button {\n            padding: 12px 15px;\n            border: 1px solid #a44951;\n            border-radius: 3px;\n            color: #fff0f0;\n            background: #692c33;\n            cursor: pointer;\n            font-family: var(--mono);\n            font-size: 10px;\n            letter-spacing: .5px;\n            transition: background .2s, border-color .2s;\n        }\n\n        .access-button:hover {\n            border-color: #e17b82;\n            background: #853740;\n        }\n\n        .message {\n            min-height: 20px;\n            margin-top: 10px;\n            color: #e17b82;\n            font-family: var(--mono);\n            font-size: 10px;\n        }\n\n        .page-footer {\n            display: flex;\n            justify-content: space-between;\n            flex-wrap: wrap;\n            gap: 10px;\n            margin-top: 28px;\n            padding-top: 15px;\n            border-top: 1px solid var(--border);\n            color: #626874;\n            font-family: var(--mono);\n            font-size: 9px;\n            letter-spacing: .5px;\n        }\n\n        @media (max-width: 560px) {\n            body {\n                padding: 0 14px 35px;\n            }\n\n            .topbar {\n                min-height: 60px;\n            }\n\n            .system-brand {\n                font-size: 9px;\n            }\n\n            .system-status {\n                font-size: 8px;\n            }\n\n            .identity-grid {\n                grid-template-columns: 1fr;\n            }\n\n            .classification-code {\n                font-size: 8px;\n            }\n\n            .panel-content {\n                padding: 17px 15px;\n            }\n\n            .password-form {\n                flex-direction: column;\n            }\n\n            .access-button {\n                min-height: 43px;\n            }\n        }\n\n        @media (prefers-reduced-motion: reduce) {\n            *, *::before, *::after {\n                animation: none !important;\n                transition: none !important;\n            }\n        }\n    ";
+  var ROLE = { A: "UNIDADE DE CAMPO", B: "CENTRAL DE COMUNICAÇÃO" };
+  var ERR = {
+    SESSAO_INEXISTENTE: "Sessão não encontrada.", SESSAO_CHEIA: "Esta sessão já está completa (2 jogadores).",
+    SEM_ACESSO: "Acesso negado a esta sessão.", AGUARDE: "Aguarde alguns segundos antes de tentar de novo.",
+    LIMITE: "Limite de tentativas desta sessão atingido.", NAO_PRONTA: "Aguardando o segundo jogador.",
+    FALHA: "Falha de comunicação com o servidor."
+  };
+  var $v = document.getElementById("view");
+  var S = { ses: load(), st: null, tab: "doc", msg: "", vals: {}, timer: null, sig: "", eco: false };
+  var configurado = CFG.url.indexOf("COLE_") !== 0;
+
+  function esc(s) { return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  function load() { try { return JSON.parse(localStorage.getItem("eco.sessao") || "null"); } catch (e) { return null; } }
+  function save() { try { if (S.ses) localStorage.setItem("eco.sessao", JSON.stringify(S.ses)); else localStorage.removeItem("eco.sessao"); } catch (e) {} }
+
+  function rpc(fn, args) {
+    return fetch(CFG.url + "/rest/v1/rpc/" + fn, {
+      method: "POST",
+      headers: { apikey: CFG.key, Authorization: "Bearer " + CFG.key, "Content-Type": "application/json" },
+      body: JSON.stringify(args || {})
+    }).then(function (r) { return r.json(); }).then(function (j) { return (j && j.message) ? { erro: "FALHA" } : j; })
+      .catch(function () { return { erro: "FALHA" }; });
+  }
+  function args(extra) { var o = { p_code: S.ses.code, p_token: S.ses.token }; for (var k in extra) o[k] = extra[k]; return o; }
+
+  /* ---------- SESSÃO ---------- */
+  function entrou(r) {
+    if (r.erro) { S.msg = ERR[r.erro] || ERR.FALHA; render(); return; }
+    S.ses = { code: r.code, token: r.token }; save(); S.msg = ""; S.tab = "doc"; S.eco = false;
+    tick(); start();
+  }
+  function start() { stop(); S.timer = setInterval(function () { if (!document.hidden) tick(); }, 2500); }
+  function stop() { if (S.timer) clearInterval(S.timer); S.timer = null; }
+  function tick() {
+    if (!S.ses) return;
+    rpc("eco_state", args({})).then(function (r) {
+      if (r.erro === "SEM_ACESSO" || r.erro === "SESSAO_INEXISTENTE") { S.ses = null; save(); stop(); S.st = null; S.msg = ERR[r.erro]; }
+      else if (r.erro) { S.msg = ERR[r.erro]; }
+      else { S.st = r; S.msg = ""; if (r.unlocked && !S.eco) { S.eco = true; S.tab = "eco"; } }
+      render();
+    });
+  }
+  function sair() {
+    var s = S.ses; stop();
+    if (s) rpc("eco_leave", { p_code: s.code, p_token: s.token });
+    S.ses = null; S.st = null; S.msg = ""; save(); S.sig = ""; render();
+  }
+
+  /* ---------- AÇÕES ---------- */
+  document.addEventListener("input", function (e) { if (e.target.id) S.vals[e.target.id] = e.target.value; });
+  $v.addEventListener("click", function (e) {
+    var t = e.target.closest("[data-act],[data-r]"); if (!t) return;
+    if (t.dataset.r !== undefined && !t.dataset.act) {
+      rpc("eco_clue", args({ p_idx: +t.dataset.r })).then(tick); return;
+    }
+    var a = t.dataset.act;
+    if (a === "criar") rpc("eco_create").then(entrou);
+    else if (a === "entrar") rpc("eco_join", { p_code: (S.vals.cod || "").trim() }).then(entrou);
+    else if (a === "retomar") { tick(); start(); }
+    else if (a === "sair") sair();
+    else if (a === "tab") { S.tab = t.dataset.v; S.sig = ""; render(); }
+    else if (a === "share") {
+      var tx = (S.vals.msg || "").trim(); if (!tx) return;
+      S.vals.msg = ""; rpc("eco_share", args({ p_text: tx })).then(tick);
+    } else if (a === "sub") {
+      var id = t.dataset.k === "senha" ? "fs" : "fc", val = S.vals[id] || "";
+      rpc("eco_submit", args({ p_kind: t.dataset.k, p_value: val })).then(function (r) {
+        if (r.erro) S.msg = ERR[r.erro] || ERR.FALHA;
+        else S.msg = r.ok ? "REGISTRO ACEITO." : "RESPOSTA NÃO CONFERE.";
+        S.sig = ""; tick();
+      });
+    }
+  });
+
+  /* ---------- TELAS ---------- */
+  function home() {
+    var q = new URLSearchParams(location.search).get("s");
+    if (q && S.vals.cod === undefined) S.vals.cod = q.toUpperCase();
+    var h = '<h1>OPERAÇÃO ECO</h1><p class="sub">Investigação cooperativa para dois terminais. Cada jogador recebe um documento diferente. Comuniquem-se para descobrir uma senha e uma coordenada.</p>';
+    if (!configurado) h += '<div class="box"><div class="lbl">SISTEMA</div>BACKEND NÃO CONFIGURADO. Preencha a URL e a chave no início do script desta página.</div>';
+    if (S.ses) h += '<div class="box"><div class="lbl">SESSÃO ANTERIOR ' + esc(S.ses.code) + '</div><button class="btn" data-act="retomar">RETOMAR SESSÃO</button> <button class="btn sec" data-act="sair">DESCARTAR</button></div>';
+    h += '<div class="box"><div class="lbl">NOVA SESSÃO</div><button class="btn" data-act="criar"' + (configurado ? "" : " disabled") + '>CRIAR SESSÃO</button></div>';
+    h += '<div class="box"><div class="lbl">ENTRAR EM SESSÃO</div><input id="cod" maxlength="5" placeholder="CÓDIGO" autocomplete="off" autocapitalize="characters"><button class="btn" data-act="entrar"' + (configurado ? "" : " disabled") + '>ENTRAR EM SESSÃO</button></div>';
+    return h + '<div class="msg">' + esc(S.msg) + '</div>';
+  }
+  function status(st, k) {
+    return '<div><span class="dot' + (st[k.toLowerCase() + "_on"] ? " on" : "") + '"></span>JOGADOR ' + k + " // " + ROLE[k] + " // " +
+      (!st[k.toLowerCase() + "_join"] ? "AGUARDANDO" : (st[k.toLowerCase() + "_on"] ? "CONECTADO" : "SEM SINAL")) + "</div>";
+  }
+  function sala(st) {
+    var link = location.origin + location.pathname + "?s=" + st.code;
+    return '<h1>SESSÃO ' + esc(st.code) + '</h1><p class="sub">Você é o JOGADOR ' + st.role + " // " + ROLE[st.role] + '. Compartilhe o código ou o QR Code com o segundo jogador.</p>' +
+      '<div class="box"><div class="lbl">CÓDIGO DA SESSÃO</div><div class="code">' + esc(st.code) + '</div><div class="sub" style="word-break:break-all">' + esc(link) + '</div><div id="qr"></div></div>' +
+      '<div class="box"><div class="lbl">ESTADO DA SESSÃO</div>' + status(st, "A") + status(st, "B") + '<div class="msg">AGUARDANDO O SEGUNDO JOGADOR...</div></div>' +
+      '<button class="btn sec" data-act="sair">SAIR DA SESSÃO</button>';
+  }
+  function mapa(d) {
+    var o = 30, c = 50, X = function (n) { return o + (n - 1) * c + c / 2; };
+    var TY = "'Courier New',monospace", HW = "'Segoe Script','Bradley Hand','Brush Script MT','Comic Sans MS',cursive";
+    function hs(n) { var v = Math.sin(n * 12.9898) * 43758.5453; return v - Math.floor(v); }
+    function circ(cx, cy, r, sd) {
+      var q = "";
+      for (var i = 0; i <= 26; i++) {
+        var an = i / 26 * Math.PI * 2.18 + sd, rr = r + (hs(sd * 7 + i) - .5) * 2.4 + i * .05;
+        q += (i ? "L" : "M") + (cx + Math.cos(an) * rr).toFixed(1) + " " + (cy + Math.sin(an) * rr).toFixed(1);
+      }
+      return q;
+    }
+    function ln(x1, y1, x2, y2, sd) {
+      var q = "M" + x1.toFixed(1) + " " + y1.toFixed(1);
+      for (var i = 1; i <= 10; i++) {
+        var t = i / 10, j = i === 10 ? 0 : (hs(sd + i) - .5) * 3.2;
+        q += "L" + (x1 + (x2 - x1) * t + j).toFixed(1) + " " + (y1 + (y2 - y1) * t + j).toFixed(1);
+      }
+      return q;
+    }
+    var pts = d.pts, B = pts.B, bx = X(B[0]), by = X(B[1]), U = [X(d.ult[0]), X(d.ult[1])];
+    var s = '<svg viewBox="0 0 430 430" width="100%" style="display:block;background:#0e0c0a;border:1px solid #25305a">' +
+      '<defs>' +
+      '<radialGradient id="pp" cx=".5" cy=".5" r=".75"><stop offset="0" stop-color="#e3d4af"/><stop offset=".7" stop-color="#d1be92"/><stop offset="1" stop-color="#a68c5d"/></radialGradient>' +
+      '<filter id="rg" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency=".05" numOctaves="2" seed="3" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="3"/></filter>' +
+      '<filter id="gr"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="7"/><feColorMatrix values="0 0 0 0 .2  0 0 0 0 .15  0 0 0 0 .08  1.3 0 0 0 -.38"/></filter>' +
+      '<filter id="tn" x="-3%" y="-3%" width="106%" height="106%"><feTurbulence type="fractalNoise" baseFrequency=".045" numOctaves="3" seed="11" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="9"/></filter>' +
+      '</defs>' +
+      '<rect x="8" y="8" width="414" height="414" fill="url(#pp)" filter="url(#tn)"/>' +
+      '<rect x="8" y="8" width="414" height="414" filter="url(#gr)" style="mix-blend-mode:multiply" opacity=".85"/>' +
+      '<ellipse cx="90" cy="360" rx="60" ry="34" fill="#8a6130" opacity=".09"/>' +
+      '<circle cx="345" cy="335" r="34" fill="none" stroke="#6b4a1e" stroke-width="3" opacity=".22"/>' +
+      '<circle cx="345" cy="335" r="30" fill="none" stroke="#6b4a1e" stroke-width="1" opacity=".18"/>';
+
+    /* grade impressa, desbotada */
+    s += '<g filter="url(#rg)" stroke="#5b4a32" stroke-width=".9" opacity=".42">';
+    for (var j = 0; j <= 8; j++) {
+      s += '<line x1="' + (o + j * c) + '" y1="' + o + '" x2="' + (o + j * c) + '" y2="' + (o + 8 * c) + '"/>';
+      s += '<line x1="' + o + '" y1="' + (o + j * c) + '" x2="' + (o + 8 * c) + '" y2="' + (o + j * c) + '"/>';
+    }
+    s += '</g><g font-family="' + TY + '" font-size="12" fill="#4a3b26" opacity=".8" text-anchor="middle">';
+    for (var i = 0; i < 8; i++) s += '<text x="' + X(i + 1) + '" y="22">' + "ABCDEFGH"[i] + '</text><text x="14" y="' + (X(i + 1) + 4) + '">' + (i + 1) + '</text>';
+    s += '</g>';
+
+    /* relevo, rio, árvores e alagado */
+    s += '<g fill="none" filter="url(#rg)">' +
+      '<path d="M40 360 C90 330 120 340 170 300 S260 270 300 235 S380 190 410 200" stroke="#5b4a32" opacity=".3"/>' +
+      '<path d="M40 392 C110 372 160 380 215 340 S320 300 360 262 S400 240 414 250" stroke="#5b4a32" opacity=".3"/>' +
+      '<path d="M50 120 C90 90 150 110 190 80 S280 60 330 82" stroke="#5b4a32" opacity=".28"/>' +
+      '<path d="M30 190 C80 205 110 175 160 190 S230 230 270 205 S340 150 380 168 S405 190 414 188" stroke="#6f8794" stroke-width="5" opacity=".5"/>' +
+      '<path d="M30 190 C80 205 110 175 160 190 S230 230 270 205 S340 150 380 168 S405 190 414 188" stroke="#c9d3d6" stroke-width="1.5" opacity=".5"/></g>';
+    s += '<g stroke="#4a3b26" fill="none" opacity=".4" stroke-width="1">';
+    for (var m = 0; m < 5; m++) s += '<path d="M' + (222 + m * 9) + ' ' + (232 + (m % 2) * 7) + ' h6 M' + (225 + m * 9) + ' ' + (236 + (m % 2) * 7) + ' h8"/>';
+    for (var t = 0; t < 90; t++) {
+      var tx = hs(t * 3.1) * 380 + 25, ty = hs(t * 5.7 + 1) * 380 + 25, bad = false;
+      Object.keys(pts).forEach(function (k) { if (Math.hypot(tx - X(pts[k][0]), ty - X(pts[k][1])) < 26) bad = true; });
+      if (Math.hypot(tx - U[0], ty - U[1]) < 30 || (tx > bx - 40 && tx < bx + 64 && ty > by - 72 && ty < by - 22)) bad = true;
+      if (!bad) s += '<path d="M' + tx.toFixed(0) + ' ' + ty.toFixed(0) + ' l2 -4 l2 4"/>';
+    }
+    s += '</g>';
+
+    /* rota a caneta azul */
+    var P = d.rota.map(function (k) { return [X(pts[k][0]), X(pts[k][1])]; });
+    s += '<g fill="none" stroke="#263b87" stroke-width="1.8" stroke-linecap="round" opacity=".85" filter="url(#rg)">';
+    for (var r = 0; r < P.length - 1; r++) {
+      s += '<path stroke-dasharray="7 6" d="' + ln(P[r][0], P[r][1], P[r + 1][0], P[r + 1][1], r * 11 + 3) + '"/>';
+      var mx = (P[r][0] + P[r + 1][0]) / 2, my = (P[r][1] + P[r + 1][1]) / 2;
+      s += '<path d="M' + (mx - 4) + ' ' + (my - 4) + ' l8 8 M' + (mx + 4) + ' ' + (my - 4) + ' l-8 8"/>';
+    }
+    s += '</g>';
+
+    /* última posição: X grosso a lápis */
+    s += '<g fill="none" stroke="#a52a3c" stroke-width="3" stroke-linecap="round" opacity=".88" filter="url(#rg)">' +
+      '<path d="' + ln(U[0] - 10, U[1] - 10, U[0] + 10, U[1] + 10, 5) + '"/><path d="' + ln(U[0] + 10, U[1] - 10, U[0] - 10, U[1] + 10, 9) + '"/>' +
+      '<path stroke-width="1.8" d="' + circ(U[0], U[1], 17, 2) + '"/></g>' +
+      '<g font-family="' + HW + '" font-size="13" fill="#8f1d2c" opacity=".92"><text x="' + (U[0] + 20) + '" y="' + (U[1] + 22) + '">últ. pos.</text><text x="' + (U[0] + 20) + '" y="' + (U[1] + 36) + '">confirmada</text></g>';
+
+    /* pontos riscados a lápis, com letra à mão */
+    var rv = { A: 0, B: 1 };
+    Object.keys(pts).forEach(function (k, n) {
+      var x = X(pts[k][0]), y = X(pts[k][1]), at = rv[k] !== undefined ? ' data-r="' + rv[k] + '" style="cursor:pointer"' : "";
+      s += '<g' + at + '><g fill="none" stroke="#a52a3c" stroke-width="2.2" stroke-linecap="round" opacity=".88" filter="url(#rg)">' +
+        '<path d="' + circ(x, y, 12, n + 1) + '"/><path stroke-width="1.4" d="' + circ(x, y, 14, n + 4) + '"/></g>' +
+        '<circle cx="' + x + '" cy="' + y + '" r="2.2" fill="#a52a3c"/>' +
+        '<text x="' + (x + 16) + '" y="' + (y - 13) + '" font-family="' + HW + '" font-size="22" font-weight="bold" fill="#8f1d2c">' + k + '</text>' +
+        '<circle cx="' + x + '" cy="' + y + '" r="22" fill="rgba(0,0,0,0)"/></g>';
+    });
+
+    /* nota incompleta: papel rasgado com rabiscos */
+    s += '<g data-r="2" style="cursor:pointer"><path d="M' + (bx - 34) + ' ' + (by - 66) + ' H' + (bx + 52) + ' l-4 6 l5 6 l-4 6 l4 6 l-3 5 H' + (bx - 34) + ' Z" fill="#ead9a2" stroke="#8a6f3c" stroke-width=".8" opacity=".95" filter="url(#rg)"/>' +
+      '<text x="' + (bx - 28) + '" y="' + (by - 53) + '" font-family="' + HW + '" font-size="11" fill="#3a2f20">nota:</text>' +
+      '<path d="M' + (bx - 28) + ' ' + (by - 45) + ' q8 -5 16 0 t16 0 t16 0 t14 0 M' + (bx - 28) + ' ' + (by - 37) + ' q8 -5 16 0 t16 0 t10 0" fill="none" stroke="#3a2f20" stroke-width="1.2" opacity=".6"/>' +
+      '<ellipse cx="' + (bx + 30) + '" cy="' + (by - 40) + '" rx="12" ry="7" fill="#3a2f20" opacity=".18"/></g>';
+
+    /* carimbo e dobras */
+    s += '<g transform="rotate(-8 310 392)" opacity=".34" font-family="' + TY + '" font-size="14" font-weight="bold" fill="none" stroke="#a52a3c" stroke-width="1.6">' +
+      '<rect x="236" y="376" width="148" height="24"/><text x="310" y="393" text-anchor="middle" fill="#a52a3c" stroke="none">RECUPERADO</text></g>' +
+      '<line x1="215" y1="8" x2="215" y2="422" stroke="#fff" stroke-opacity=".2" stroke-width="1.4"/><line x1="216.6" y1="8" x2="216.6" y2="422" stroke="#000" stroke-opacity=".14"/>' +
+      '<line x1="8" y1="215" x2="422" y2="215" stroke="#fff" stroke-opacity=".14" stroke-width="1.2"/><line x1="8" y1="216.5" x2="422" y2="216.5" stroke="#000" stroke-opacity=".1"/>';
+    return s + '</svg>';
+  }
+  function documento(st) {
+    var d = st.doc, h;
+    if (!d) return '<div class="box">DOCUMENTO INDISPONÍVEL.</div>';
+    h = '<div class="box"><div class="lbl">' + esc(d.id) + " // " + esc(d.titulo) + "</div>";
+    if (d.pts) h += mapa(d) + '<div class="sub" style="margin:8px 0 0;font-size:11px">' + esc(d.leg) + "</div>";
+    else {
+      d.linhas.forEach(function (l) {
+        h += '<div class="ln"' + (l.r !== undefined ? ' data-r="' + l.r + '"' : "") + '><span class="h">' + l.h + '</span><span class="s">' + (l.s ? esc(l.s) : "[SEM ASSINATURA]") + "</span>" + esc(l.m) + "</div>";
+      });
+      h += '<div class="ln">' + esc(d.obs) + '</div><div class="ln" data-r="2">' + esc(d.tab) + "</div>";
+    }
+    h += '<div class="shout">' + esc(d.msg) + "</div>";
+    st.mine.forEach(function (i) { h += '<div class="rev">' + esc(d.rev[i]) + "</div>"; });
+    return h + '</div><div class="sub">Toque nos elementos do documento para registrar descobertas.</div>';
+  }
+  function canal(st) {
+    var h = '<div class="box"><div class="lbl">CANAL ENTRE TERMINAIS</div><div class="chat">';
+    if (!st.shared.length) h += '<div>Nenhuma transmissão ainda. Descreva ao parceiro o que você encontrou.</div>';
+    st.shared.forEach(function (m) { h += "<div><b>" + (m.r === st.role ? "VOCÊ" : "PARCEIRO") + "</b>" + esc(m.t) + "</div>"; });
+    return h + '</div></div><div class="box"><input id="msg" maxlength="140" placeholder="Transmitir mensagem..." autocomplete="off"><button class="btn" data-act="share">TRANSMITIR</button></div>';
+  }
+  function final(st) {
+    return '<div class="box"><div class="lbl">TERMINAL FINAL // ACESSO RESTRITO</div>' +
+      '<div class="sub" style="margin-bottom:8px">SENHA RECUPERADA ' + (st.pass_ok ? "// ACEITA" : "") + "</div>" +
+      '<input id="fs" placeholder="SENHA" autocomplete="off" autocapitalize="characters"' + (st.pass_ok ? " disabled" : "") + '><button class="btn" data-act="sub" data-k="senha"' + (st.pass_ok ? " disabled" : "") + '>VALIDAR SENHA</button>' +
+      '<div class="sub" style="margin:16px 0 8px">COORDENADA IDENTIFICADA ' + (st.coord_ok ? "// ACEITA" : "") + "</div>" +
+      '<input id="fc" placeholder="COORDENADA (EX: C-3)" autocomplete="off" autocapitalize="characters"' + (st.coord_ok ? " disabled" : "") + '><button class="btn" data-act="sub" data-k="coord"' + (st.coord_ok ? " disabled" : "") + '>VALIDAR COORDENADA</button>' +
+      '<div class="sub" style="margin-top:12px">Tentativas restantes: ' + st.left + "</div></div>";
+  }
+  function eco(st) {
+    var doc = '<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><style>' + ECO_CSS + '</style></head><body>' + st.final.html + '</body></html>';
+    return '<iframe id="ecof" sandbox="allow-same-origin" title="ECO-00" style="width:100%;height:900px;border:1px solid #25305a;background:#111318" srcdoc="' + doc.replace(/&/g, "&amp;").replace(/"/g, "&quot;") + '"></iframe>';
+  }
+
+  function jogo(st) {
+    var tabs = [["doc", "DOCUMENTO"], ["canal", "CANAL"], ["fim", "TERMINAL"]];
+    if (st.unlocked) tabs.push(["eco", "ECO-00"]);
+    var h = '<h1>' + ROLE[st.role] + '</h1><p class="sub">JOGADOR ' + st.role + " // SESSÃO " + esc(st.code) + '</p>' +
+      '<div class="box">' + status(st, "A") + status(st, "B") + "</div>" +
+      '<div class="chips"><span class="chip' + (st.mine.length === 3 ? " ok" : "") + '">MINHAS PISTAS ' + st.mine.length + '/3</span><span class="chip">PARCEIRO ' + st.other_n + '/3</span>' +
+      '<span class="chip' + (st.pass_ok ? " ok" : "") + '">SENHA ' + (st.pass_ok ? "RECUPERADA" : "—") + '</span><span class="chip' + (st.coord_ok ? " ok" : "") + '">COORDENADA ' + (st.coord_ok ? "RECUPERADA" : "—") + '</span><span class="chip' + (st.unlocked ? " ok" : "") + '">ARQUIVO ' + (st.unlocked ? "LIBERADO" : "BLOQUEADO") + "</span></div>" +
+      '<div class="tabs">' + tabs.map(function (t) { return '<button data-act="tab" data-v="' + t[0] + '"' + (S.tab === t[0] ? ' class="on"' : "") + ">" + t[1] + "</button>"; }).join("") + "</div>";
+    if (S.tab === "canal") h += canal(st);
+    else if (S.tab === "fim") h += final(st);
+    else if (S.tab === "eco" && st.unlocked) h += eco(st);
+    else h += documento(st);
+    return h + '<div class="msg">' + esc(S.msg) + '</div><button class="btn sec" data-act="sair">SAIR DA SESSÃO</button>';
+  }
+
+  /* ---------- RENDER ---------- */
+  function render() {
+    var st = S.st, html;
+    if (S.ses && st) html = st.ready ? jogo(st) : sala(st);
+    else if (S.ses && !st && S.timer) html = '<div class="box">CONECTANDO AO TERMINAL...</div>';
+    else html = home();
+    var sig = html + JSON.stringify(S.vals.cod || "");
+    if (sig === S.sig) return; S.sig = sig;
+    var ae = document.activeElement, fid = ae && ae.id && $v.contains(ae) ? ae.id : null;
+    $v.innerHTML = html;
+    ["cod", "msg", "fs", "fc"].forEach(function (id) { var el = document.getElementById(id); if (el && S.vals[id] !== undefined) el.value = S.vals[id]; });
+    if (fid) { var f = document.getElementById(fid); if (f) { f.focus(); try { f.setSelectionRange(f.value.length, f.value.length); } catch (e) {} } }
+    var fr = document.getElementById("ecof");
+    if (fr) { var fit = function () { try { fr.style.height = (fr.contentDocument.documentElement.scrollHeight + 4) + "px"; } catch (e) {} }; fr.addEventListener("load", fit); addEventListener("resize", fit); setTimeout(fit, 400); }
+    var qr = document.getElementById("qr");
+    if (qr && window.qrcode && st) { try { var q = qrcode(0, "M"); q.addData(location.origin + location.pathname + "?s=" + st.code); q.make(); qr.innerHTML = q.createSvgTag(4); } catch (e) {} }
+  }
+
+  render();
+  if (S.ses && configurado) { tick(); start(); }
+})();
+</script>
+</body>
+</html>
