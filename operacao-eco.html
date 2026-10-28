@@ -6,44 +6,55 @@
 <meta name="theme-color" content="#0b1020">
 <title>Operação Eco | PROJECT114</title>
 <style>
-:root{--bg:#0b1020;--panel:#11182e;--navy:#1b2a55;--border:#25305a;--text:#dfe3f2;--muted:#8d96b8;--pink:#e8799f;--pink2:#f4a3c0}
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
+:root{--bg:#070910;--panel:rgba(17,24,46,.72);--navy:#1b2a55;--border:#252f57;--text:#e6e9f7;--muted:#8b93b8;--pink:#e0545c;--pink2:#f29a9e;--glow:rgba(224,84,92,.35)}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font-family:"Courier New",monospace;min-height:100vh}
+body{margin:0;min-height:100vh;color:var(--text);font-family:Inter,system-ui,sans-serif;font-size:14px;line-height:1.6;background:radial-gradient(900px 500px at 15% -10%,#1d2a5e 0%,transparent 60%),radial-gradient(700px 500px at 110% 110%,#3a1518 0%,transparent 60%),var(--bg)}
 button,input{font:inherit}button{cursor:pointer;-webkit-tap-highlight-color:transparent}
-a{color:var(--pink2)}
-.wrap{width:min(760px,100%);margin:auto;padding:18px 16px 40px}
-.top{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;padding-bottom:12px;border-bottom:1px solid var(--border);font-size:11px;letter-spacing:2px}
-.cls{color:var(--pink2);border:1px solid #5a3350;padding:4px 8px;font-size:9px}
-h1{margin:22px 0 6px;font-size:clamp(22px,6vw,30px);font-weight:normal;letter-spacing:2px}
-.sub{color:var(--muted);font-family:Arial,sans-serif;font-size:13px;line-height:1.7;margin:0 0 18px}
-.box{background:var(--panel);border:1px solid var(--border);border-left:3px solid var(--pink);padding:16px;margin-bottom:12px}
-.lbl{font-size:10px;letter-spacing:2px;color:var(--pink2);margin-bottom:8px}
-.btn{padding:13px 16px;border:1px solid #7a3d5c;background:#4a2142;color:#fff;font-size:12px;letter-spacing:1.5px}
-.btn:hover{background:#612b57}.btn.sec{background:transparent;border-color:var(--border);color:var(--muted)}
-.btn.sec:hover{color:#fff;background:var(--navy)}.btn:disabled{opacity:.4}
-input{width:100%;padding:12px;background:#0a0f1f;border:1px solid var(--border);color:var(--text);letter-spacing:2px;margin-bottom:10px}
-input:focus{outline:1px solid var(--pink)}
+a{color:var(--pink2);text-decoration:none}
+.wrap{width:min(780px,100%);margin:auto;padding:22px 18px 48px}
+.top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;padding-bottom:14px;border-bottom:1px solid var(--border);font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2px;color:var(--muted)}
+.cls{color:var(--pink2);border:1px solid #6a2a30;background:rgba(224,84,92,.08);padding:5px 10px;border-radius:999px;font-size:9px;letter-spacing:1.5px}
+h1{margin:26px 0 8px;font-size:clamp(26px,6vw,36px);font-weight:700;letter-spacing:-.8px;line-height:1.15;background:linear-gradient(90deg,#fff,var(--pink2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{color:var(--muted);font-size:13.5px;line-height:1.75;margin:0 0 20px}
+.box{background:var(--panel);backdrop-filter:blur(8px);border:1px solid var(--border);border-radius:14px;border-left:3px solid var(--pink);padding:18px;margin-bottom:14px;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+.lbl{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--pink2);margin-bottom:10px;text-transform:uppercase}
+.btn{padding:12px 18px;border:1px solid #8a3a40;border-radius:10px;background:linear-gradient(180deg,#5a2228,#3d181c);color:#fff;font-weight:600;font-size:12.5px;letter-spacing:.8px;transition:transform .15s,box-shadow .2s,background .2s}
+.btn:hover{background:linear-gradient(180deg,#7a2a30,#55202a);box-shadow:0 6px 18px var(--glow);transform:translateY(-1px)}
+.btn.sec{background:transparent;border-color:var(--border);color:var(--muted);box-shadow:none;transform:none}
+.btn.sec:hover{color:#fff;background:var(--navy)}
+.btn:disabled{opacity:.4;transform:none;box-shadow:none}
+input{width:100%;padding:13px 14px;background:#080c1a;border:1px solid var(--border);border-radius:10px;color:var(--text);font-family:'JetBrains Mono',monospace;letter-spacing:2px;margin-bottom:10px;transition:border-color .2s,box-shadow .2s}
+input:focus{outline:none;border-color:var(--pink);box-shadow:0 0 0 3px rgba(224,84,92,.18)}
 .row{display:flex;gap:10px;flex-wrap:wrap}.row>*{flex:1}
-.msg{color:var(--pink2);font-size:12px;margin:10px 0;min-height:16px}
-.code{font-size:34px;letter-spacing:8px;color:#fff;margin:6px 0}
-.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#3a4268;margin-right:8px}
-.dot.on{background:var(--pink);box-shadow:0 0 8px var(--pink)}
-.chips{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0}
-.chip{border:1px solid var(--border);padding:5px 8px;font-size:10px;letter-spacing:1px;color:var(--muted)}
-.chip.ok{border-color:var(--pink);color:var(--pink2)}
-.tabs{display:flex;gap:6px;margin:12px 0}.tabs button{flex:1;padding:10px 4px;border:1px solid var(--border);background:transparent;color:var(--muted);font-size:10px;letter-spacing:1px}
-.tabs button.on{background:var(--navy);color:#fff;border-color:var(--pink)}
-.ln{padding:9px 10px;border-bottom:1px dashed var(--border);font-size:13px;line-height:1.5}
-.ln[data-r]{cursor:pointer}.ln .h{color:var(--muted);margin-right:8px}.ln .s{color:var(--pink2);margin-right:8px}
-.rev{margin-top:10px;padding:10px;border:1px solid #5a3350;background:#160f26;font-family:Arial,sans-serif;font-size:13px;line-height:1.6}
-.shout{margin:14px 0 0;padding:12px;border:1px solid var(--pink);text-align:center;letter-spacing:2px;font-size:13px;color:#fff}
-.chat div{padding:7px 0;border-bottom:1px dashed var(--border);font-family:Arial,sans-serif;font-size:13px}
-.chat b{font-family:"Courier New",monospace;color:var(--pink2);font-size:10px;letter-spacing:1px;margin-right:8px}
-svg text{font-family:"Courier New",monospace}
-#qr svg{width:130px;height:130px;background:#e8e0ea;padding:6px}
-.eco .bl{margin:0 0 14px;padding-bottom:12px;border-bottom:1px solid var(--border)}
-.eco .bl p{margin:0;font-family:Arial,sans-serif;font-size:14px;line-height:1.7}
-.back{display:inline-block;margin-top:18px;font-size:11px;letter-spacing:1px;color:var(--muted);text-decoration:none}
+.msg{color:var(--pink2);font-size:12.5px;margin:12px 0;min-height:18px}
+.code{font-family:'JetBrains Mono',monospace;font-size:38px;font-weight:700;letter-spacing:10px;color:#fff;margin:8px 0;text-shadow:0 0 18px var(--glow)}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#3a4268;margin-right:9px;vertical-align:middle}
+.dot.on{background:var(--pink);box-shadow:0 0 10px var(--pink)}
+.chips{display:flex;gap:7px;flex-wrap:wrap;margin:14px 0}
+.chip{border:1px solid var(--border);border-radius:999px;padding:5px 11px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;color:var(--muted)}
+.chip.ok{border-color:var(--pink);color:var(--pink2);background:rgba(224,84,92,.08)}
+.tabs{display:flex;gap:6px;margin:14px 0;background:#0b0f1f;border:1px solid var(--border);border-radius:12px;padding:5px}
+.tabs button{flex:1;padding:10px 4px;border:0;border-radius:8px;background:transparent;color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px}
+.tabs button.on{background:var(--navy);color:#fff;box-shadow:inset 0 -2px 0 var(--pink)}
+.ln{padding:11px 10px;border-bottom:1px dashed var(--border);font-size:13.5px;line-height:1.6}
+.ln[data-r]{cursor:pointer;border-radius:8px;transition:background .2s}.ln[data-r]:hover{background:rgba(224,84,92,.06)}
+.ln .h{font-family:'JetBrains Mono',monospace;color:var(--muted);margin-right:10px;font-size:12px}
+.ln .s{color:var(--pink2);font-weight:600;margin-right:8px}
+.rev{margin-top:12px;padding:12px 14px;border:1px solid #5a2a30;border-radius:10px;background:#1a0c0e;font-size:13px;line-height:1.6}
+.shout{margin:16px 0 0;padding:14px;border:1px dashed var(--pink);border-radius:12px;text-align:center;letter-spacing:1.5px;font-weight:600;font-size:13px;color:#fff;background:rgba(224,84,92,.05)}
+.chat div{padding:8px 0;border-bottom:1px dashed var(--border);font-size:13.5px}
+.chat b{font-family:'JetBrains Mono',monospace;color:var(--pink2);font-size:10px;letter-spacing:1px;margin-right:10px}
+svg text{font-family:'JetBrains Mono',monospace}
+#qr svg{width:140px;height:140px;background:#ece6ef;padding:8px;border-radius:10px;margin-top:12px}
+.back{display:inline-block;margin-top:20px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1px;color:var(--muted)}
+.back:hover{color:#fff}
+.eco-bar{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:0 0 10px;padding:10px 12px;border:1px solid var(--border);border-radius:12px;background:var(--panel);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.5px;color:var(--pink2)}
+.eco-bar .btn{padding:8px 12px;font-size:10px}
+#ecof{width:100%;border:1px solid var(--border);border-radius:14px;background:#111318;display:block}
+.eco-wrap.big{position:fixed;inset:0;z-index:50;background:var(--bg);padding:12px;display:flex;flex-direction:column;overflow:hidden}
+.eco-wrap.big .eco-bar{flex:0 0 auto}
+.eco-wrap.big #ecof{flex:1 1 auto;height:auto!important;min-height:0}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
 </head>
@@ -53,6 +64,63 @@ svg text{font-family:"Courier New",monospace}
   <div id="view"></div>
   <a class="back" href="BASE.html">← VOLTAR AO TERMINAL</a>
 </main>
+<script type="text/plain" id="eco-extra"><section class="panel"><header class="panel-header"><span class="panel-title">07 — MATERIAL COMPLEMENTAR</span><span class="panel-code">ARQ. ECO-D</span></header><div class="panel-content"><p class="hint">Itens recuperados junto à fita. Toque para abrir cada registro. Origem e autenticidade não confirmadas.</p>
+<details><summary>D1 — Inventário de equipamento de rádio</summary><div class="dpad">Rádio de campo nº 2: presente, bateria em 40%. Rádio de campo nº 3: não localizado. Antena direcional: presente, desmontada. Caderneta de frequências: ausente. A frequência 41,7 MHz não consta na caderneta.</div></details>
+<details><summary>D2 — Bilhete encontrado no estojo da fita</summary><div class="dpad"><em>“Se alguém ouvir esta fita sem mim, não responda quando chamarem meu nome. Nem se for a minha voz.”</em><br><br>Sem assinatura. Papel de caderneta da patrulha, dobrado quatro vezes.</div></details>
+<details><summary>D3 — Relógios comparados</summary><div class="dpad">Relógio do operador de rádio: 05:52. Carimbo da fita: 06:13. Relógio de pulso do comandante: não registrado no momento da recolha. Nenhum dos horários foi confirmado como correto.</div></details>
+<details><summary>D4 — Hipóteses do comando (não verificadas)</summary><div class="dpad"><b>H1</b> — imitação deliberada de vozes da patrulha.<br><b>H2</b> — degradação da fita, com mistura de vozes.<br><b>H3</b> — transmissão de outro grupo, em frequência próxima.<br><br>Nenhuma hipótese foi confirmada ou descartada pelo laboratório.</div></details>
+<details><summary>D5 — Relatório de busca, 22/07</summary><div class="dpad">Equipe de busca percorreu o quadrante da última posição confirmada. Foram registradas apenas áreas de vegetação rala, sem relação com a carta. Nenhum vestígio humano. Relatório arquivado como sem relevância.</div></details>
+</div></section>
+</script>
+<script type="text/plain" id="eco-x">@import url('https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,600;1,400&family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+:root{--serif:'Newsreader',Georgia,serif;--display:'Space Grotesk',Inter,sans-serif;--mono:'IBM Plex Mono',monospace}
+body{padding:0 32px 64px;font-family:var(--display);font-size:15px;line-height:1.7;background:radial-gradient(ellipse at 50% -10%,#232733 0%,transparent 55%),#07080b}
+.container{max-width:1040px}
+.topbar{min-height:76px}
+.brand-icon{width:38px;height:38px;font-size:12px}
+.system-brand{font-size:12px}
+.breadcrumb{font-size:11px;margin:32px 0 36px}
+h1{font-size:clamp(34px,6vw,58px);letter-spacing:-2px;line-height:1.05;font-weight:700;margin-top:16px}
+h1 span{font-family:var(--serif);font-style:italic;font-weight:400;color:#c3c7d1}
+.heading-description{font-size:16px;max-width:680px;line-height:1.8;color:#9aa1b1}
+.eyebrow{font-size:11px}
+.classification{padding:16px 20px;border-radius:12px;border-color:#6a3a40}
+.classification-label{font-size:11px}
+.panel{border-radius:16px;margin-top:30px;overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,.35)}
+.panel-header{padding:20px 26px;background:linear-gradient(90deg,#15181f,#0f1116)}
+.panel-title{font-size:13px;letter-spacing:.5px}
+.panel-content{padding:28px 26px}
+.identity-grid{gap:0 36px}
+.field{padding:16px 0}
+.field-label{font-size:10px;letter-spacing:1.4px}
+.field-value{font-size:15px}
+.field-value.mono{font-size:13px}
+.section-heading{font-size:12px;margin:34px 0 16px;color:#d9dce4;letter-spacing:2px;display:flex;align-items:center;gap:12px}
+.section-heading::after{content:"";flex:1;height:1px;background:var(--border)}
+.observations{border-radius:12px}
+.observation{padding:16px 18px;font-size:14.5px;line-height:1.75;color:#c3c8d3;grid-template-columns:34px 1fr}
+.observation-index{font-size:12px}
+.statement{border-radius:12px;padding:26px;margin-top:26px;border-left:3px solid #c0545c}
+.statement-label{font-size:10px;letter-spacing:1.6px}
+blockquote{font-family:var(--serif);font-size:24px;line-height:1.5;color:#f3e6e7;margin-top:14px}
+.statement-source{font-size:10px}
+.restricted{border-radius:16px;margin-top:30px;overflow:hidden}
+.restricted-header{padding:22px 26px}
+.restricted-title{font-size:15px}
+.restricted-content{padding:26px}
+.restricted-content > p{font-size:14.5px}
+.page-footer{font-size:10px;margin-top:40px}
+@media (max-width:560px){body{padding:0 16px 40px}.identity-grid{grid-template-columns:1fr}.panel-content{padding:22px 18px}blockquote{font-size:20px}}
+details{border:1px solid #2a2f3a;border-radius:12px;margin:12px 0;background:#0d0f13;overflow:hidden}
+summary{cursor:pointer;padding:16px 18px;font-family:var(--mono);font-size:12px;letter-spacing:.5px;color:#e6c4c6;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:12px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";color:#e0545c;font-size:20px;line-height:1}
+details[open] summary::after{content:"-"}
+details[open] summary{border-bottom:1px solid #2a2f3a}
+.dpad{padding:16px 18px;font-size:14.5px;line-height:1.75;color:#c3c8d3}
+.dpad em{font-family:var(--serif);font-size:18px;color:#f3e6e7}
+.hint{color:#8b93a3;font-size:14px;margin:0 0 18px}
+</script>
 <script>
 (function () {
   /* CONFIGURAÇÃO: cole aqui a Project URL e a chave "anon public" do Supabase.
@@ -120,6 +188,7 @@ svg text{font-family:"Courier New",monospace}
     else if (a === "entrar") rpc("eco_join", { p_code: (S.vals.cod || "").trim() }).then(entrou);
     else if (a === "retomar") { tick(); start(); }
     else if (a === "sair") sair();
+    else if (a === "expand") { S.big = !S.big; S.sig = ""; render(); }
     else if (a === "tab") { S.tab = t.dataset.v; S.sig = ""; render(); }
     else if (a === "share") {
       var tx = (S.vals.msg || "").trim(); if (!tx) return;
@@ -287,8 +356,11 @@ svg text{font-family:"Courier New",monospace}
       '<div class="sub" style="margin-top:12px">Tentativas restantes: ' + st.left + "</div></div>";
   }
   function eco(st) {
-    var doc = '<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><style>' + ECO_CSS + '</style></head><body>' + st.final.html + '</body></html>';
-    return '<iframe id="ecof" sandbox="allow-same-origin" title="ECO-00" style="width:100%;height:900px;border:1px solid #25305a;background:#111318" srcdoc="' + doc.replace(/&/g, "&amp;").replace(/"/g, "&quot;") + '"></iframe>';
+    var extra = document.getElementById("eco-x").textContent;
+    var fin = st.final.html.replace('<footer class="page-footer">', document.getElementById("eco-extra").textContent + '<footer class="page-footer">');
+    var doc = '<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><style>' + ECO_CSS + extra + '</style></head><body>' + fin + '</body></html>';
+    return '<div class="eco-wrap' + (S.big ? " big" : "") + '"><div class="eco-bar"><span>ARQUIVO ECO-00 // DESBLOQUEADO</span><button class="btn sec" data-act="expand">' + (S.big ? "FECHAR" : "AMPLIAR") + '</button></div>' +
+      '<iframe id="ecof" sandbox="allow-same-origin" title="ECO-00" srcdoc="' + doc.replace(/&/g, "&amp;").replace(/"/g, "&quot;") + '"></iframe></div>';
   }
 
   function jogo(st) {
