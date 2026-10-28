@@ -355,12 +355,16 @@ details[open] summary{border-bottom:1px solid #2a2f3a}
       '<input id="fc" placeholder="COORDENADA (EX: C-3)" autocomplete="off" autocapitalize="characters"' + (st.coord_ok ? " disabled" : "") + '><button class="btn" data-act="sub" data-k="coord"' + (st.coord_ok ? " disabled" : "") + '>VALIDAR COORDENADA</button>' +
       '<div class="sub" style="margin-top:12px">Tentativas restantes: ' + st.left + "</div></div>";
   }
+  function acesso() {
+    var k = atob("MjI4MDE5Sy5K");
+    return '<div class="box" style="margin-top:14px"><div class="lbl">REGISTRO FINAL // DOSSIÊ J.C.M.</div><div class="sub" style="margin-bottom:8px">SENHA DO DOSSIÊ</div><div style="font-family:\'IBM Plex Mono\',monospace;font-size:20px;letter-spacing:3px;user-select:all;margin-bottom:14px">' + k + '</div><a class="btn" href="dadosmoderno.html" target="_blank" rel="noopener" style="display:inline-block;text-decoration:none">ABRIR DOSSIÊ</a></div>';
+  }
   function eco(st) {
     var extra = document.getElementById("eco-x").textContent;
     var fin = st.final.html.replace('<footer class="page-footer">', document.getElementById("eco-extra").textContent + '<footer class="page-footer">');
     var doc = '<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><style>' + ECO_CSS + extra + '</style></head><body>' + fin + '</body></html>';
     return '<div class="eco-wrap' + (S.big ? " big" : "") + '"><div class="eco-bar"><span>ARQUIVO ECO-00 // DESBLOQUEADO</span><button class="btn sec" data-act="expand">' + (S.big ? "FECHAR" : "AMPLIAR") + '</button></div>' +
-      '<iframe id="ecof" sandbox="allow-same-origin" title="ECO-00" srcdoc="' + doc.replace(/&/g, "&amp;").replace(/"/g, "&quot;") + '"></iframe></div>';
+      '<iframe id="ecof" sandbox="allow-same-origin" title="ECO-00" srcdoc="' + doc.replace(/&/g, "&amp;").replace(/"/g, "&quot;") + '"></iframe></div>' + acesso();
   }
 
   function jogo(st) {
